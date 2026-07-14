@@ -1,4 +1,4 @@
-const ProductType = require("../model/productTypeModel");
+const ProductType = require("../model/ProductTypeModel");
 const Notification = require("../model/Notification");
 
 /* ==========================================
