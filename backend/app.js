@@ -7,7 +7,7 @@ const session = require('express-session');
 const { connectDB } = require('./db');
 
 const jerseyRouter = require('./route/jerseyRoute');
-const productRoute = require('./route/productRoutes'); // ✅ NEW
+const productRoute = require("./route/ProductRoutes");
 
 const userRouter = require('./route/userRoute');
 const categoryRoute = require('./route/categoryRoute');
