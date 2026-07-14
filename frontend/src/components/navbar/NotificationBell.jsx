@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
+import API_URL from "../../utils/api";
 import './NotificationBell.css'
 
 import dayjs from 'dayjs'
@@ -33,7 +34,7 @@ const NotificationBell = () => {
 
         axios.get(
 
-            'http://localhost:2987/notification'
+            `${API_URL}/notification`
 
         )
 
@@ -59,7 +60,7 @@ const NotificationBell = () => {
 
         axios.get(
 
-            'http://localhost:2987/notification/count'
+            `${API_URL}/notification/count`
 
         )
 
@@ -89,7 +90,7 @@ const NotificationBell = () => {
 
         axios.put(
 
-            `http://localhost:2987/notification/read/${id}`
+            `${API_URL}/notification/read/${id}`
 
         )
 
@@ -117,7 +118,7 @@ const NotificationBell = () => {
 
         axios.put(
 
-            'http://localhost:2987/notification/read-all'
+            `${API_URL}/notification/read-all`
 
         )
 
@@ -171,7 +172,7 @@ const deleteNotification = (id) => {
 
     axios.delete(
 
-        `http://localhost:2987/notification/${id}`
+        `${API_URL}/notification/${id}`
 
     )
 

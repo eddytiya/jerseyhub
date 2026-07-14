@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import API_URL from "../utils/api";
 import { useNavigate } from 'react-router-dom'
 import {
 
@@ -29,11 +30,11 @@ const AddCategory = () => {
 
         axios.post(
 
-            'http://localhost:2987/category/add',
+    `${API_URL}/category/add`,
 
-            category
+    category
 
-        )
+)
 
         .then(() => {
 

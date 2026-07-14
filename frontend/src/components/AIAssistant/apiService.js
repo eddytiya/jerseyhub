@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const API = "http://localhost:2987";
+import API_URL from "../../utils/api";
+const API = API_URL;
 
 /* ==========================================
             PRODUCT SEARCH

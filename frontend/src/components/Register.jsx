@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import API_URL from "../utils/api";
 import {
 
     FaUser,
@@ -47,7 +47,7 @@ const Register = () => {
 
         axios.post(
 
-            "http://localhost:2987/user/register",
+             `${API_URL}/user/register`,
 
             user
 

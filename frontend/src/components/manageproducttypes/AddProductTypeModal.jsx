@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { FaPlus } from "react-icons/fa";
-
+import API_URL from "../../utils/api";
 import { MdClose } from "react-icons/md";
 
 import "./AddProductTypeModal.css";
@@ -56,22 +56,17 @@ const AddProductTypeModal = ({
 
             setLoading(true);
 
-            await axios.post(
+           await axios.post(
 
-                "http://localhost:2987/product-type/add",
+                `${API_URL}/product-type/add`,
 
                 form,
 
                 {
-
-                    headers:{
-
+                    headers: {
                         Authorization:
-
                         `Bearer ${localStorage.getItem("adminToken")}`
-
                     }
-
                 }
 
             );

@@ -8,6 +8,8 @@ import React, {
 
 import axios from "axios";
 
+import API_URL from "../../utils/api";
+
 import {
 
     FaTrash,
@@ -41,7 +43,7 @@ const ManageSubscribers = () => {
 
             const resp = await axios.get(
 
-                "http://localhost:2987/newsletter/all",
+                `${API_URL}/newsletter/all`,
 
                 {
 
@@ -103,7 +105,7 @@ const ManageSubscribers = () => {
 
             await axios.delete(
 
-                `http://localhost:2987/newsletter/${id}`,
+                `${API_URL}/newsletter/${id}`,
 
                 {
 

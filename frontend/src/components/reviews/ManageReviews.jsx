@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import ReviewTable from "./ReviewTable";
 
 import ReviewStats from "./ReviewStats";
@@ -34,7 +34,7 @@ const ManageReviews = () => {
 
         axios.get(
 
-            "http://localhost:2987/review/admin/all",
+            `${API_URL}/review/admin/all`,
 
             {
 

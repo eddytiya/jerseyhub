@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import API_URL from "../utils/api";
 
-const CATEGORY_API = "http://localhost:2987/category";
-const JERSEY_API = "http://localhost:2987/jersey";
+
+const CATEGORY_API = `${API_URL}/category`;
+const JERSEY_API = `${API_URL}/jersey`;
 
 const useCategories = () => {
 

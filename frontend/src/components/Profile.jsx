@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-
+import API_URL from "../utils/api";
 import './Profile.css'
 import {
 
@@ -26,7 +26,7 @@ const Profile = () => {
     useEffect(() => {
 
         axios.get(
-            'http://localhost:2987/profile',
+            `${API_URL}/profile`,
             {
                 withCredentials: true
             }
@@ -76,7 +76,8 @@ const Profile = () => {
 
         axios.put(
 
-            'http://localhost:2987/profile',
+           `${API_URL}/profile`,
+
 
             {
 
@@ -140,7 +141,7 @@ const Profile = () => {
 
         axios.put(
 
-            'http://localhost:2987/profile/change-password',
+             `${API_URL}/profile/change-password`,
 
             password,
 

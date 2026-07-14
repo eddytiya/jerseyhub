@@ -13,7 +13,7 @@ import {
     FaHome
 
 } from "../utils/navbarIcons";
-
+import API_URL from "../utils/api";
 const OrderSuccess = () => {
 
     const { state } = useLocation();
@@ -465,7 +465,7 @@ const OrderSuccess = () => {
 
             <a
 
-                href={`http://localhost:2987/order/invoice/${order._id}`}
+                href={`${API_URL}/order/invoice/${order._id}`}
 
                 target="_blank"
 

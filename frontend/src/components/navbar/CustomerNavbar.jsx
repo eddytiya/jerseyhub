@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import {
     FaHome,
     FaChevronDown,
@@ -21,12 +21,12 @@ const CustomerNavbar = () => {
     useEffect(() => {
 
         axios
-            .get("http://localhost:2987/category")
+            .get(`${API_URL}/category`)
             .then((resp) => setCategories(resp.data))
             .catch((err) => console.log(err));
 
         axios
-            .get("http://localhost:2987/jersey")
+            .get(`${API_URL}/jersey`)
             .then((resp) => setJerseys(resp.data))
             .catch((err) => console.log(err));
 

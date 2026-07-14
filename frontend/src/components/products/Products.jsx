@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./Products.css";
-
+import API_URL from "../../utils/api";
 import ProductHero from "./ProductHero";
 import ProductToolbar from "./ProductToolbar";
 import ProductGrid from "./ProductGrid";
@@ -22,34 +22,21 @@ const Products = () => {
     useEffect(() => {
 
         axios
+    .get(`${API_URL}/product`)
+    .then((resp) => {
+        setProducts(resp.data);
+    })
+    .catch((err) => console.log(err));
 
-            .get("http://localhost:2987/jersey")
-
-            .then((resp) => {
-
-                setProducts(resp.data);
-
-            })
-
-            .catch((err) => console.log(err));
-
-        axios
-
-            .get("http://localhost:2987/category")
-
-            .then((resp) => {
-
-                setCategories([
-
-                    "All",
-
-                    ...resp.data.map(category => category.categoryName)
-
-                ]);
-
-            })
-
-            .catch((err) => console.log(err));
+axios
+    .get(`${API_URL}/category`)
+    .then((resp) => {
+        setCategories([
+            "All",
+            ...resp.data.map((category) => category.categoryName),
+        ]);
+    })
+    .catch((err) => console.log(err));
 
     }, []);
 

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 import axios from "axios";
-
+import API_URL from "../utils/api";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { uploadImageToCloudinary } from "../utils/cloudinary";
@@ -86,15 +86,17 @@ useEffect(() => {
 ] = await Promise.all([
 
     axios.get(
-        `http://localhost:2987/jersey/show/${id}`
+        `${API_URL}/jersey/show/${id}`
     ),
 
     axios.get(
-        "http://localhost:2987/category"
+        `${API_URL}/category`
     ),
 
     axios.get(
-        "http://localhost:2987/product-type"
+        axios.get(
+    `${API_URL}/product-type`
+)
     )
 
 ]);
@@ -413,7 +415,7 @@ const handleSubmit = async (e) => {
 
         await axios.put(
 
-            `http://localhost:2987/jersey/${id}`,
+            `${API_URL}/jersey/${id}`,
 
             jerseyData,
 

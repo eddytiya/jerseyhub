@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-
-const API = "http://localhost:2987/product-type";
+import API_URL from "../utils/api";
+const API = `${API_URL}/product-type`;
 
 const useProductTypes = () => {
 

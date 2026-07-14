@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import API_URL from "../utils/api";
 import { uploadImageToCloudinary } from "../utils/cloudinary";
 
 import "./AddJersey.css";
@@ -49,13 +50,13 @@ const [uploading,setUploading]=useState(false);
 
     useEffect(() => {
 
-    axios.get("http://localhost:2987/category")
+    axios.get(`${API_URL}/category`)
         .then((resp) => {
             setCategories(resp.data);
         })
         .catch(console.log);
 
-    axios.get("http://localhost:2987/product-type")
+   axios.get(`${API_URL}/product-type`)
         .then((resp) => {
             setProductTypes(resp.data);
         })
@@ -231,11 +232,11 @@ const [uploading,setUploading]=useState(false);
 
         await axios.post(
 
-            "http://localhost:2987/jersey/add",
+    `${API_URL}/jersey/add`,
 
-            jerseyData
+    jerseyData
 
-        );
+);
 
         showSuccess(
 

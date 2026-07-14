@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import API_URL from "../utils/api";
 import { FaUser } from "react-icons/fa";
 import GoogleLoginButton from "./auth/GoogleLoginButton";
 import {
@@ -39,7 +39,7 @@ const Login = () => {
 
         axios.post(
 
-            "http://localhost:2987/user/login",
+             `${API_URL}/user/login`,
 
             user,
 

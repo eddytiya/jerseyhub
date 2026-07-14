@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import "./ManageJerseys.css";
-
+import API_URL from "../utils/api";
 import ManageHeader from "./managejerseys/ManageHeader";
 import JerseyStats from "./managejerseys/JerseyStats";
 import SearchToolbar from "./managejerseys/SearchToolbar";
@@ -33,7 +33,7 @@ const ManageJerseys = () => {
         try {
 
             const res = await axios.get(
-                "http://localhost:2987/jersey"
+                `${API_URL}/jersey`
             );
 
             setJerseys(res.data);
@@ -57,7 +57,7 @@ const ManageJerseys = () => {
         try {
 
             await axios.delete(
-                `http://localhost:2987/jersey/${id}`
+                `${API_URL}/jersey/${id}`
             );
 
             fetchJerseys();
@@ -75,7 +75,7 @@ const ManageJerseys = () => {
         try {
 
             await axios.put(
-                `http://localhost:2987/jersey/featured/${id}`
+                `${API_URL}/jersey/featured/${id}`
             );
 
             fetchJerseys();
@@ -253,7 +253,7 @@ const ManageJerseys = () => {
                 selectedJerseys.map(id =>
 
                     axios.delete(
-                        `http://localhost:2987/jersey/${id}`
+                        `${API_URL}/jersey/${id}`
                     )
 
                 )
@@ -283,7 +283,7 @@ const ManageJerseys = () => {
                 selectedJerseys.map(id =>
 
                     axios.put(
-                        `http://localhost:2987/jersey/featured/${id}`
+                        `${API_URL}/jersey/featured/${id}`
                     )
 
                 )
@@ -323,7 +323,7 @@ const ManageJerseys = () => {
                 featured.map(jersey =>
 
                     axios.put(
-                        `http://localhost:2987/jersey/featured/${jersey._id}`
+                        `${API_URL}/jersey/featured/${jersey._id}`
                     )
 
                 )

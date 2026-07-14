@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import {
 
     FaFutbol,
@@ -49,15 +49,13 @@ const subscribeNewsletter = async () => {
 
         const resp = await axios.post(
 
-            "http://localhost:2987/newsletter/subscribe",
+    `${API_URL}/newsletter/subscribe`,
 
-            {
+    {
+        email
+    }
 
-                email
-
-            }
-
-        );
+);
 
        toast.success(resp.data.message);
 

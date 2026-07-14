@@ -14,6 +14,7 @@ import {
 
 } from "react-router-dom";
 import axios from 'axios'
+import API_URL from "../utils/api";
 import {
 
     showSuccess,
@@ -59,11 +60,11 @@ const fetchCart = () => {
 
         ?
 
-        `http://localhost:2987/cart/buy-now/${userId}`
+        `${API_URL}/cart/buy-now/${userId}`
 
         :
 
-        `http://localhost:2987/cart/${userId}`;
+        `${API_URL}/cart/${userId}`;
 
     axios.get(url)
 
@@ -99,7 +100,7 @@ const updateQuantity = (id, quantity) => {
 
     axios.put(
 
-        `http://localhost:2987/cart/update/${id}`,
+        `${API_URL}/cart/update/${id}`,
 
         {
 
@@ -135,7 +136,7 @@ const removeItem = (id) => {
 
     axios.delete(
 
-        `http://localhost:2987/cart/remove/${id}`
+        `${API_URL}/cart/remove/${id}`
 
     )
 

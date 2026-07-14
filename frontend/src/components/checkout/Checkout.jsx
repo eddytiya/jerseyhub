@@ -13,7 +13,7 @@ import {
     useNavigate
 
 } from "react-router-dom";
-
+import API_URL from "../../utils/api";
 import axios from "axios";
 import CheckoutSteps from "./CheckoutSteps";
 import ConfirmOrderModal from "./ConfirmOrderModal";
@@ -90,11 +90,11 @@ const Checkout = () => {
 
             ?
 
-            `http://localhost:2987/cart/buy-now/${userId}`
+            `${API_URL}/cart/buy-now/${userId}`
 
             :
 
-            `http://localhost:2987/cart/${userId}`;
+            `${API_URL}/cart/${userId}`;
 
         axios.get(url)
 
@@ -116,7 +116,7 @@ const fetchUser = () => {
 
     axios.get(
 
-        "http://localhost:2987/user/me",
+        `${API_URL}/user/me`,
 
         {
 
@@ -250,7 +250,7 @@ const startRazorpayPayment = async () => {
 
         const { data } = await axios.post(
 
-            "http://localhost:2987/order/create-order",
+           `${API_URL}/order/create-order`,
 
             {
 
@@ -387,7 +387,7 @@ if (paymentMethod === "COD") {
 
     axios.post(
 
-        "http://localhost:2987/order/checkout",
+       `${API_URL}/order/checkout`,
 
         {
 

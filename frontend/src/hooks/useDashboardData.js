@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import API_URL from "../utils/api";
 const useDashboardData = () => {
 
     const [loading, setLoading] = useState(true)
@@ -68,69 +68,69 @@ const useDashboardData = () => {
 
                 const [
 
-                    jerseys,
+    jerseys,
 
-                    analytics,
+    analytics,
 
-                    lowStock,
+    lowStock,
 
-                    recentOrders,
+    recentOrders,
 
-                    topSelling,
+    topSelling,
 
-                    monthlyRevenue,
+    monthlyRevenue,
 
-                    orderStatus,
+    orderStatus,
 
-                    bestCustomers
+    bestCustomers
 
-                ] = await Promise.all([
+] = await Promise.all([
 
-                    axios.get('http://localhost:2987/jersey'),
+    axios.get(`${API_URL}/jersey`),
 
-                    axios.get('http://localhost:2987/dashboard/analytics', {
+    axios.get(`${API_URL}/dashboard/analytics`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    }),
+    }),
 
-                    axios.get('http://localhost:2987/dashboard/low-stock', {
+    axios.get(`${API_URL}/dashboard/low-stock`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    }),
+    }),
 
-                    axios.get('http://localhost:2987/dashboard/recent-orders', {
+    axios.get(`${API_URL}/dashboard/recent-orders`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    }),
+    }),
 
-                    axios.get('http://localhost:2987/dashboard/top-selling', {
+    axios.get(`${API_URL}/dashboard/top-selling`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    }),
+    }),
 
-                    axios.get('http://localhost:2987/dashboard/monthly-revenue', {
+    axios.get(`${API_URL}/dashboard/monthly-revenue`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    }),
+    }),
 
-                    axios.get('http://localhost:2987/dashboard/orders-status', {
+    axios.get(`${API_URL}/dashboard/orders-status`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    }),
+    }),
 
-                    axios.get('http://localhost:2987/dashboard/best-customers', {
+    axios.get(`${API_URL}/dashboard/best-customers`, {
 
-                        withCredentials: true
+        withCredentials: true
 
-                    })
+    })
 
-                ])
+]);
 
                 setJerseys(jerseys.data)
 

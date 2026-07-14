@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../utils/api";
 import { useParams } from "react-router-dom";
 
 import ProductListing from "./products/ProductListing";
@@ -18,7 +19,7 @@ const CategoryPage = () => {
 
         axios
 
-            .get(`http://localhost:2987/jersey/category/${category}`)
+            .get(`${API_URL}/jersey/category/${category}`)
 
             .then((resp)=>{
 

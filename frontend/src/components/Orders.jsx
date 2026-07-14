@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-
+import API_URL from "../utils/api";
 import "./Orders.css";
 const Orders = () => {
 
@@ -23,7 +23,7 @@ const Orders = () => {
 
         axios.get(
 
-            `http://localhost:2987/order/${userId}`
+            `${API_URL}/order/${userId}`
 
         )
 
@@ -509,7 +509,7 @@ const Orders = () => {
 
         window.open(
 
-            `http://localhost:2987/order/invoice/${order._id}`,
+            `${API_URL}/order/invoice/${order._id}`,
 
             "_blank"
 

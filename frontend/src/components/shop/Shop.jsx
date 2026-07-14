@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../../utils/api";
 
 import "./Shop.css";
 
@@ -17,7 +18,7 @@ const Shop = () => {
 
         axios
 
-            .get("http://localhost:2987/jersey")
+           .get(`${API_URL}/jersey`)
 
             .then((resp)=>setJerseys(resp.data))
 

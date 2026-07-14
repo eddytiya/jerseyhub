@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
-
+import API_URL from "../utils/api";
 import ProductCard from "./products/ProductCard";
 
 import "./SearchResults.css";
@@ -24,7 +24,7 @@ const SearchResults = () => {
 
             .get(
 
-                `http://localhost:2987/jersey/search?name=${keyword}`
+                `${API_URL}/jersey/search?name=${keyword}`
 
             )
 

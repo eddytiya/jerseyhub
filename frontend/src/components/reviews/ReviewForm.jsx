@@ -9,7 +9,7 @@ import React, {
 } from "react";
 
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import StarRating from "./StarRating";
 
 import uploadImageToCloudinary from "../../utils/uploadImageToCloudinary";
@@ -220,7 +220,7 @@ const images = [
 
             await axios.put(
 
-                `http://localhost:2987/review/${editingReview._id}`,
+                `${API_URL}/review/${editingReview._id}`,
 
                 {
 
@@ -256,7 +256,7 @@ const images = [
 
             await axios.post(
 
-                "http://localhost:2987/review/add",
+                `${API_URL}/review/add`,
 
                 {
 

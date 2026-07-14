@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import API_URL from "../utils/api";
 import HeroCarousel from "./Home/HeroCarousel";
 import CategorySection from "./Home/CategorySection";
 import FeaturedSection from "./Home/FeaturedSection";
@@ -16,13 +16,14 @@ const Home = () => {
 
     useEffect(() => {
 
-        axios
-            .get("http://localhost:2987/category/featured")
+        
+            axios
+    .get(`${API_URL}/category/featured`)
             .then((resp) => setCategories(resp.data))
             .catch((err) => console.log(err));
 
         axios
-            .get("http://localhost:2987/jersey/featured")
+            .get(`${API_URL}/jersey/featured`)
             .then((resp) => setJerseys(resp.data))
             .catch((err) => console.log(err));
 

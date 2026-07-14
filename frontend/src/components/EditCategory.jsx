@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import API_URL from "../utils/api";
 import { useNavigate, useParams } from 'react-router-dom'
 import {
 
@@ -23,7 +24,7 @@ const EditCategory = () => {
     useEffect(() => {
 
         axios.get(
-            'http://localhost:2987/category'
+            `${API_URL}/category`
         )
         .then((resp) => {
 
@@ -68,7 +69,7 @@ const EditCategory = () => {
         e.preventDefault()
 
         axios.put(
-            `http://localhost:2987/category/update/${id}`,
+            `${API_URL}/category/update/${id}`,
             category
         )
         .then(() => {

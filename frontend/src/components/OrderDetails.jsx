@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams, NavLink } from 'react-router-dom'
-
+import API_URL from "../utils/api";
 const OrderDetails = () => {
 
     const { id } = useParams()
@@ -12,7 +12,7 @@ const OrderDetails = () => {
 
         axios.get(
 
-            `http://localhost:2987/order/admin/${id}`,
+            `${API_URL}/order/admin/${id}`,
 
             {
                 withCredentials: true
@@ -457,7 +457,7 @@ const OrderDetails = () => {
         >
 
             <a
-                href={`http://localhost:2987/order/invoice/${order._id}`}
+                href={`${API_URL}/order/invoice/${order._id}`}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-primary btn-lg"

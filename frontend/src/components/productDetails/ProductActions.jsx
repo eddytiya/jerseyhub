@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import API_URL from "../../utils/api";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
@@ -47,21 +47,14 @@ const handleBuyNow = async () => {
 
         }
 
-        await axios.post(
-
-            "http://localhost:2987/cart/buy-now",
-
-            {
-
-                userId,
-
-                jerseyId: jersey._id,
-
-                quantity
-
-            }
-
-        );
+       await axios.post(
+    `${API_URL}/cart/buy-now`,
+    {
+        userId,
+        jerseyId: jersey._id,
+        quantity
+    }
+);
 
         showSuccess(
 

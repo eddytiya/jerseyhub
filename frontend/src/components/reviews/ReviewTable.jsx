@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import API_URL from "../../utils/api";
 import {
 
     FaStar,
@@ -70,7 +71,7 @@ const ReviewTable = ({
 
         await axios.delete(
 
-            `http://localhost:2987/review/admin/${id}`,
+            `${API_URL}/review/admin/${id}`,
 
             {
 

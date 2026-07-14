@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-
+import API_URL from "../../utils/api";
 import {
     showSuccess,
     showError
@@ -20,7 +20,7 @@ const GoogleLoginButton = () => {
 
             const resp = await axios.post(
 
-                "http://localhost:2987/user/google-login",
+                `${API_URL}/user/google-login`,
 
                 {
 

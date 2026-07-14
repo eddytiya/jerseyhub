@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import RatingBreakdown from "./RatingBreakdown";
 
 import ReviewForm from "./ReviewForm";
@@ -45,7 +45,7 @@ const ReviewSection = ({
 
         axios.get(
 
-            `http://localhost:2987/review/jersey/${jerseyId}`
+            `${API_URL}/review/jersey/${jerseyId}`
 
         )
 
@@ -115,7 +115,7 @@ const ReviewSection = ({
 
     axios.get(
 
-        "http://localhost:2987/user/me",
+         `${API_URL}/user/me`,
 
         {
 
@@ -147,7 +147,7 @@ const ReviewSection = ({
 
         axios.put(
 
-            `http://localhost:2987/review/helpful/${id}`,
+            `${API_URL}/review/helpful/${id}`,
 
             {},
 
@@ -185,7 +185,7 @@ const handleDelete = async (reviewId) => {
 
         await axios.delete(
 
-            `http://localhost:2987/review/${reviewId}`,
+            `${API_URL}/review/${reviewId}`,
 
             {
 

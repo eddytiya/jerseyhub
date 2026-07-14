@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
+import API_URL from "../utils/api";
 import {
     showSuccess,
-    showError
+    showError,
+    showWarning
 } from "../utils/toastUtils";
 
 import Breadcrumb from "./productDetails/Breadcrumb";
@@ -32,7 +33,7 @@ const ShowJersey = () => {
 
         axios
 
-            .get(`http://localhost:2987/jersey/show/${id}`)
+            .get(`${API_URL}/jersey/show/${id}`)
 
             .then((resp) => {
 
@@ -50,7 +51,7 @@ const ShowJersey = () => {
 
         axios
 
-            .get(`http://localhost:2987/jersey/category/${jersey.category}`)
+            .get(`${API_URL}/jersey/category/${jersey.category}`)
 
             .then((resp) => {
 
@@ -87,7 +88,7 @@ const ShowJersey = () => {
 
             .post(
 
-                "http://localhost:2987/cart/add",
+               `${API_URL}/cart/add`,
 
                 {
 

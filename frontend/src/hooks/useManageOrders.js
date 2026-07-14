@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-
+import API_URL from "../utils/api";
 const useManageOrders = () => {
 
     const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const useManageOrders = () => {
 
             const res = await axios.get(
 
-                "http://localhost:2987/order/admin/all",
+                `${API_URL}/order/admin/all`,
 
                 {
 
@@ -79,7 +79,7 @@ const useManageOrders = () => {
 
             await axios.put(
 
-                `http://localhost:2987/order/status/${id}`,
+                `${API_URL}/order/status/${id}`,
 
                 {
 

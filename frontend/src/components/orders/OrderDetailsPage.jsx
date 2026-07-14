@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import {
     FaArrowLeft,
     FaCheckCircle,
@@ -29,18 +29,18 @@ const OrderDetailsPage = () => {
 
         const userId = localStorage.getItem("userId");
 
-        axios
-            .get(`http://localhost:2987/order/${userId}`)
-            .then((resp) => {
+       axios
+    .get(`${API_URL}/order/${userId}`)
+    .then((resp) => {
 
-                const selectedOrder = resp.data.find(
-                    order => String(order._id) === String(id)
-                );
+        const selectedOrder = resp.data.find(
+            order => String(order._id) === String(id)
+        );
 
-                setOrder(selectedOrder);
+        setOrder(selectedOrder);
 
-            })
-            .catch(console.log);
+    })
+    .catch(console.log);
 
     }, [id]);
 
@@ -48,7 +48,7 @@ const OrderDetailsPage = () => {
 
     const link = document.createElement("a");
 
-    link.href = `http://localhost:2987/order/invoice/${order._id}`;
+    link.href = `${API_URL}/order/invoice/${order._id}`;
 
     link.download = "";
 

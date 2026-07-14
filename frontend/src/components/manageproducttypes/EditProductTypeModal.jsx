@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-
+import API_URL from "../../utils/api";
 import { FaEdit } from "react-icons/fa";
 
 import { MdClose } from "react-icons/md";
@@ -76,7 +76,7 @@ const EditProductTypeModal = ({
 
             await axios.put(
 
-                `http://localhost:2987/product-type/update/${productType._id}`,
+                `${API_URL}/product-type/update/${productType._id}`,
 
                 form,
 

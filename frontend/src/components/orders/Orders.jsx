@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../../utils/api";
 
 import OrderHero from "./OrderHero";
 import OrderToolbar from "./OrderToolbar";
@@ -9,63 +10,45 @@ import OrderDetailsDrawer from "./OrderDetailsDrawer";
 import "./Orders.css";
 
 const Orders = () => {
-
     const [orders, setOrders] = useState([]);
-
     const [search, setSearch] = useState("");
-
     const [status, setStatus] = useState("All");
-
     const [selectedOrder, setSelectedOrder] = useState(null);
 
     const userId = localStorage.getItem("userId");
 
     useEffect(() => {
-
         if (!userId) return;
 
         axios
-            .get(`http://localhost:2987/order/${userId}`)
+            .get(`${API_URL}/order/user/${userId}`)
             .then((resp) => {
-
                 setOrders(resp.data);
-
             })
             .catch(console.log);
-
     }, [userId]);
 
     const filteredOrders = orders.filter((order) => {
+        const teamName = order.items?.[0]?.jerseyId?.teamName || "";
 
-        const teamName =
-            order.items?.[0]?.jerseyId?.teamName || "";
-
-        const matchesSearch =
-            teamName
-                .toLowerCase()
-                .includes(search.toLowerCase());
+        const matchesSearch = teamName
+            .toLowerCase()
+            .includes(search.toLowerCase());
 
         const matchesStatus =
-            status === "All" ||
-            order.status === status;
+            status === "All" || order.status === status;
 
         return matchesSearch && matchesStatus;
-
     });
 
     return (
-
         <>
-
             <section
                 className={`orders-page ${
                     selectedOrder ? "drawer-open" : ""
                 }`}
             >
-
-                <OrderHero
-                    total={filteredOrders.length}
-                />
+                <OrderHero total={filteredOrders.length} />
 
                 <OrderToolbar
                     search={search}
@@ -78,23 +61,14 @@ const Orders = () => {
                     orders={filteredOrders}
                     onViewDetails={setSelectedOrder}
                 />
-
             </section>
 
             <OrderDetailsDrawer
-
                 order={selectedOrder}
-
-                onClose={() =>
-                    setSelectedOrder(null)
-                }
-
+                onClose={() => setSelectedOrder(null)}
             />
-
         </>
-
     );
-
 };
 
 export default Orders;

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-
+import API_URL from "../utils/api";
 import "./Categories.css";
 import CategoryListCard from "./CategoryListCard";
 
@@ -17,12 +17,12 @@ const Categories = () => {
     useEffect(() => {
 
         axios
-            .get("http://localhost:2987/category")
+    .get(`${API_URL}/category`)
             .then((resp) => setCategories(resp.data))
             .catch((err) => console.log(err));
 
         axios
-            .get("http://localhost:2987/jersey")
+    .get(`${API_URL}/jersey`)
             .then((resp) => setProducts(resp.data))
             .catch((err) => console.log(err));
 
