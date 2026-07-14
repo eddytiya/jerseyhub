@@ -27,7 +27,7 @@ import ManageProductTypes from "./components/ManageProductTypes";
 import AIAssistant from "./components/AIAssistant/AIAssistant";
 import ReviewsSection from "./components/Home/Reviews/ReviewsSection";
 import Footer from "./components/Footer/Footer";
-import ManageSubscribers from "./components/newsletter/ManageSubscribers";
+import ManageSubscribers from "./components/Newsletter/ManageSubscribers";
 import ReturnPolicy from "./components/Pages/ReturnPolicy";
 import ShippingPolicy from "./components/Pages/ShippingPolicy";
 import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
