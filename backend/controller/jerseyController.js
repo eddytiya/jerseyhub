@@ -2,7 +2,7 @@ const Jersey = require("../model/jerseyModel");
 const Fuse = require('fuse.js')
 const Notification = require('../model/Notification')
 const Category = require("../model/categoryModel");
-const ProductType = require("../model/productTypeModel");
+const ProductType = require("../model/ProductTypeModel");
 // Add Jersey
 const addJersey = async (req, res) => {
 
