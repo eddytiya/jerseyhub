@@ -1,0 +1,181 @@
+/* ==========================================
+            SKELETON
+========================================== */
+
+.admin-orders-skeleton-page{
+
+    animation:adminOrdersPulse 1.4s infinite;
+
+}
+
+/* ========================================== */
+
+.admin-orders-skeleton-header{
+
+    margin-bottom:40px;
+
+}
+
+.admin-orders-skeleton-badge{
+
+    width:170px;
+
+    height:34px;
+
+    border-radius:999px;
+
+    background:var(--input-bg);
+
+    margin-bottom:20px;
+
+}
+
+.admin-orders-skeleton-title{
+
+    width:320px;
+
+    height:48px;
+
+    border-radius:12px;
+
+    background:var(--input-bg);
+
+    margin-bottom:18px;
+
+}
+
+.admin-orders-skeleton-subtitle{
+
+    width:520px;
+
+    max-width:100%;
+
+    height:22px;
+
+    border-radius:10px;
+
+    background:var(--input-bg);
+
+}
+
+/* ========================================== */
+
+.admin-orders-skeleton-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+
+    margin-bottom:36px;
+
+}
+
+.admin-orders-skeleton-card{
+
+    height:150px;
+
+    border-radius:22px;
+
+    background:var(--input-bg);
+
+}
+
+/* ========================================== */
+
+.admin-orders-skeleton-toolbar{
+
+    width:100%;
+
+    height:90px;
+
+    border-radius:22px;
+
+    background:var(--input-bg);
+
+    margin-bottom:32px;
+
+}
+
+/* ========================================== */
+
+.admin-orders-skeleton-table{
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+}
+
+.admin-orders-skeleton-row{
+
+    height:74px;
+
+    background:var(--input-bg);
+
+    margin-bottom:10px;
+
+    border-radius:16px;
+
+}
+
+/* ========================================== */
+
+@keyframes adminOrdersPulse{
+
+    0%{
+
+        opacity:.55;
+
+    }
+
+    50%{
+
+        opacity:1;
+
+    }
+
+    100%{
+
+        opacity:.55;
+
+    }
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.admin-orders-skeleton-stats{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:650px){
+
+.admin-orders-skeleton-stats{
+
+    grid-template-columns:1fr;
+
+}
+
+.admin-orders-skeleton-title{
+
+    width:220px;
+
+}
+
+.admin-orders-skeleton-subtitle{
+
+    width:100%;
+
+}
+
+}

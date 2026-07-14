@@ -1,0 +1,833 @@
+/* ==========================================================
+                    ROW CARD
+========================================================== */
+
+.adminjersey-rowcard{
+
+    display:grid;
+
+    grid-template-columns:160px 2fr 170px 170px 250px;
+
+    align-items:center;
+
+    gap:28px;
+
+    padding:22px;
+
+    margin-bottom:24px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:26px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.35s;
+
+    box-shadow:0 14px 40px rgba(15,23,42,.08);
+
+}
+
+.adminjersey-rowcard:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 22px 60px rgba(37,99,235,.15);
+
+}
+
+/* ==========================================================
+                    LEFT ACCENT
+========================================================== */
+
+.adminjersey-rowcard::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:6px;
+
+    height:100%;
+
+    background:linear-gradient(
+        180deg,
+        #2563eb,
+        #60a5fa
+    );
+
+}
+
+/* ==========================================================
+                    IMAGE
+========================================================== */
+
+.adminjersey-rowcard-image{
+
+    position:relative;
+
+    width:160px;
+
+    height:160px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:#eef5ff;
+
+    flex-shrink:0;
+
+}
+
+.adminjersey-rowcard-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.45s;
+
+}
+
+.adminjersey-rowcard:hover
+.adminjersey-rowcard-image img{
+
+    transform:scale(1.08);
+
+}
+
+/* ==========================================================
+                    FEATURED BADGE
+========================================================== */
+
+.adminjersey-rowcard-featured{
+
+    position:absolute;
+
+    top:12px;
+
+    left:12px;
+
+    padding:7px 14px;
+
+    border-radius:50px;
+
+    background:#fff;
+
+    color:#f59e0b;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:.6px;
+
+    text-transform:uppercase;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+
+}
+
+/* ==========================================================
+                    DETAILS
+========================================================== */
+
+.adminjersey-rowcard-details{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    gap:16px;
+
+    min-width:0;
+
+}
+
+.adminjersey-rowcard-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:18px;
+
+}
+
+.adminjersey-rowcard-title{
+
+    margin:0;
+
+    color:var(--text);
+
+    font-size:28px;
+
+    font-weight:900;
+
+    line-height:1.1;
+
+}
+
+.adminjersey-rowcard-subtitle{
+
+    margin:6px 0 0;
+
+    color:var(--text-secondary);
+
+    font-size:17px;
+
+    font-weight:600;
+
+}
+
+.adminjersey-rowcard-description{
+
+    margin:0;
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+    display:-webkit-box;
+
+    -webkit-box-orient:vertical;
+
+    -webkit-line-clamp:2;
+
+    line-clamp:2;
+
+    overflow:hidden;
+
+}
+
+/* ==========================================================
+                    CATEGORY
+========================================================== */
+
+.adminjersey-rowcard-category{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:9px 18px;
+
+    border-radius:40px;
+
+    background:rgba(37,99,235,.08);
+
+    color:#2563eb;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:.7px;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+
+    border:1px solid rgba(37,99,235,.12);
+
+}
+
+/* ==========================================================
+                    PRICE BOX
+========================================================== */
+
+.adminjersey-rowcard-price{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:140px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    border:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(37,99,235,.03),
+            transparent
+        );
+
+    transition:.35s;
+
+}
+
+.adminjersey-rowcard:hover
+.adminjersey-rowcard-price{
+
+    transform:translateY(-3px);
+
+}
+
+.adminjersey-rowcard-price span{
+
+    color:var(--text-secondary);
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+.adminjersey-rowcard-price h3{
+
+    margin-top:12px;
+
+    margin-bottom:0;
+
+    font-size:34px;
+
+    font-weight:900;
+
+    color:#16a34a;
+
+}
+
+/* ==========================================================
+                    STOCK BOX
+========================================================== */
+
+.adminjersey-rowcard-stockbox{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:140px;
+
+    padding:18px;
+
+    border-radius:22px;
+
+    border:1px solid var(--border);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(37,99,235,.03),
+            transparent
+        );
+
+    transition:.35s;
+
+}
+
+.adminjersey-rowcard:hover
+.adminjersey-rowcard-stockbox{
+
+    transform:translateY(-3px);
+
+}
+
+.adminjersey-rowcard-stockbox span{
+
+    color:var(--text-secondary);
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+.adminjersey-rowcard-stockbox h3{
+
+    margin:10px 0;
+
+    font-size:34px;
+
+    font-weight:900;
+
+    color:var(--text);
+
+}
+
+/* ==========================================================
+                    STATUS
+========================================================== */
+
+.adminjersey-rowcard-status{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:8px 16px;
+
+    border-radius:40px;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    text-transform:uppercase;
+
+}
+
+.adminjersey-good{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.adminjersey-low{
+
+    background:#fef3c7;
+
+    color:#b45309;
+
+}
+
+.adminjersey-out{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+/* ==========================================================
+                    ACTIONS
+========================================================== */
+
+.adminjersey-rowcard-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.adminjersey-rowcard-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:16px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:
+        transform .35s,
+        box-shadow .35s;
+
+}
+
+.adminjersey-rowcard-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================================
+                    EDIT
+========================================================== */
+
+.adminjersey-edit{
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color:#fff;
+
+}
+
+.adminjersey-edit:hover{
+
+    color:#fff;
+
+    box-shadow:
+        0 16px 35px rgba(37,99,235,.30);
+
+}
+
+/* ==========================================================
+                    FEATURE
+========================================================== */
+
+.adminjersey-feature{
+
+    background:linear-gradient(
+        135deg,
+        #f59e0b,
+        #fbbf24
+    );
+
+    color:#fff;
+
+}
+
+.adminjersey-feature:hover{
+
+    box-shadow:
+        0 16px 35px rgba(245,158,11,.30);
+
+}
+
+/* ==========================================================
+                    DELETE
+========================================================== */
+
+.adminjersey-delete{
+
+    background:linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color:#fff;
+
+}
+
+.adminjersey-delete:hover{
+
+    box-shadow:
+        0 16px 35px rgba(239,68,68,.30);
+
+}
+
+/* ==========================================================
+                    DARK MODE
+========================================================== */
+
+[data-theme="dark"] .adminjersey-rowcard{
+
+    background:var(--card);
+
+    border-color:rgba(255,255,255,.08);
+
+}
+
+[data-theme="dark"] .adminjersey-rowcard-category{
+
+    background:rgba(59,130,246,.18);
+
+}
+
+[data-theme="dark"] .adminjersey-rowcard-price,
+
+[data-theme="dark"] .adminjersey-rowcard-stockbox{
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.03),
+            transparent
+        );
+
+}
+
+[data-theme="dark"] .adminjersey-rowcard-featured{
+
+    background:#1e293b;
+
+    color:#facc15;
+
+}
+
+/* ==========================================================
+                    LARGE TABLETS
+========================================================== */
+
+@media(max-width:1200px){
+
+    .adminjersey-rowcard{
+
+        grid-template-columns:
+
+            140px
+
+            1fr
+
+            150px
+
+            220px;
+
+    }
+
+    .adminjersey-rowcard-stockbox{
+
+        display:none;
+
+    }
+
+}
+
+/* ==========================================================
+                    TABLETS
+========================================================== */
+
+@media(max-width:992px){
+
+    .adminjersey-rowcard{
+
+        grid-template-columns:
+
+            130px
+
+            1fr;
+
+        gap:22px;
+
+    }
+
+    .adminjersey-rowcard-price{
+
+        display:none;
+
+    }
+
+    .adminjersey-rowcard-actions{
+
+        grid-column:1/-1;
+
+        flex-direction:row;
+
+    }
+
+    .adminjersey-rowcard-btn{
+
+        flex:1;
+
+    }
+
+}
+
+/* ==========================================================
+                    MOBILE
+========================================================== */
+
+@media(max-width:768px){
+
+    .adminjersey-rowcard{
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        padding:20px;
+
+    }
+
+    .adminjersey-rowcard-image{
+
+        width:100%;
+
+        height:240px;
+
+    }
+
+    .adminjersey-rowcard-header{
+
+        flex-direction:column;
+
+        gap:12px;
+
+    }
+
+    .adminjersey-rowcard-category{
+
+        align-self:flex-start;
+
+    }
+
+    .adminjersey-rowcard-actions{
+
+        flex-direction:column;
+
+    }
+
+    .adminjersey-rowcard-btn{
+
+        width:100%;
+        gap:10px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+    }
+
+}
+
+/* ==========================================================
+                    SMALL MOBILE
+========================================================== */
+
+@media(max-width:576px){
+
+    .adminjersey-rowcard{
+
+        padding:16px;
+
+        border-radius:20px;
+
+    }
+
+    .adminjersey-rowcard-title{
+
+        font-size:22px;
+
+    }
+
+    .adminjersey-rowcard-subtitle{
+
+        font-size:15px;
+
+    }
+
+    .adminjersey-rowcard-description{
+
+        font-size:14px;
+
+        line-height:1.6;
+
+    }
+
+    .adminjersey-rowcard-image{
+
+        height:200px;
+
+    }
+
+}
+
+/* ==========================================================
+                    HOVER EFFECTS
+========================================================== */
+
+.adminjersey-rowcard-image,
+
+.adminjersey-rowcard-price,
+
+.adminjersey-rowcard-stockbox,
+
+.adminjersey-rowcard-btn{
+
+    transition:all .35s ease;
+
+}
+
+.adminjersey-rowcard:hover
+
+.adminjersey-rowcard-price,
+
+.adminjersey-rowcard:hover
+
+.adminjersey-rowcard-stockbox{
+
+    border-color:rgba(37,99,235,.18);
+
+}
+
+.adminjersey-rowcard:hover
+
+.adminjersey-rowcard-title{
+
+    color:#2563eb;
+
+}
+
+/* ==========================================================
+                    SCROLL ANIMATION
+========================================================== */
+
+.adminjersey-rowcard{
+
+    animation:adminjerseyFade .45s ease;
+
+}
+
+@keyframes adminjerseyFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

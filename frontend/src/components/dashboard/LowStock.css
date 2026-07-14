@@ -1,0 +1,241 @@
+/* ==========================================================
+                    LOW STOCK
+========================================================== */
+
+.low-stock-card{
+
+    border:none;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    margin-bottom:40px;
+
+    box-shadow:0 18px 40px rgba(15,23,42,.08);
+
+}
+
+.low-stock-header{
+
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+
+    color:#fff;
+
+    padding:20px 28px;
+
+}
+
+.low-stock-header h4{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+.low-stock-body{
+
+    padding:25px;
+
+    background:#fff;
+
+}
+
+.low-stock-item{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:20px;
+
+    border:1px solid rgba(239,68,68,.15);
+
+    transition:.35s;
+
+    height:100%;
+
+}
+
+.low-stock-item:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 18px 35px rgba(239,68,68,.18);
+
+}
+
+.low-stock-content{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.low-stock-image{
+
+    width:95px;
+
+    height:95px;
+
+    object-fit:cover;
+
+    border-radius:18px;
+
+    margin-right:20px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+
+}
+
+.low-stock-info{
+
+    flex:1;
+
+}
+
+.low-stock-team{
+
+    font-size:1.15rem;
+
+    font-weight:700;
+
+    margin-bottom:4px;
+
+}
+
+.low-stock-name{
+
+    color:#64748b;
+
+    margin-bottom:10px;
+
+}
+
+.low-stock-category{
+
+    display:inline-block;
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+    font-size:.85rem;
+
+}
+
+.low-stock-count{
+
+    text-align:right;
+
+}
+
+.low-stock-value{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    color:#dc2626;
+
+    line-height:1;
+
+}
+
+.low-stock-label{
+
+    color:#64748b;
+
+}
+
+.low-stock-progress{
+
+    margin-top:22px;
+
+    height:10px;
+
+    border-radius:20px;
+
+    background:#fee2e2;
+
+    overflow:hidden;
+
+}
+
+.low-stock-progress-bar{
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:linear-gradient(90deg,#ef4444,#f97316);
+
+}
+
+.low-stock-empty{
+
+    text-align:center;
+
+    padding:60px;
+
+}
+
+[data-theme="dark"] .low-stock-body{
+
+    background:#1e293b;
+
+}
+
+[data-theme="dark"] .low-stock-item{
+
+    background:#334155;
+
+}
+
+[data-theme="dark"] .low-stock-name,
+
+[data-theme="dark"] .low-stock-label{
+
+    color:#cbd5e1;
+
+}
+
+@media(max-width:768px){
+
+    .low-stock-body{
+
+        padding:20px;
+
+    }
+
+    .low-stock-content{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .low-stock-image{
+
+        margin:0 0 18px;
+
+    }
+
+    .low-stock-count{
+
+        margin-top:18px;
+
+        text-align:center;
+
+    }
+
+}

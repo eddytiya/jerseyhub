@@ -1,0 +1,485 @@
+/* ==========================================
+                FOOTER
+========================================== */
+
+.footer{
+
+    margin-top:120px;
+
+    background:var(--card);
+
+    border-top:1px solid var(--border);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* ==========================================
+                CONTAINER
+========================================== */
+
+.footer .container{
+
+    padding:70px 0 25px;
+
+}
+
+/* ==========================================
+                GRID
+========================================== */
+
+.footer-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr 1fr 1fr 1.4fr;
+
+    gap:45px;
+
+    margin-bottom:55px;
+
+}
+
+/* ==========================================
+                LOGO
+========================================== */
+
+.footer-logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+    font-size:1.8rem;
+
+    font-weight:800;
+
+    color:var(--primary);
+
+}
+
+.footer-logo svg{
+
+    font-size:2rem;
+
+}
+
+/* ==========================================
+                DESCRIPTION
+========================================== */
+
+.footer-description{
+
+    color:var(--text-secondary);
+
+    line-height:1.9;
+
+    margin-bottom:28px;
+
+    max-width:320px;
+
+}
+
+/* ==========================================
+                COLUMN
+========================================== */
+
+.footer-column h4{
+
+    color:var(--text-primary);
+
+    margin-bottom:22px;
+
+    font-size:1.15rem;
+
+    font-weight:700;
+
+}
+
+.footer-column a{
+
+    display:block;
+
+    margin-bottom:14px;
+
+    color:var(--text-secondary);
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.footer-column a:hover{
+
+    color:var(--primary);
+
+    transform:translateX(6px);
+
+}
+
+.footer-column p{
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+                SOCIAL
+========================================== */
+
+.footer-social{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+.footer-social a{
+
+    width:44px;
+
+    height:44px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--text-primary);
+
+    transition:.35s;
+
+    font-size:1.05rem;
+
+}
+
+.footer-social a:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+    transform:translateY(-6px);
+
+}
+
+/* ==========================================
+            NEWSLETTER
+========================================== */
+
+.footer-newsletter{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    margin-top:20px;
+
+}
+
+.footer-newsletter input{
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    border:1px solid var(--border);
+
+    background:transparent;
+
+    color:var(--text-primary);
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.footer-newsletter input:focus{
+
+    border-color:var(--primary);
+
+}
+
+.footer-newsletter button{
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    color:white;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        #4f46e5
+
+    );
+
+    transition:.35s;
+
+}
+
+.footer-newsletter button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 30px rgba(37,99,235,.25);
+
+}
+
+/* ==========================================
+                PAYMENTS
+========================================== */
+
+.footer-payments{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:25px 0;
+
+    border-top:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    margin-bottom:25px;
+
+}
+
+.footer-payments span{
+
+    color:var(--text-secondary);
+
+    font-weight:600;
+
+}
+
+.footer-payments div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+    font-size:2rem;
+
+    color:var(--text-primary);
+
+}
+
+/* ==========================================
+                BOTTOM
+========================================== */
+
+.footer-bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.footer-bottom p{
+
+    margin:0;
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            BACK TO TOP
+========================================== */
+
+.footer-top-btn{
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        #4f46e5
+
+    );
+
+    color:white;
+
+    transition:.35s;
+
+}
+
+.footer-top-btn:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 30px rgba(37,99,235,.30);
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+.footer-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.footer{
+
+margin-top:80px;
+
+}
+
+.footer .container{
+
+padding:55px 20px 20px;
+
+}
+
+.footer-grid{
+
+grid-template-columns:1fr;
+
+gap:40px;
+
+}
+
+.footer-description{
+
+max-width:100%;
+
+}
+
+.footer-payments{
+
+flex-direction:column;
+
+gap:20px;
+
+text-align:center;
+
+}
+
+.footer-payments div{
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+}
+
+.footer-bottom{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+}
+
+/* ==========================================
+            BRAND STATS
+========================================== */
+
+.footer-stats{
+
+    display:flex;
+
+    gap:28px;
+
+    margin:30px 0;
+
+    flex-wrap:wrap;
+
+}
+
+.footer-stats div{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.footer-stats h3{
+
+    margin:0;
+
+    color:var(--primary);
+
+    font-size:1.7rem;
+
+    font-weight:800;
+
+}
+
+.footer-stats span{
+
+    margin-top:4px;
+
+    color:var(--text-secondary);
+
+    font-size:.9rem;
+
+}

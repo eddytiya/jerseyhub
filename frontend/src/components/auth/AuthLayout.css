@@ -1,0 +1,279 @@
+/* ==========================================
+            AUTH PAGE
+========================================== */
+
+.admin-auth-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:40px 20px;
+
+    background:var(--bg);
+
+}
+
+/* ==========================================
+            BACKGROUND
+========================================== */
+
+.admin-auth-circle{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(130px);
+
+    opacity:.35;
+
+    pointer-events:none;
+
+}
+
+/* Blue */
+
+.admin-auth-circle-one{
+
+    width:330px;
+
+    height:330px;
+
+    background:#2563eb;
+
+    top:-120px;
+
+    left:-120px;
+
+}
+
+/* Purple */
+
+.admin-auth-circle-two{
+
+    width:280px;
+
+    height:280px;
+
+    background:#7c3aed;
+
+    right:-80px;
+
+    bottom:-80px;
+
+}
+
+/* Cyan */
+
+.admin-auth-circle-three{
+
+    width:240px;
+
+    height:240px;
+
+    background:#06b6d4;
+
+    top:45%;
+
+    left:55%;
+
+    transform:translate(-50%,-50%);
+
+}
+
+/* ==========================================
+            CARD
+========================================== */
+
+.admin-auth-card{
+
+    position:relative;
+
+    z-index:10;
+
+    width:100%;
+
+    max-width:520px;
+
+    padding:46px;
+
+    border-radius:28px;
+
+    background:rgba(15,23,42,.82);
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 25px 60px rgba(0,0,0,.28),
+
+        inset 0 1px rgba(255,255,255,.05);
+
+}
+
+/* ==========================================
+            LIGHT
+========================================== */
+
+[data-theme="light"] .admin-auth-card{
+
+    background:rgba(255,255,255,.88);
+
+}
+
+/* ==========================================
+            HEADER
+========================================== */
+
+.admin-auth-header{
+
+    text-align:center;
+
+    margin-bottom:34px;
+
+}
+
+.admin-auth-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        #4f46e5
+
+    );
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    margin-bottom:22px;
+
+}
+
+.admin-auth-header h1{
+
+    margin:0;
+
+    color:var(--text);
+
+    font-size:38px;
+
+    font-weight:800;
+
+}
+
+.admin-auth-header p{
+
+    margin-top:14px;
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+            MOBILE
+========================================== */
+
+@media(max-width:576px){
+
+.admin-auth-card{
+
+    padding:28px;
+
+}
+
+.admin-auth-header h1{
+
+    font-size:30px;
+
+}
+
+}
+
+/* ==========================================
+            FOOTER
+========================================== */
+
+.admin-auth-footer{
+
+    margin-top:28px;
+
+    text-align:center;
+
+    color:var(--text-secondary);
+
+    font-size:15px;
+
+}
+
+.admin-auth-footer a{
+
+    margin-left:8px;
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+}
+
+.admin-auth-footer a:hover{
+
+    color:var(--primary-hover);
+
+    text-decoration:underline;
+
+}
+
+.admin-auth-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:inherit;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    pointer-events:none;
+
+    opacity:.8;
+
+}

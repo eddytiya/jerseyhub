@@ -1,0 +1,219 @@
+.product-type-modal-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(7px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+    animation:fadeIn .25s;
+
+}
+
+.product-type-modal{
+
+    width:520px;
+
+    background:#fff;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    animation:popup .35s;
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.18);
+
+}
+
+.product-type-modal-header{
+
+    padding:24px 28px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+.product-type-modal-header h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:24px;
+
+    color:#111827;
+
+}
+
+.product-type-modal-header button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:26px;
+
+}
+
+.product-type-modal-body{
+
+    padding:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.product-type-modal-body label{
+
+    font-weight:700;
+
+    color:#374151;
+
+}
+
+.product-type-modal-body input,
+
+.product-type-modal-body textarea{
+
+    border:1px solid #dbe3ef;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+.product-type-modal-body input:focus,
+
+.product-type-modal-body textarea:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:
+
+    0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+.product-type-modal-footer{
+
+    padding:24px 30px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:14px;
+
+    border-top:1px solid #eef2f7;
+
+}
+
+.cancel-btn{
+
+    border:none;
+
+    padding:13px 24px;
+
+    border-radius:12px;
+
+    background:#e5e7eb;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+.save-btn{
+
+    border:none;
+
+    padding:13px 24px;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+.save-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:translateY(30px) scale(.95);
+
+opacity:0;
+
+}
+
+to{
+
+transform:translateY(0) scale(1);
+
+opacity:1;
+
+}
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}

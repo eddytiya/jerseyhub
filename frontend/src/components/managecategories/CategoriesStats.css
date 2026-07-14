@@ -1,0 +1,189 @@
+/* ==========================================
+            STATS SECTION
+========================================== */
+
+.categories-admin-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+
+    margin-bottom:38px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-stat-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:26px;
+
+    border-radius:22px;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+    color:#fff;
+
+}
+
+.categories-admin-stat-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+
+    height:140px;
+
+    right:-40px;
+
+    top:-40px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.10);
+
+}
+
+.categories-admin-stat-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+/* ========================================== */
+
+.categories-admin-stat-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-stat-icon{
+
+    width:62px;
+
+    height:62px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    font-size:30px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-stat-card h4{
+
+    margin:0 0 14px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    opacity:.95;
+
+}
+
+.categories-admin-stat-card h2{
+
+    margin:0;
+
+    font-size:42px;
+
+    font-weight:800;
+
+}
+
+/* ==========================================
+            CARD COLORS
+========================================== */
+
+.categories-admin-stat-blue{
+
+    background:var(--primary);
+
+}
+
+.categories-admin-stat-purple{
+
+    background:#7c3aed;
+
+}
+
+.categories-admin-stat-green{
+
+    background:var(--success);
+
+}
+
+.categories-admin-stat-orange{
+
+    background:#f59e0b;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+.categories-admin-stats{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:700px){
+
+.categories-admin-stats{
+
+    grid-template-columns:1fr;
+
+}
+
+.categories-admin-stat-card{
+
+    padding:22px;
+
+}
+
+.categories-admin-stat-card h2{
+
+    font-size:34px;
+
+}
+
+}

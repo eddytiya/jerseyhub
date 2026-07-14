@@ -1,0 +1,11 @@
+.products-page{
+
+    min-height:100vh;
+
+    background:var(--bg-primary);
+
+    color:var(--text-primary);
+
+    transition:.35s;
+
+}

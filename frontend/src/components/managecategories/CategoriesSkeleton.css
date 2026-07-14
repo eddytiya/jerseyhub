@@ -1,0 +1,231 @@
+/* ==========================================
+        PAGE
+========================================== */
+
+.categories-admin-skeleton-page{
+
+    width:100%;
+
+}
+
+/* ========================================== */
+
+.skeleton-loading{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:var(--glass);
+
+    border-radius:14px;
+
+}
+
+.skeleton-loading::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    transform:translateX(-100%);
+
+    background:linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.18),
+
+        transparent
+
+    );
+
+    animation:categories-admin-skeleton 1.4s infinite;
+
+}
+
+@keyframes categories-admin-skeleton{
+
+    100%{
+
+        transform:translateX(100%);
+
+    }
+
+}
+
+/* ==========================================
+        HEADER
+========================================== */
+
+.categories-admin-skeleton-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:42px;
+
+}
+
+.categories-admin-skeleton-badge{
+
+    width:140px;
+
+    height:34px;
+
+    margin-bottom:20px;
+
+}
+
+.categories-admin-skeleton-heading{
+
+    width:360px;
+
+    height:42px;
+
+    margin-bottom:16px;
+
+}
+
+.categories-admin-skeleton-subtitle{
+
+    width:520px;
+
+    max-width:100%;
+
+    height:18px;
+
+}
+
+.categories-admin-skeleton-button{
+
+    width:180px;
+
+    height:56px;
+
+}
+
+/* ==========================================
+        STATS
+========================================== */
+
+.categories-admin-skeleton-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+    margin-bottom:36px;
+
+}
+
+.categories-admin-skeleton-stat{
+
+    height:170px;
+
+}
+
+/* ==========================================
+        TOOLBAR
+========================================== */
+
+.categories-admin-skeleton-toolbar{
+
+    display:flex;
+
+    gap:20px;
+
+    margin-bottom:34px;
+
+}
+
+.categories-admin-skeleton-search{
+
+    flex:1;
+
+    height:58px;
+
+}
+
+.categories-admin-skeleton-select{
+
+    width:180px;
+
+    height:58px;
+
+}
+
+/* ==========================================
+        LIST
+========================================== */
+
+.categories-admin-skeleton-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+}
+
+/* ==========================================
+        RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.categories-admin-skeleton-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.categories-admin-skeleton-stats{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.categories-admin-skeleton-toolbar{
+
+    flex-direction:column;
+
+}
+
+.categories-admin-skeleton-select{
+
+    width:100%;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.categories-admin-skeleton-stats{
+
+    grid-template-columns:1fr;
+
+}
+
+.categories-admin-skeleton-heading{
+
+    width:100%;
+
+}
+
+}

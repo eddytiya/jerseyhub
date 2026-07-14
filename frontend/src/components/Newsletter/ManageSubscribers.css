@@ -1,0 +1,427 @@
+/* ==========================================
+            PAGE
+========================================== */
+
+.subscriber-page{
+
+    padding:35px;
+
+    animation:fadeIn .35s ease;
+
+}
+
+/* ==========================================
+            HEADER
+========================================== */
+
+.subscriber-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.subscriber-header h2{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    color:var(--text);
+
+}
+
+.subscriber-header svg{
+
+    color:var(--primary);
+
+}
+
+/* ==========================================
+            STATS
+========================================== */
+
+.subscriber-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+    margin-bottom:35px;
+
+}
+
+.subscriber-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    text-align:center;
+
+}
+
+.subscriber-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+.subscriber-card svg{
+
+    font-size:2.2rem;
+
+    color:var(--primary);
+
+    margin-bottom:18px;
+
+}
+
+.subscriber-card h3{
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    color:var(--text);
+
+    margin-bottom:8px;
+
+}
+
+.subscriber-card p{
+
+    color:var(--text-secondary);
+
+    margin:0;
+
+}
+
+/* ==========================================
+            SEARCH
+========================================== */
+
+.subscriber-search{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:15px 20px;
+
+    margin-bottom:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.subscriber-search svg{
+
+    color:var(--primary);
+
+    font-size:1.1rem;
+
+}
+
+.subscriber-search input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:1rem;
+
+}
+
+.subscriber-search input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            TABLE WRAPPER
+========================================== */
+
+.subscriber-table-wrapper{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ==========================================
+            TABLE
+========================================== */
+
+.subscriber-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.subscriber-table thead{
+
+    background:var(--bg-secondary);
+
+}
+
+.subscriber-table th{
+
+    padding:18px;
+
+    text-align:left;
+
+    color:var(--text);
+
+    font-weight:700;
+
+    border-bottom:1px solid var(--divider);
+
+}
+
+.subscriber-table td{
+
+    padding:18px;
+
+    color:var(--text);
+
+    border-bottom:1px solid var(--divider);
+
+}
+
+.subscriber-table tbody tr{
+
+    transition:var(--transition);
+
+}
+
+.subscriber-table tbody tr:hover{
+
+    background:var(--hover-bg);
+
+}
+
+/* ==========================================
+            STATUS
+========================================== */
+
+.subscriber-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+    color:white;
+
+    background:var(--success);
+
+}
+
+/* ==========================================
+            DELETE BUTTON
+========================================== */
+
+.subscriber-delete{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(239,68,68,.12);
+
+    color:var(--danger);
+
+    transition:var(--transition);
+
+}
+
+.subscriber-delete:hover{
+
+    background:var(--danger);
+
+    color:white;
+
+    transform:scale(1.08);
+
+}
+
+/* ==========================================
+            EMPTY
+========================================== */
+
+.subscriber-empty{
+
+    text-align:center;
+
+    padding:80px 20px;
+
+}
+
+.subscriber-empty h3{
+
+    color:var(--text);
+
+    margin-bottom:10px;
+
+}
+
+.subscriber-empty p{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            LOADING
+========================================== */
+
+.subscriber-loading{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:70px;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.subscriber-table{
+
+display:block;
+
+overflow-x:auto;
+
+white-space:nowrap;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.subscriber-page{
+
+padding:20px;
+
+}
+
+.subscriber-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.subscriber-header h2{
+
+font-size:1.7rem;
+
+}
+
+.subscriber-search{
+
+padding:14px 18px;
+
+}
+
+.subscriber-card{
+
+padding:24px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.subscriber-stats{
+
+grid-template-columns:1fr;
+
+}
+
+.subscriber-header h2{
+
+font-size:1.5rem;
+
+}
+
+}

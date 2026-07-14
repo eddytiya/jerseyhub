@@ -1,0 +1,173 @@
+/* ==========================================
+            SEARCH BAR
+========================================== */
+
+.navbar-search{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    width:48px;
+
+    height:48px;
+
+    overflow:hidden;
+
+    border-radius:999px;
+
+    transition:width .35s ease;
+
+    flex-shrink:0;
+
+}
+
+.navbar-search.expanded{
+
+    width:300px;
+
+}
+
+/* ==========================================
+            ICON BUTTON
+========================================== */
+
+.search-icon-btn{
+
+    width:48px;
+
+    height:48px;
+
+    min-width:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        var(--primary-hover)
+
+    );
+
+    color:#fff;
+
+    z-index:5;
+
+    transition:.3s;
+
+    box-shadow:
+
+        0 8px 22px rgba(37,99,235,.25);
+
+}
+
+.search-icon-btn:hover{
+
+    transform:scale(1.06);
+
+}
+
+/* ==========================================
+            INPUT
+========================================== */
+
+.navbar-search input{
+
+    width:0;
+
+    opacity:0;
+
+    border:none;
+
+    outline:none;
+
+    height:48px;
+
+    margin-left:10px;
+
+    padding:0;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border-radius:999px;
+
+    transition:
+
+        width .35s,
+
+        opacity .25s,
+
+        padding .35s;
+
+}
+
+.navbar-search.expanded input{
+
+    width:240px;
+
+    opacity:1;
+
+    padding:0 18px;
+
+}
+
+.navbar-search input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+.navbar-search.expanded{
+
+    width:240px;
+
+}
+
+.navbar-search.expanded input{
+
+    width:180px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.navbar-search.expanded{
+
+    width:200px;
+
+}
+
+.navbar-search.expanded input{
+
+    width:145px;
+
+}
+
+}

@@ -1,0 +1,130 @@
+/* =====================================================
+                    ADMIN NAVBAR
+===================================================== */
+
+.admin-navbar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+}
+
+/* ===================================================== */
+
+.admin-nav-link{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 18px;
+
+    border-radius:999px;
+
+    color:var(--text);
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+/* ===================================================== */
+
+.admin-nav-link svg{
+
+    font-size:18px;
+
+}
+
+/* ===================================================== */
+
+.admin-nav-link:hover{
+
+    background:var(--glass);
+
+    color:var(--primary);
+
+}
+
+/* ===================================================== */
+
+.admin-nav-link.active{
+
+    background:var(--primary);
+
+    color:white;
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ===================================================== */
+
+.admin-nav-link.active::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:6px;
+
+    transform:translateX(-50%);
+
+    width:22px;
+
+    height:3px;
+
+    border-radius:20px;
+
+    background:white;
+
+}
+
+/* ===================================================== */
+
+.admin-nav-link:hover svg{
+
+    transform:scale(1.1);
+
+}
+
+/* ===================================================== */
+
+@media(max-width:992px){
+
+.admin-navbar{
+
+    gap:8px;
+
+}
+
+.admin-nav-link{
+
+    min-width:150px;
+
+    justify-content:center;
+
+    padding:14px 24px;
+}
+
+.admin-nav-link span{
+
+    display:none;
+
+}
+
+}

@@ -1,0 +1,154 @@
+/* ==========================================
+            WELCOME CARD
+========================================== */
+
+.ai-welcome-card{
+
+    padding:24px;
+
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(37,99,235,.14),
+        rgba(37,99,235,.04)
+    );
+
+    border:1px solid var(--border);
+
+    margin-bottom:22px;
+
+    animation:welcomeFade .5s ease;
+
+}
+
+.ai-welcome-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(37,99,235,.10);
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.ai-welcome-card h2{
+
+    margin:18px 0 8px;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    color:var(--text);
+
+}
+
+.ai-welcome-card p{
+
+    margin:0;
+
+    color:var(--text-secondary);
+
+    line-height:1.7;
+
+}
+
+.ai-welcome-divider{
+
+    width:100%;
+
+    height:1px;
+
+    background:var(--border);
+
+    margin:22px 0;
+
+}
+
+.ai-feature-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+.ai-feature{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.ai-feature span{
+
+    width:26px;
+
+    height:26px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.ai-feature p{
+
+    margin:0;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+@keyframes welcomeFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

@@ -1,0 +1,755 @@
+
+
+
+/* ======================================================
+                    PRODUCT HERO
+====================================================== */
+.products-hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:grid;
+
+    grid-template-columns:1.2fr .8fr;
+
+    align-items:center;
+
+    gap:60px;
+
+    min-height:520px;
+
+    padding:80px;
+
+    border-radius:30px;
+
+    margin-bottom:60px;
+
+    background:linear-gradient(
+        180deg,
+        var(--card-bg),
+        var(--surface-bg)
+    );
+
+    border:1px solid var(--border-color);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+    transition:.35s;
+
+}
+
+/* ======================================================
+                    BACKGROUND GLOW
+====================================================== */
+
+.products-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+    top:-120px;
+
+    right:-120px;
+
+    filter:blur(50px);
+
+}
+
+.products-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    border-radius:50%;
+
+    background:
+
+        rgba(37,99,235,.30);
+
+    bottom:-150px;
+
+    left:-120px;
+
+    filter:blur(80px);
+
+}
+
+/* ======================================================
+                    OVERLAY
+====================================================== */
+
+.hero-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            rgba(255,255,255,.03),
+
+            rgba(255,255,255,.01)
+
+        );
+
+}
+
+/* ======================================================
+                    LEFT SIDE
+====================================================== */
+
+.hero-left{
+
+    position:relative;
+
+    z-index:5;
+
+}
+.hero-badge{
+
+    display:inline-block;
+
+    padding:10px 22px;
+
+    border-radius:999px;
+
+    background:rgba(37,99,235,.12);
+
+    backdrop-filter:blur(15px);
+
+    color:#2563eb;
+
+    border:1px solid rgba(37,99,235,.25);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    margin-bottom:24px;
+
+    transition:.35s;
+
+}
+
+/* ======================================================
+                    TITLE
+====================================================== */
+
+.hero-left h1{
+
+    color:var(--text-primary);
+
+    font-size:64px;
+
+    line-height:1.1;
+
+    margin-bottom:24px;
+
+    font-weight:900;
+
+    letter-spacing:-1px;
+
+    text-shadow:none;
+
+}
+
+/* ======================================================
+                    DESCRIPTION
+====================================================== */
+
+.hero-left p{
+
+    color:var(--text-secondary);
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    max-width:600px;
+
+}
+
+/* ======================================================
+                    HERO BUTTONS
+====================================================== */
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:35px;
+
+    margin-bottom:45px;
+
+}
+
+.primary-btn{
+
+    height:54px;
+
+    padding:0 34px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    transition:.35s;
+
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 15px 35px rgba(37,99,235,.45);
+
+}
+
+.secondary-btn{
+
+    height:54px;
+
+    padding:0 34px;
+
+    border-radius:14px;
+
+    border:2px solid rgba(255,255,255,.25);
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(12px);
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.secondary-btn:hover{
+
+    background:white;
+
+    color:#2563eb;
+
+    transform:translateY(-4px);
+
+}
+
+/* ======================================================
+                    HERO STATS
+====================================================== */
+
+.hero-stats{
+
+    display:flex;
+
+    gap:25px;
+
+    margin-top:10px;
+
+}
+
+.hero-stats div{
+
+    min-width:120px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:var(--card-bg);
+
+    border:1px solid var(--border-color);
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+}
+
+.hero-stats div:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#2563eb;
+
+    box-shadow:0 15px 35px rgba(37,99,235,.18);
+
+}
+
+.hero-stats h2{
+
+    color:#2563eb;
+
+    font-size:32px;
+
+    margin-bottom:8px;
+
+    font-weight:800;
+
+}
+
+.hero-stats span{
+
+    color:var(--text-secondary);
+
+    font-size:14px;
+
+}
+
+/* ======================================================
+                    RIGHT SIDE
+====================================================== */
+
+.hero-right{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:5;
+
+}
+
+/* ======================================================
+                    GLASS CARD
+====================================================== */
+
+.glass-card{
+
+    width:360px;
+
+    padding:40px;
+
+    border-radius:30px;
+
+    background:var(--card-bg);
+
+    border:1px solid var(--border-color);
+
+    backdrop-filter:blur(20px);
+
+    text-align:center;
+
+    transition:.4s;
+
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
+
+}
+
+.glass-card:hover{
+
+    transform:
+        translateY(-10px)
+        rotate(-2deg);
+
+}
+
+.glass-card h3{
+
+    color:var(--text-primary);
+
+    font-size:28px;
+
+    margin-bottom:20px;
+
+}
+
+.glass-card p{
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+}
+
+/* ======================================================
+                FLOATING FOOTBALL
+====================================================== */
+
+.football{
+
+    font-size:72px;
+
+    margin-bottom:25px;
+
+    animation:floatBall 3s ease-in-out infinite;
+
+}
+
+@keyframes floatBall{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-18px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ======================================================
+                HERO ENTRANCE ANIMATION
+====================================================== */
+
+.hero-left{
+
+    animation:heroSlideLeft .8s ease;
+
+}
+
+.hero-right{
+
+    animation:heroSlideRight .8s ease;
+
+}
+
+@keyframes heroSlideLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(-50px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+@keyframes heroSlideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(50px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+/* ======================================================
+                TITLE ANIMATION
+====================================================== */
+
+.hero-left h1{
+
+    animation:fadeTitle 1s ease;
+
+}
+
+@keyframes fadeTitle{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ======================================================
+                BADGE EFFECT
+====================================================== */
+
+.hero-badge{
+
+    box-shadow:
+
+        0 10px 30px rgba(255,255,255,.08);
+
+}
+
+.hero-badge:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.18);
+
+}
+
+/* ======================================================
+                GLASS CARD SHADOW
+====================================================== */
+
+.glass-card{
+
+    box-shadow:
+
+        0 25px 60px rgba(0,0,0,.18);
+
+}
+
+.glass-card:hover{
+
+    box-shadow:
+
+        0 35px 80px rgba(37,99,235,.35);
+
+}
+
+/* ======================================================
+                BUTTON CLICK
+====================================================== */
+
+.primary-btn:active,
+
+.secondary-btn:active{
+
+    transform:scale(.97);
+
+}
+
+/* ======================================================
+                RESPONSIVE
+====================================================== */
+
+@media(max-width:1200px){
+
+    .products-hero{
+
+        grid-template-columns:1fr;
+
+        gap:50px;
+
+        text-align:center;
+
+        padding:60px;
+
+    }
+
+    .hero-left p{
+
+        margin:auto;
+
+    }
+
+    .hero-buttons{
+
+        justify-content:center;
+
+    }
+
+    .hero-stats{
+
+        justify-content:center;
+
+        flex-wrap:wrap;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .products-hero{
+
+        padding:40px 25px;
+
+        border-radius:22px;
+
+    }
+
+    .hero-left h1{
+
+        font-size:42px;
+
+    }
+
+    .hero-left p{
+
+        font-size:16px;
+
+    }
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .primary-btn,
+
+    .secondary-btn{
+
+        width:100%;
+
+    }
+
+    .glass-card{
+
+        width:100%;
+
+        padding:30px;
+
+    }
+
+    .hero-stats{
+
+        gap:15px;
+
+    }
+
+    .hero-stats div{
+
+        min-width:100px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hero-left h1{
+
+        font-size:34px;
+
+    }
+
+    .hero-badge{
+
+        font-size:11px;
+
+    }
+
+    .glass-card h3{
+
+        font-size:22px;
+
+    }
+
+    .football{
+
+        font-size:56px;
+
+    }
+
+}
+
+/* ======================================================
+                DARK MODE
+====================================================== */
+
+[data-theme="dark"] .products-hero{
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #020617,
+
+            #0f172a,
+
+            #1e293b
+
+        );
+
+}
+
+[data-theme="dark"] .glass-card{
+
+    background:rgba(17,24,39,.55);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+[data-theme="dark"] .hero-stats div{
+
+    background:rgba(17,24,39,.45);
+
+}
+
+[data-theme="dark"] .secondary-btn{
+
+    background:rgba(17,24,39,.45);
+
+}

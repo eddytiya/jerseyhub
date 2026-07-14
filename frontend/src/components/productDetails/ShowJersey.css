@@ -1,0 +1,943 @@
+/* =====================================================
+                    SHOW JERSEY PAGE
+===================================================== */
+
+.show-jersey-page{
+
+    width:100%;
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    padding:40px 30px 60px;
+
+    box-sizing:border-box;
+
+
+}
+
+.show-jersey-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+/* =====================================================
+                    BREADCRUMB
+===================================================== */
+
+.product-breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:35px;
+
+    font-size:15px;
+
+    flex-wrap:wrap;
+
+}
+
+.product-breadcrumb a{
+
+    text-decoration:none;
+
+    color:var(--primary);
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.product-breadcrumb a:hover{
+
+    opacity:.8;
+
+}
+
+.product-breadcrumb span{
+
+    color:var(--text-secondary);
+
+}
+
+.product-breadcrumb .active{
+
+    color:var(--text);
+
+    font-weight:700;
+
+}
+
+/* =====================================================
+                    MAIN LAYOUT
+===================================================== */
+
+.product-layout{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:50px;
+
+    align-items:start;
+
+}
+
+/* =====================================================
+                    GALLERY
+===================================================== */
+
+.product-gallery{
+
+    position:sticky;
+
+    top:110px;
+
+}
+
+/* =====================================================
+                    MAIN IMAGE
+===================================================== */
+
+.main-image{
+
+    position:relative;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:650px;
+
+    box-shadow:
+
+        0 18px 45px rgba(0,0,0,.12);
+
+    transition:.35s;
+
+}
+
+.main-image:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+
+        0 25px 60px rgba(37,99,235,.18);
+
+}
+
+.main-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    padding:40px;
+
+    transition:.4s;
+
+}
+
+.main-image:hover img{
+
+    transform:scale(1.08);
+
+}
+
+/* =====================================================
+                    FEATURED BADGE
+===================================================== */
+
+.product-gallery .featured-badge{
+
+    position:absolute;
+
+    top:20px;
+
+    left:20px;
+
+    z-index:20;
+
+    background:#f59e0b;
+
+    color:white;
+
+    padding:8px 16px;
+
+    border-radius:40px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+/* =====================================================
+                    THUMBNAILS
+===================================================== */
+
+.thumbnail-row{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:22px;
+
+}
+
+.thumbnail{
+
+    width:90px;
+
+    height:90px;
+
+    object-fit:contain;
+
+    padding:10px;
+
+    border-radius:16px;
+
+    background:var(--card);
+
+    border:2px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.thumbnail:hover{
+
+    border-color:var(--primary);
+
+    transform:translateY(-4px);
+
+}
+
+.thumbnail.active{
+
+    border-color:var(--primary);
+
+}
+
+/* =====================================================
+                    RIGHT PANEL
+===================================================== */
+
+.product-right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:25px;
+
+}
+
+/* =====================================================
+                    PRODUCT INFO
+===================================================== */
+
+.product-info{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:35px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.product-category{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.product-info h1{
+
+    color:var(--text);
+
+    font-size:42px;
+
+    line-height:1.2;
+
+    margin-bottom:10px;
+
+    font-weight:800;
+
+}
+
+.product-info h3{
+
+    color:var(--text-secondary);
+
+    font-size:18px;
+
+    margin-bottom:25px;
+
+    font-weight:600;
+
+}
+
+.product-price{
+
+    color:var(--primary);
+
+    font-size:42px;
+
+    font-weight:900;
+
+    margin-bottom:25px;
+
+}
+
+.product-meta{
+
+    display:grid;
+
+    gap:14px;
+
+    margin-top:30px;
+
+}
+
+.product-meta p{
+
+    color:var(--text-secondary);
+
+    font-size:16px;
+
+    line-height:1.7;
+
+}
+
+.product-meta strong{
+
+    color:var(--text);
+
+}
+
+/* =====================================================
+                    STOCK
+===================================================== */
+
+.stock{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    width:max-content;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    margin-top:10px;
+
+}
+
+.stock.available{
+
+    background:rgba(34,197,94,.15);
+
+    color:#22c55e;
+
+}
+
+.stock.unavailable{
+
+    background:rgba(239,68,68,.15);
+
+    color:#ef4444;
+
+}
+
+/* =====================================================
+                    PRODUCT ACTIONS
+===================================================== */
+
+.product-actions{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:30px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+/* =====================================================
+                    QUANTITY
+===================================================== */
+
+.quantity-selector{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:25px;
+
+    width:max-content;
+
+    padding:12px 22px;
+
+    border-radius:16px;
+
+    background:var(--bg);
+
+    border:1px solid var(--border);
+
+    margin-bottom:30px;
+
+}
+
+.quantity-selector button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.quantity-selector button:hover{
+
+    transform:scale(1.08);
+
+}
+
+.quantity-selector span{
+
+    color:var(--text);
+
+    font-size:20px;
+
+    font-weight:700;
+
+    min-width:20px;
+
+    text-align:center;
+
+}
+
+/* =====================================================
+                    BUTTONS
+===================================================== */
+
+.cart-btn,
+
+.buy-btn{
+
+    width:100%;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    margin-bottom:18px;
+
+}
+
+.cart-btn{
+
+    background:linear-gradient(
+
+        135deg,
+
+        #2563eb,
+
+        #4f46e5
+
+    );
+
+    color:white;
+
+}
+
+.cart-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 18px 35px rgba(37,99,235,.35);
+
+}
+
+.buy-btn{
+
+    background:transparent;
+
+    border:2px solid var(--primary);
+
+    color:var(--primary);
+
+}
+
+.buy-btn:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/* =====================================================
+                    ADMIN BUTTONS
+===================================================== */
+
+.admin-actions{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+.edit-btn,
+
+.delete-btn{
+
+    flex:1;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.edit-btn{
+
+    background:#16a34a;
+
+    color:white;
+
+}
+
+.edit-btn:hover{
+
+    background:#15803d;
+
+}
+
+.delete-btn{
+
+    background:#dc2626;
+
+    color:white;
+
+}
+
+.delete-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+/* =====================================================
+                    PRODUCT TABS
+===================================================== */
+
+.product-tabs{
+
+    margin-top:60px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:35px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.tabs-header{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:30px;
+
+}
+
+.tab-btn{
+
+    padding:12px 26px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.tab-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.tab-btn.active{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.tab-content{
+
+    color:var(--text-secondary);
+
+    line-height:1.9;
+
+    font-size:16px;
+
+}
+
+.tab-content h3{
+
+    color:var(--text);
+
+    margin-bottom:18px;
+
+}
+
+.tab-content ul{
+
+    padding-left:20px;
+
+}
+
+.tab-content li{
+
+    margin-bottom:12px;
+
+}
+
+/* =====================================================
+                    RELATED PRODUCTS
+===================================================== */
+
+.related-products{
+
+    margin-top:70px;
+
+}
+
+.related-products h2{
+
+    color:var(--text);
+
+    font-size:34px;
+
+    margin-bottom:30px;
+
+    font-weight:800;
+
+}
+
+/* =====================================================
+                    PAGE ANIMATION
+===================================================== */
+
+.show-jersey-page{
+
+    animation:fadeProduct .6s ease;
+
+}
+
+@keyframes fadeProduct{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================================
+                    RESPONSIVE
+===================================================== */
+
+@media(max-width:1200px){
+
+    .product-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .product-gallery{
+
+        position:static;
+
+    }
+
+    .main-image{
+
+        height:520px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .show-jersey-page{
+
+        padding:0 20px 50px;
+
+    }
+
+    .product-info{
+
+        padding:25px;
+
+    }
+
+    .product-actions{
+
+        padding:25px;
+
+    }
+
+    .product-info h1{
+
+        font-size:30px;
+
+    }
+
+    .product-price{
+
+        font-size:34px;
+
+    }
+
+    .main-image{
+
+        height:420px;
+
+    }
+
+    .thumbnail{
+
+        width:70px;
+
+        height:70px;
+
+    }
+
+    .admin-actions{
+
+        flex-direction:column;
+
+    }
+
+    .tabs-header{
+
+        flex-direction:column;
+
+    }
+
+    .tab-btn{
+
+        width:100%;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .product-info h1{
+
+        font-size:26px;
+
+    }
+
+    .product-price{
+
+        font-size:28px;
+
+    }
+
+    .quantity-selector{
+
+        width:100%;
+
+        justify-content:space-between;
+
+    }
+
+    .cart-btn,
+
+    .buy-btn{
+
+        height:52px;
+
+    }
+
+}
+
+/* =====================================================
+                    DARK MODE POLISH
+===================================================== */
+
+[data-theme="dark"] .main-image,
+
+[data-theme="dark"] .product-info,
+
+[data-theme="dark"] .product-actions,
+
+[data-theme="dark"] .product-tabs{
+
+    background:var(--card);
+
+}
+
+[data-theme="dark"] .quantity-selector{
+
+    background:rgba(255,255,255,.03);
+
+}
+
+[data-theme="dark"] .tab-btn{
+
+    background:rgba(255,255,255,.05);
+
+}
+
+[data-theme="dark"] .tab-btn.active{
+
+    background:var(--primary);
+
+}
+
+.review-count{
+
+    margin-left:6px;
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    font-size:.9rem;
+
+}

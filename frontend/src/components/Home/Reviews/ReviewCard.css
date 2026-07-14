@@ -1,0 +1,167 @@
+.review-card{
+
+    position:relative;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    overflow:hidden;
+
+    height:100%;
+
+}
+
+.review-card:hover{
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+.review-quote{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    font-size:2rem;
+
+    color:var(--primary);
+
+   opacity:.08;
+
+}
+
+.review-stars{
+
+    display:flex;
+
+    gap:4px;
+
+    margin-bottom:16px;
+
+}
+
+.review-star{
+
+    color:#fbbf24;
+
+}
+
+.review-comment{
+
+    color:var(--text);
+
+    line-height:1.7;
+
+    min-height:110px;
+
+    margin-bottom:28px;
+
+}
+
+.review-jersey{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:20px;
+
+}
+
+.review-jersey img{
+
+    width:60px;
+
+    height:60px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+}
+
+.review-jersey h5{
+
+    margin:0;
+
+    font-size:1rem;
+
+    color:var(--text);
+
+}
+
+.review-jersey span{
+
+    color:var(--text-secondary);
+
+    font-size:.9rem;
+
+}
+
+.review-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.review-user img{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.review-user h6{
+
+    margin:0;
+
+    color:var(--text);
+
+}
+
+.review-user span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#22c55e;
+
+    font-size:.85rem;
+
+}
+
+.review-card small{
+
+    display:block;
+
+    margin-top:20px;
+
+    color:var(--text-secondary);
+
+}

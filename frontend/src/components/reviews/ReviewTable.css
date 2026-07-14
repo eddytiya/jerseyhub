@@ -1,0 +1,209 @@
+.review-table-wrapper{
+
+    background:#1f2937;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.review-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.review-table th{
+
+    background:#111827;
+
+    color:#fff;
+
+    padding:18px;
+
+    text-align:left;
+
+    font-weight:600;
+
+}
+
+.review-table td{
+
+    padding:18px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    color:#d1d5db;
+
+    vertical-align:middle;
+
+}
+
+.review-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.review-user img{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.review-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:#3b82f6;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:700;
+
+}
+
+.rating-badge{
+
+    background:#f59e0b;
+
+    color:#fff;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.verified{
+
+    color:#22c55e;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.helpful{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.review-comment{
+
+    max-width:300px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.review-action-btn{
+
+    background:#3b82f6;
+
+    color:#fff;
+
+    border:none;
+
+    padding:8px 16px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.review-action-btn:hover{
+
+    background:#2563eb;
+
+}
+
+.review-table-loading,
+
+.review-table-empty{
+
+    background:#1f2937;
+
+    color:#fff;
+
+    padding:60px;
+
+    text-align:center;
+
+    border-radius:18px;
+
+}
+
+.review-delete-btn{
+
+    margin-left:10px;
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    padding:8px 10px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.review-delete-btn:hover{
+
+    background:#dc2626;
+
+    transform:translateY(-2px);
+
+}

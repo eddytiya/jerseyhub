@@ -1,0 +1,203 @@
+/* ==========================================
+            EMPTY STATE
+========================================== */
+
+.wishlist-empty{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:90px 40px;
+
+    border-radius:30px;
+
+    background:white;
+
+    text-align:center;
+
+    border:1px solid rgba(0,0,0,.06);
+
+    box-shadow:
+
+        0 20px 45px rgba(15,23,42,.08);
+
+}
+
+/* ==========================================
+            BACKGROUND CIRCLES
+========================================== */
+
+.wishlist-empty-circle{
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+            rgba(59,130,246,.12),
+
+            transparent
+
+        );
+
+    top:-90px;
+
+    left:-90px;
+
+}
+
+.wishlist-empty-circle.two{
+
+    right:-80px;
+
+    bottom:-80px;
+
+    left:auto;
+
+    top:auto;
+
+}
+
+/* ==========================================
+            ICON
+========================================== */
+
+.wishlist-empty-icon{
+
+    width:120px;
+
+    height:120px;
+
+    margin:auto;
+
+    margin-bottom:30px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:50px;
+
+    color:#ef4444;
+
+    background:#fee2e2;
+
+    animation:
+
+        wishlistPulse 2s infinite;
+
+}
+
+@keyframes wishlistPulse{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.08);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================================
+            TEXT
+========================================== */
+
+.wishlist-empty h2{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    margin-bottom:18px;
+
+}
+
+.wishlist-empty p{
+
+    max-width:560px;
+
+    margin:auto;
+
+    color:#6b7280;
+
+    font-size:16px;
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+            BUTTON
+========================================== */
+
+.wishlist-shop-btn{
+
+    margin-top:38px;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:15px 34px;
+
+    border-radius:16px;
+
+    color:white;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    background:linear-gradient(
+
+        135deg,
+
+        #2563eb,
+
+        #4f46e5
+
+    );
+
+    box-shadow:
+
+        0 15px 32px rgba(37,99,235,.22);
+
+    transition:.35s;
+
+}
+
+.wishlist-shop-btn:hover{
+
+    color:white;
+
+    transform:
+
+        translateY(-4px);
+
+}

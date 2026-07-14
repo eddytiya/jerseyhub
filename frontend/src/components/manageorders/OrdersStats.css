@@ -1,0 +1,242 @@
+/* ==========================================
+            STATS
+========================================== */
+
+.admin-orders-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+
+    margin-bottom:40px;
+
+}
+
+/* ========================================== */
+
+.admin-orders-stat-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:28px;
+
+    border-radius:22px;
+
+    color:#fff;
+
+    transition:.35s;
+
+    box-shadow:var(--shadow);
+
+}
+
+.admin-orders-stat-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+
+    height:140px;
+
+    right:-40px;
+
+    top:-40px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+
+}
+
+.admin-orders-stat-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:
+
+        transform .35s ease,
+
+        box-shadow .35s ease;
+
+}
+
+.admin-orders-stat-card:hover{
+
+    transform:
+
+        translateY(-8px)
+
+        scale(1.02);
+
+    box-shadow:
+
+        0 25px 45px rgba(0,0,0,.22);
+
+}
+
+.admin-orders-stat-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        120deg,
+
+        transparent,
+
+        rgba(255,255,255,.15),
+
+        transparent
+
+    );
+
+    transform:translateX(-130%);
+
+}
+
+.admin-orders-stat-card:hover::before{
+
+    transform:translateX(130%);
+
+    transition:1s;
+
+}
+/* ========================================== */
+
+.admin-orders-stat-top{
+
+    margin-bottom:18px;
+
+}
+
+.admin-orders-stat-top h4{
+
+    margin:0;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    opacity:.95;
+
+}
+
+/* ========================================== */
+
+.admin-orders-stat-card h2{
+
+    margin:0;
+
+    font-size:42px;
+
+    font-weight:800;
+
+}
+
+/* ==========================================
+            COLORS
+========================================== */
+
+.admin-orders-stat-blue{
+
+    background:linear-gradient(
+
+        135deg,
+
+        #2563eb,
+
+        #4f46e5
+
+    );
+
+}
+
+.admin-orders-stat-purple{
+
+    background:linear-gradient(
+
+        135deg,
+
+        #7c3aed,
+
+        #9333ea
+
+    );
+
+}
+
+.admin-orders-stat-green{
+
+    background:linear-gradient(
+
+        135deg,
+
+        #16a34a,
+
+        #22c55e
+
+    );
+
+}
+
+.admin-orders-stat-orange{
+
+    background:linear-gradient(
+
+        135deg,
+
+        #ea580c,
+
+        #f59e0b
+
+    );
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+.admin-orders-stats{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:700px){
+
+.admin-orders-stats{
+
+    grid-template-columns:1fr;
+
+}
+
+.admin-orders-stat-card{
+
+    padding:24px;
+
+}
+
+.admin-orders-stat-card h2{
+
+    font-size:34px;
+
+}
+
+}

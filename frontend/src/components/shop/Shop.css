@@ -1,0 +1,17 @@
+.shop-page{
+
+    min-height:100vh;
+
+    background:var(--bg);
+
+    padding:80px 8%;
+
+}
+
+.shop-container{
+
+    max-width:1450px;
+
+    margin:auto;
+
+}

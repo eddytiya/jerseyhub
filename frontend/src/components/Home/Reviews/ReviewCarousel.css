@@ -1,0 +1,51 @@
+.swiper{
+
+    padding-bottom:60px;
+
+}
+
+.swiper-pagination-bullet{
+
+    width:12px;
+
+    height:12px;
+
+    background:var(--primary);
+
+    opacity:.4;
+
+}
+
+.swiper-pagination-bullet-active{
+
+    opacity:1;
+
+}
+
+.swiper-button-next,
+
+.swiper-button-prev{
+
+    color:var(--primary);
+
+}
+
+.swiper-button-next:after,
+
+.swiper-button-prev:after{
+
+    font-size:22px;
+
+}
+
+@media(max-width:768px){
+
+.swiper-button-next,
+
+.swiper-button-prev{
+
+display:none;
+
+}
+
+}

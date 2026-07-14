@@ -1,0 +1,195 @@
+/* ==========================================
+            SEARCH PAGE
+========================================== */
+
+.search-page{
+
+    min-height:100vh;
+
+    padding:40px 0 70px;
+
+    background:var(--bg-primary);
+
+    color:var(--text-primary);
+
+}
+
+/* ==========================================
+            HEADER
+========================================== */
+
+.search-header{
+
+    margin-bottom:40px;
+
+    padding:35px;
+
+    border-radius:24px;
+
+    background:linear-gradient(
+        180deg,
+        var(--card-bg),
+        var(--surface-bg)
+    );
+
+    border:1px solid var(--border-color);
+
+    text-align:center;
+
+    box-shadow:0 12px 28px rgba(0,0,0,.08);
+
+}
+
+.search-header h2{
+
+    font-size:2.3rem;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+    color:var(--text-primary);
+
+}
+
+.search-header p{
+
+    color:var(--text-secondary);
+
+    font-size:1.05rem;
+
+    margin-bottom:18px;
+
+}
+
+.search-header p span{
+
+    color:#2563eb;
+
+    font-weight:700;
+
+}
+
+.search-count{
+
+    display:inline-block;
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    background:rgba(37,99,235,.12);
+
+    color:#2563eb;
+
+    font-weight:700;
+
+    font-size:.95rem;
+
+}
+
+/* ==========================================
+            LOADING
+========================================== */
+
+.search-loading{
+
+    min-height:70vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.3rem;
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            EMPTY
+========================================== */
+
+.search-empty{
+
+    max-width:650px;
+
+    margin:70px auto;
+
+    text-align:center;
+
+    padding:60px 35px;
+
+    border-radius:24px;
+
+    background:linear-gradient(
+        180deg,
+        var(--card-bg),
+        var(--surface-bg)
+    );
+
+    border:1px solid var(--border-color);
+
+}
+
+.search-empty h3{
+
+    font-size:2rem;
+
+    margin-bottom:15px;
+
+    color:var(--text-primary);
+
+}
+
+.search-empty p{
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+    font-size:1rem;
+
+}
+
+/* ==========================================
+            GRID
+========================================== */
+
+.product-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+
+    gap:32px;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .search-header{
+
+        padding:25px;
+
+    }
+
+    .search-header h2{
+
+        font-size:1.9rem;
+
+    }
+
+    .product-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

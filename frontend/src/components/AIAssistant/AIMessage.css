@@ -1,0 +1,255 @@
+/* =====================================================
+                    AI MESSAGE
+===================================================== */
+
+.ai-message{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:14px;
+
+    margin-bottom:24px;
+
+    animation:messageIn .35s ease;
+
+}
+
+/* =====================================================
+                    USER MESSAGE
+===================================================== */
+
+.ai-message.user{
+
+    flex-direction:row-reverse;
+
+}
+
+/* =====================================================
+                    AVATAR
+===================================================== */
+
+.ai-avatar{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-shrink:0;
+
+    font-size:18px;
+
+    transition:var(--transition);
+
+}
+
+/* =====================================================
+                    AI AVATAR
+===================================================== */
+
+.ai-message.assistant .ai-avatar{
+
+    background:var(--primary);
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
+
+}
+
+/* =====================================================
+                    USER AVATAR
+===================================================== */
+
+.ai-message.user .ai-avatar{
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* =====================================================
+                    MESSAGE BUBBLE
+===================================================== */
+
+.ai-bubble{
+
+    max-width:92%;
+
+    padding:16px 20px;
+
+    border-radius:20px;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    word-break:break-word;
+
+    transition:var(--transition);
+
+}
+
+/* =====================================================
+                    AI BUBBLE
+===================================================== */
+
+.ai-message.assistant .ai-bubble{
+
+    background:var(--glass);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* =====================================================
+                    USER BUBBLE
+===================================================== */
+
+.ai-message.user .ai-bubble{
+
+    background:var(--primary);
+
+    color:white;
+
+    box-shadow:0 12px 24px rgba(37,99,235,.20);
+
+}
+
+/* =====================================================
+                    HOVER
+===================================================== */
+
+.ai-bubble:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+/* =====================================================
+                    LINKS
+===================================================== */
+
+.ai-bubble a{
+
+    color:inherit;
+
+    text-decoration:underline;
+
+    font-weight:600;
+
+}
+
+/* =====================================================
+                    LISTS
+===================================================== */
+
+.ai-bubble ul{
+
+    margin-top:10px;
+
+    margin-left:18px;
+
+}
+
+.ai-bubble li{
+
+    margin-bottom:6px;
+
+}
+
+/* =====================================================
+                    CODE
+===================================================== */
+
+.ai-bubble code{
+
+    background:var(--bg-secondary);
+
+    padding:2px 6px;
+
+    border-radius:6px;
+
+    font-size:13px;
+
+}
+
+/* =====================================================
+                    ANIMATION
+===================================================== */
+
+@keyframes messageIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(12px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================================
+                    MOBILE
+===================================================== */
+
+@media(max-width:768px){
+
+.ai-bubble{
+
+    max-width:86%;
+
+    font-size:14px;
+
+}
+
+.ai-avatar{
+
+    width:40px;
+
+    height:40px;
+
+}
+
+}
+
+.ai-message.assistant{
+
+    align-items:flex-start;
+
+}
+
+.ai-message.assistant .ai-bubble{
+
+    width:100%;
+
+}

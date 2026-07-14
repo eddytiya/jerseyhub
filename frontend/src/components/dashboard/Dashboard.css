@@ -1,0 +1,139 @@
+/* ==========================================================
+                    DASHBOARD CONTAINER
+========================================================== */
+
+.dashboard-page{
+
+    min-height:100vh;
+
+    background:
+
+        var(--dashboard-gradient),
+
+        var(--bg);
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding-bottom:60px;
+
+    transition:background .4s ease;
+
+}
+
+/* ==========================================================
+                    FLOATING BLOBS
+========================================================== */
+
+.dashboard-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+
+    height:420px;
+
+    border-radius:50%;
+
+    background:var(--dashboard-blob-1);
+
+    filter:blur(110px);
+
+    top:-120px;
+
+    left:-120px;
+
+    animation:floatBlob1 14s ease-in-out infinite;
+
+    pointer-events:none;
+
+}
+
+.dashboard-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:var(--dashboard-blob-2);
+
+    filter:blur(120px);
+
+    bottom:-180px;
+
+    right:-160px;
+
+    animation:floatBlob2 18s ease-in-out infinite;
+
+    pointer-events:none;
+
+}
+
+/* ==========================================================
+                    CONTENT
+========================================================== */
+
+.dashboard-content{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+/* ==========================================================
+                    ANIMATIONS
+========================================================== */
+
+@keyframes floatBlob1{
+
+    0%{
+
+        transform:translate(0,0) scale(1);
+
+    }
+
+    50%{
+
+        transform:translate(40px,25px) scale(1.08);
+
+    }
+
+    100%{
+
+        transform:translate(0,0) scale(1);
+
+    }
+
+}
+
+@keyframes floatBlob2{
+
+    0%{
+
+        transform:translate(0,0) scale(1);
+
+    }
+
+    50%{
+
+        transform:translate(-35px,-20px) scale(.95);
+
+    }
+
+    100%{
+
+        transform:translate(0,0) scale(1);
+
+    }
+
+}

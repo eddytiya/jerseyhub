@@ -1,0 +1,485 @@
+/* ===========================================
+        CATEGORY GRID
+===========================================*/
+
+.category-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:38px;
+
+    margin-top:50px;
+
+}
+
+/* ===========================================
+        1 CATEGORY
+===========================================*/
+
+.category-grid.count-1 .category-card{
+
+    grid-column:span 4;
+
+}
+
+/* ===========================================
+        2 CATEGORIES
+===========================================*/
+
+.category-grid.count-2 .category-card{
+
+    grid-column:span 2;
+
+}
+
+/* ===========================================
+        3 CATEGORIES
+===========================================*/
+
+.category-grid.count-3 .category-card{
+
+    grid-column:span 4;
+
+}
+
+.category-grid.count-3 .category-card:nth-child(2),
+
+.category-grid.count-3 .category-card:nth-child(3){
+
+    grid-column:span 2;
+
+}
+
+/* ===========================================
+        5 CATEGORIES
+===========================================*/
+
+.category-grid.count-5 .category-card:nth-child(5){
+
+    grid-column:span 4;
+
+}
+
+/* ===========================================
+        6 CATEGORIES
+===========================================*/
+
+.category-grid.count-6 .category-card:nth-child(5),
+
+.category-grid.count-6 .category-card:nth-child(6){
+
+    grid-column:span 2;
+
+}
+
+/* ===========================================
+        7 CATEGORIES
+===========================================*/
+
+.category-grid.count-7 .category-card:nth-child(5),
+
+.category-grid.count-7 .category-card:nth-child(6),
+
+.category-grid.count-7 .category-card:nth-child(7){
+
+    grid-column:span 1;
+
+}
+
+/* ===========================================
+        9 CATEGORIES
+===========================================*/
+
+.category-grid.count-9 .category-card:nth-child(9){
+
+    grid-column:span 4;
+
+}
+
+/* ===========================================
+        10 CATEGORIES
+===========================================*/
+
+.category-grid.count-10 .category-card:nth-child(9),
+
+.category-grid.count-10 .category-card:nth-child(10){
+
+    grid-column:span 2;
+
+}
+
+/* ===========================================
+        11 CATEGORIES
+===========================================*/
+
+.category-grid.count-11 .category-card:nth-child(9),
+
+.category-grid.count-11 .category-card:nth-child(10),
+
+.category-grid.count-11 .category-card:nth-child(11){
+
+    grid-column:span 1;
+
+}
+
+/* ===========================================
+        CARD
+===========================================*/
+
+.category-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    height:460px;
+
+    border-radius:28px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transition:
+
+        transform .45s,
+
+        box-shadow .45s,
+
+        border-color .35s;
+
+}
+
+.category-card:hover{
+
+    transform:
+
+        translateY(-14px)
+
+        scale(1.02);
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+        0 30px 70px rgba(37,99,235,.22);
+
+}
+
+/* ===========================================
+        IMAGE
+===========================================*/
+
+.category-card img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+
+        transform .9s;
+
+}
+
+.category-card:hover img{
+
+    transform:scale(1.12);
+
+}
+
+/* ===========================================
+        DARK OVERLAY
+===========================================*/
+
+.category-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            to top,
+
+            rgba(0,0,0,.92) 8%,
+
+            rgba(0,0,0,.55) 48%,
+
+            rgba(0,0,0,.12) 100%
+
+        );
+
+}
+
+/* ===========================================
+        CONTENT
+===========================================*/
+
+.category-content{
+
+    position:absolute;
+
+    left:32px;
+
+    right:32px;
+
+    bottom:34px;
+
+    z-index:5;
+
+}
+
+.category-content h3{
+
+    color:white;
+
+    font-size:38px;
+
+    font-weight:900;
+
+    line-height:1.1;
+
+    margin-bottom:12px;
+
+}
+
+.category-content p{
+
+    color:#e5e7eb;
+
+    font-size:17px;
+
+    line-height:1.7;
+
+    margin-bottom:24px;
+
+}
+
+/* ===========================================
+        BUTTON
+===========================================*/
+
+.category-link{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 24px;
+
+    border-radius:50px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    background:rgba(255,255,255,.12);
+
+    color:white;
+
+    backdrop-filter:blur(18px);
+
+    transition:.35s;
+
+}
+
+.category-card:hover .category-link{
+
+    background:var(--primary);
+
+    color:white;
+
+    gap:18px;
+
+}
+
+/* ===========================================
+        BADGE
+===========================================*/
+.category-badge{
+
+    position:absolute !important;
+
+    top:20px !important;
+
+    right:20px !important;
+
+    z-index:999 !important;
+
+    display:flex !important;
+
+    align-items:center !important;
+
+    justify-content:center !important;
+
+    min-width:120px !important;
+
+    height:44px !important;
+
+    padding:0 18px !important;
+
+    border-radius:999px !important;
+
+    background:#2563eb !important;
+
+    color:#ffffff !important;
+
+    font-size:14px !important;
+
+    font-weight:800 !important;
+
+    letter-spacing:.5px !important;
+
+    border:none !important;
+
+    text-shadow:0 1px 2px rgba(0,0,0,.35) !important;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.45) !important;
+}
+
+.category-badge,
+.category-badge *{
+
+    color:#fff !important;
+
+    fill:#fff !important;
+
+}
+
+/* ===========================================
+        SHINE EFFECT
+===========================================*/
+
+.category-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            120deg,
+
+            transparent 25%,
+
+            rgba(255,255,255,.18),
+
+            transparent 75%
+
+        );
+
+    transform:translateX(-140%);
+
+    transition:1s;
+
+    z-index:4;
+
+}
+
+.category-card:hover::before{
+
+    transform:translateX(140%);
+
+}
+
+/* ===========================================
+        LIGHT MODE
+===========================================*/
+
+[data-theme="light"] .category-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+}
+
+[data-theme="light"] .category-overlay{
+
+    background:
+
+        linear-gradient(
+
+            to top,
+
+            rgba(17,24,39,.78),
+
+            rgba(17,24,39,.35),
+
+            rgba(17,24,39,.05)
+
+        );
+
+}
+
+/* ===========================================
+        MOBILE
+===========================================*/
+
+@media(max-width:992px){
+
+.category-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.category-card{
+
+    grid-column:auto!important;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.category-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.category-card{
+
+    grid-column:auto!important;
+
+    height:380px;
+
+}
+
+.category-content h3{
+
+    font-size:30px;
+
+}
+
+.category-content p{
+
+    font-size:15px;
+
+}
+
+}
+
+

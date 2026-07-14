@@ -1,0 +1,339 @@
+.product-type-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+    padding:28px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+}
+
+.product-type-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:5px;
+
+    height:100%;
+
+    background:linear-gradient(
+
+        180deg,
+
+        var(--primary),
+
+        var(--primary-hover)
+
+    );
+
+    opacity:0;
+
+    transition:.35s;
+
+}
+
+.product-type-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:var(--primary);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+.product-type-card:hover::before{
+
+    opacity:1;
+
+}
+
+/* ==========================================
+                HEADER
+========================================== */
+
+.product-type-card-header{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+}
+
+.product-type-avatar{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        var(--primary-hover)
+
+    );
+
+    color:white;
+
+    font-size:30px;
+
+    box-shadow:
+
+        0 18px 36px rgba(37,99,235,.28);
+
+    transition:var(--transition);
+
+}
+
+.product-type-card:hover .product-type-avatar{
+
+    transform:rotate(-8deg) scale(1.08);
+
+}
+
+.product-type-card h2{
+
+    font-size:1.45rem;
+
+    font-weight:800;
+
+    color:var(--text);
+
+    margin-bottom:10px;
+
+    line-height:1.3;
+
+}
+
+.product-type-card p{
+
+    color:var(--text-secondary);
+
+    line-height:1.75;
+
+    font-size:.92rem;
+
+}
+
+/* ==========================================
+                STATUS
+========================================== */
+
+.product-type-status-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:16px 0;
+
+    border-top:1px solid var(--divider);
+
+    border-bottom:1px solid var(--divider);
+
+}
+
+.status-badge{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 18px;
+
+    border-radius:999px;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+}
+
+.status-badge.active{
+
+    background:rgba(34,197,94,.12);
+
+    color:var(--success);
+
+}
+
+.status-badge.inactive{
+
+    background:rgba(239,68,68,.12);
+
+    color:var(--danger);
+
+}
+
+.product-count{
+
+    font-size:.88rem;
+
+    color:var(--text-secondary);
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+                FOOTER
+========================================== */
+
+.product-type-footer{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+.edit-btn,
+
+.delete-btn{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:var(--radius);
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.edit-btn{
+
+    background:rgba(37,99,235,.10);
+
+    color:var(--primary);
+
+}
+
+.edit-btn:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+    transform:translateY(-2px);
+
+}
+
+.delete-btn{
+
+    background:rgba(239,68,68,.12);
+
+    color:var(--danger);
+
+}
+
+.delete-btn:hover{
+
+    background:var(--danger);
+
+    color:white;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+                RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+.product-type-card{
+
+padding:22px;
+
+}
+
+.product-type-avatar{
+
+width:64px;
+
+height:64px;
+
+font-size:26px;
+
+}
+
+.product-type-card h2{
+
+font-size:1.25rem;
+
+}
+
+.product-type-footer{
+
+flex-direction:column;
+
+}
+
+.edit-btn,
+
+.delete-btn{
+
+width:100%;
+
+}
+
+}

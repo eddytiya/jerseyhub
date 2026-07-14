@@ -1,0 +1,407 @@
+/* ==========================================
+                PAGE
+========================================== */
+
+.edit-jersey-page{
+
+    max-width:1500px;
+
+    padding:30px 10px;
+
+    background:transparent;
+
+}
+
+/* ==========================================
+                MAIN CARD
+========================================== */
+
+.edit-jersey-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+}
+
+.edit-jersey-card .card-body{
+
+    background:transparent;
+
+    padding:45px;
+
+}
+
+/* ==========================================
+                PAGE TITLE
+========================================== */
+
+.edit-page-title{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+.edit-page-title h2{
+
+    color:var(--text);
+
+    font-size:42px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+}
+
+.edit-page-title p{
+
+    color:var(--text-secondary);
+
+    margin:0;
+
+    font-size:16px;
+
+}
+
+/* ==========================================
+                SECTION CARD
+========================================== */
+
+.edit-section-card{
+
+    background:var(--bg-secondary);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    transition:.35s;
+
+    overflow:hidden;
+
+}
+
+.edit-section-card:hover{
+
+    border-color:rgba(37,99,235,.35);
+
+    box-shadow:0 12px 30px rgba(37,99,235,.12);
+
+}
+
+.edit-section-card .card-body{
+
+    background:transparent;
+
+    padding:35px;
+
+}
+
+/* ==========================================
+                SECTION TITLE
+========================================== */
+
+.edit-section-title{
+
+    color:var(--text);
+
+    font-size:24px;
+
+    font-weight:700;
+
+    margin-bottom:28px;
+
+    padding-left:18px;
+
+    position:relative;
+
+}
+
+.edit-section-title::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:2px;
+
+    width:5px;
+
+    height:28px;
+
+    border-radius:20px;
+
+    background:var(--primary);
+
+}
+
+/* ==========================================
+                LABELS
+========================================== */
+
+.form-label{
+
+    color:var(--text);
+
+    font-weight:600;
+
+}
+
+/* ==========================================
+                INPUTS
+========================================== */
+
+.form-control,
+.form-select{
+
+    height:56px;
+
+    border-radius:14px;
+
+    background:var(--bg-secondary);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    transition:.25s;
+
+}
+
+.form-control::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 .2rem rgba(37,99,235,.18);
+
+    background:var(--bg-secondary);
+
+    color:var(--text);
+
+}
+
+.form-select option{
+
+    background:var(--card);
+
+    color:var(--text);
+
+}
+
+textarea.form-control{
+
+    min-height:160px;
+
+    resize:none;
+
+}
+
+/* ==========================================
+                BUTTONS
+========================================== */
+
+.update-jersey-btn{
+
+    height:56px;
+
+    min-width:220px;
+
+    border-radius:14px;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    border:none;
+
+    color:#fff;
+
+}
+
+.update-jersey-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 25px rgba(37,99,235,.35);
+
+}
+
+.cancel-btn{
+
+    height:56px;
+
+    min-width:170px;
+
+    border-radius:14px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.cancel-btn:hover{
+
+    background:var(--bg-secondary);
+
+}
+
+/* ==========================================
+                CHECKBOX
+========================================== */
+
+.form-check{
+
+    margin-top:20px;
+
+}
+
+.form-check-label{
+
+    color:var(--text);
+
+    font-weight:500;
+
+}
+
+.form-check-input{
+
+    cursor:pointer;
+
+}
+
+.form-check-input:checked{
+
+    background-color:var(--primary);
+
+    border-color:var(--primary);
+
+}
+
+/* ==========================================
+                CARD DIVIDER
+========================================== */
+
+.edit-divider{
+
+    margin:35px 0;
+
+    border-color:var(--border);
+
+    opacity:1;
+
+}
+
+/* ==========================================
+                CARD ANIMATION
+========================================== */
+
+.edit-jersey-card,
+.edit-section-card{
+
+    transition:.35s;
+
+}
+
+.edit-jersey-card:hover{
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+/* ==========================================
+                SPACING
+========================================== */
+
+.mb-3{
+
+    margin-bottom:1.4rem !important;
+
+}
+
+.mb-4{
+
+    margin-bottom:2rem !important;
+
+}
+
+/* ==========================================
+                BUTTON ROW
+========================================== */
+
+.edit-button-row{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:35px;
+
+}
+
+/* ==========================================
+                RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .edit-jersey-card .card-body{
+
+        padding:30px;
+
+    }
+
+    .edit-page-title h2{
+
+        font-size:34px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .edit-button-row{
+
+        flex-direction:column;
+
+    }
+
+    .cancel-btn,
+    .update-jersey-btn{
+
+        width:100%;
+
+    }
+
+}

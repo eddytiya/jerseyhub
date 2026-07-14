@@ -1,0 +1,69 @@
+.mega-category-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:12px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.mega-category-card:hover{
+
+    background:rgba(255,255,255,.05);
+
+}
+
+.mega-category-card img{
+
+    width:130px;
+
+    height:90px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    flex-shrink:0;
+
+}
+
+.mega-category-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.mega-category-content h4{
+
+    color:var(--text);
+
+    font-size:22px;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+.mega-category-content p{
+
+    color:var(--text-secondary);
+
+    line-height:1.6;
+
+    font-size:15px;
+
+}

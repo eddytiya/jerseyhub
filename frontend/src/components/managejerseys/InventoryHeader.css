@@ -1,0 +1,412 @@
+/* ==========================================================
+                    INVENTORY
+========================================================== */
+
+.adminjersey-inventory{
+
+    margin-bottom:40px;
+
+}
+
+/* ==========================================================
+                    CARD
+========================================================== */
+
+.adminjersey-inventory-card{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:40px;
+
+    padding:34px 38px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.08);
+
+    transition:
+        transform .4s,
+        box-shadow .4s;
+
+}
+
+.adminjersey-inventory-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 30px 60px rgba(37,99,235,.15);
+
+}
+
+/* ==========================================================
+                    LEFT STRIP
+========================================================== */
+
+.adminjersey-inventory-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:7px;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #2563eb,
+            #60a5fa
+        );
+
+}
+
+/* ==========================================================
+                    GLOW
+========================================================== */
+
+.adminjersey-inventory-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    right:-120px;
+
+    top:-120px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37,99,235,.12),
+            transparent 70%
+        );
+
+    pointer-events:none;
+
+}
+
+/* ==========================================================
+                    BADGE
+========================================================== */
+
+.adminjersey-inventory-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px 20px;
+
+    border-radius:50px;
+
+    background:rgba(37,99,235,.08);
+
+    color:#2563eb;
+
+    font-size:13px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+/* ==========================================================
+                    TITLE
+========================================================== */
+
+.adminjersey-inventory-title{
+
+    margin-top:18px;
+
+    margin-bottom:10px;
+
+    font-size:38px;
+
+    font-weight:900;
+
+    color:var(--text);
+
+}
+
+.adminjersey-inventory-subtitle{
+
+    max-width:520px;
+
+    margin:0;
+
+    color:var(--text-secondary);
+
+    font-size:16px;
+
+    line-height:1.8;
+
+}
+
+/* ==========================================================
+                    STATS
+========================================================== */
+
+.adminjersey-inventory-stats{
+
+    display:flex;
+
+    gap:16px;
+
+    margin-top:28px;
+
+    flex-wrap:wrap;
+
+}
+
+.adminjersey-stat-pill{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 20px;
+
+    border-radius:18px;
+
+    background:var(--bg-secondary);
+
+    border:1px solid var(--border);
+
+    font-weight:700;
+
+    color:var(--text);
+
+    transition:.35s;
+
+}
+
+.adminjersey-stat-pill:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(37,99,235,.12);
+
+}
+
+.adminjersey-stat-pill span{
+
+    font-size:22px;
+
+    font-weight:900;
+
+    color:#2563eb;
+
+}
+
+/* ==========================================================
+                    RIGHT
+========================================================== */
+
+.adminjersey-inventory-right{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* ==========================================================
+                    CUSTOM CHECKBOX
+========================================================== */
+
+.adminjersey-selectall{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    color:var(--text);
+
+    user-select:none;
+
+}
+
+.adminjersey-selectall input{
+
+    display:none;
+
+}
+
+.adminjersey-custom-check{
+
+    width:28px;
+
+    height:28px;
+
+    border-radius:10px;
+
+    border:2px solid #2563eb;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.35s;
+
+    background:transparent;
+
+}
+
+.adminjersey-custom-check::after{
+
+    content:"✓";
+
+    color:#fff;
+
+    font-size:15px;
+
+    opacity:0;
+
+    transform:scale(.4);
+
+    transition:.35s;
+
+}
+
+.adminjersey-selectall input:checked
+
++
+
+.adminjersey-custom-check{
+
+    background:#2563eb;
+
+}
+
+.adminjersey-selectall input:checked
+
++
+
+.adminjersey-custom-check::after{
+
+    opacity:1;
+
+    transform:scale(1);
+
+}
+
+/* ==========================================================
+                    DARK MODE
+========================================================== */
+
+[data-theme="dark"] .adminjersey-inventory-badge{
+
+    background:rgba(59,130,246,.15);
+
+}
+
+[data-theme="dark"] .adminjersey-stat-pill{
+
+    background:rgba(255,255,255,.03);
+
+}
+
+[data-theme="dark"] .adminjersey-custom-check{
+
+    border-color:#60a5fa;
+
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:992px){
+
+    .adminjersey-inventory-card{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .adminjersey-inventory-right{
+
+        width:100%;
+
+        justify-content:flex-start;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .adminjersey-inventory-card{
+
+        padding:26px;
+
+    }
+
+    .adminjersey-inventory-title{
+
+        font-size:30px;
+
+    }
+
+    .adminjersey-inventory-stats{
+
+        flex-direction:column;
+
+        width:100%;
+
+    }
+
+    .adminjersey-stat-pill{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+}

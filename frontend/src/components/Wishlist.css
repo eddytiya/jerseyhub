@@ -1,0 +1,57 @@
+/* ==========================================
+            PAGE
+========================================== */
+
+.wishlist-page{
+
+    padding:42px 0 80px;
+
+    min-height:100vh;
+
+    animation:
+
+        wishlistFade .45s ease;
+
+}
+
+/* ==========================================
+            FADE
+========================================== */
+
+@keyframes wishlistFade{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+            translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+            translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:768px){
+
+    .wishlist-page{
+
+        padding:24px 0 60px;
+
+    }
+
+}

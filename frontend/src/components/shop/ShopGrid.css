@@ -1,0 +1,427 @@
+.shop-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+
+    gap:35px;
+
+}
+
+/* ============================== */
+
+.shop-card{
+
+    animation:fadeCard .6s ease;
+
+}
+
+@keyframes fadeCard{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+/* ============================== */
+.shop-card:hover{
+
+    transform:
+
+        translateY(-12px)
+
+        scale(1.02);
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+        0 30px 70px rgba(37,99,235,.25);
+
+}
+/* ============================== */
+
+.shop-image-wrapper{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+.card-info-row{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+}
+
+.season-pill{
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    background:rgba(37,99,235,.12);
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.type-pill{
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.07);
+
+    color:var(--text);
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ============================== */
+.shop-card img{
+
+    width:100%;
+
+    height:340px;
+
+    object-fit:cover;
+
+    transition:
+
+        transform .6s,
+
+        filter .4s;
+
+}
+
+.shop-card:hover img{
+
+    transform:scale(1.08);
+
+    filter:brightness(1.05);
+
+}
+
+/* ============================== */
+
+.shop-card-body{
+
+    padding:22px;
+
+}
+
+/* ============================== */
+.team-name{
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    margin-bottom:8px;
+
+}
+
+/* ============================== */
+.shop-card-body h3{
+
+    color:var(--text);
+
+    font-size:23px;
+
+    font-weight:800;
+
+    line-height:1.4;
+
+    min-height:62px;
+
+    margin-bottom:18px;
+
+}
+
+/* ============================== */
+.stock-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.in-stock{
+
+    background:rgba(34,197,94,.14);
+
+    color:#22c55e;
+
+}
+
+.out-stock{
+
+    background:rgba(239,68,68,.14);
+
+    color:#ef4444;
+
+}
+
+/* ============================== */
+.price{
+
+    color:var(--primary);
+
+    font-size:30px;
+
+    font-weight:900;
+
+    margin-bottom:22px;
+
+}
+
+/* ============================== */
+.shop-card button{
+
+    position:relative;
+
+    overflow:hidden;
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #2563eb,
+
+            #3b82f6
+
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+}
+
+.shop-card button::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-120%;
+
+    top:0;
+
+    width:120%;
+
+    height:100%;
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            transparent,
+
+            rgba(255,255,255,.35),
+
+            transparent
+
+        );
+
+    transition:.8s;
+
+}
+
+.shop-card button:hover::before{
+
+    left:120%;
+
+}
+
+.shop-card button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 12px 30px rgba(37,99,235,.35);
+
+}
+
+.featured-ribbon{
+
+    position:absolute;
+
+    top:18px;
+
+    left:18px;
+
+    z-index:5;
+
+    padding:8px 15px;
+
+    border-radius:999px;
+
+    background:rgba(37,99,235,.95);
+
+    color:white;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    box-shadow:0 10px 25px rgba(37,99,235,.35);
+
+}
+.image-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            transparent 55%,
+
+            rgba(0,0,0,.28)
+
+        );
+
+    opacity:0;
+
+    transition:.35s;
+
+}
+
+.shop-card:hover .image-overlay{
+
+    opacity:1;
+
+}
+/* ==========================================
+            FEATURED RIBBON
+========================================== */
+
+.featured-ribbon{
+
+    position:absolute;
+
+    top:18px;
+
+    left:18px;
+
+    z-index:10;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    box-shadow:
+        0 10px 25px rgba(37,99,235,.35);
+
+}
+
+@media(max-width:768px){
+
+.shop-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.shop-card img{
+
+    height:300px;
+
+}
+
+.shop-card-body h3{
+
+    min-height:auto;
+
+}
+
+.card-info-row{
+
+    flex-wrap:wrap;
+
+}
+
+}

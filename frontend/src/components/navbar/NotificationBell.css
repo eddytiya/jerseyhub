@@ -1,0 +1,401 @@
+/* ==========================================
+        Notification Wrapper
+========================================== */
+
+.notification-wrapper{
+
+    position:relative;
+
+}
+
+/* ==========================================
+            Bell Button
+========================================== */
+
+.notification-btn{
+
+    position:relative;
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--text);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.notification-btn:hover{
+
+    background:var(--glass);
+
+    color:var(--primary);
+
+    transform:translateY(-2px);
+
+}
+
+.notification-btn svg{
+
+    font-size:20px;
+
+}
+
+/* Badge */
+/* ==========================================
+        Notification Badge
+========================================== */
+
+.notification-count{
+
+    position:absolute;
+
+    top:-4px;
+
+    right:-4px;
+
+    width:20px;
+
+    height:20px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--danger);
+
+    color:#fff;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    border:2px solid var(--card);
+
+    box-shadow:
+
+        0 4px 12px rgba(239,68,68,.35);
+
+    animation:pulse 1.6s infinite;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.15);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+/* ==========================================
+            DROPDOWN
+========================================== */
+
+.notification-dropdown{
+
+    position:absolute;
+
+    top:60px;
+
+    right:0;
+
+    width:360px;
+
+    max-height:520px;
+
+    overflow-y:auto;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:var(--shadow);
+
+    animation:notificationDropdown .25s ease;
+
+    z-index:999;
+
+}
+
+/* ========================================== */
+
+.notification-dropdown h5{
+
+    margin:0;
+
+    padding:22px;
+
+    text-align:center;
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:var(--text);
+
+    border-bottom:1px solid var(--border);
+
+    background:var(--card);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:20;
+
+}
+
+/* ========================================== */
+
+.notification-dropdown::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.notification-dropdown::-webkit-scrollbar-track{
+
+    background:var(--bg-secondary);
+
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:20px;
+
+}
+
+.notification-dropdown::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary-hover);
+
+}
+
+/* ==========================================
+            ITEMS
+========================================== */
+
+.notification-item{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:16px;
+
+    padding:18px 22px;
+
+    border-bottom:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.notification-item:hover{
+
+    background:var(--hover-bg);
+
+}
+
+.notification-dot{
+
+    width:12px;
+
+    height:12px;
+
+    margin-top:8px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    flex-shrink:0;
+
+}
+
+/* ========================================== */
+
+.notification-item strong{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:15px;
+
+    color:var(--text);
+
+}
+
+.notification-item small{
+
+    display:block;
+
+    line-height:1.6;
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            DELETE
+========================================== */
+
+.delete-notification-btn{
+
+    width:36px;
+
+    height:36px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--text-secondary);
+
+    cursor:pointer;
+
+    opacity:0;
+
+    transition:.25s;
+
+}
+
+.notification-item:hover .delete-notification-btn{
+
+    opacity:1;
+
+}
+
+.delete-notification-btn:hover{
+
+    background:rgba(239,68,68,.12);
+
+    color:var(--danger);
+
+    transform:scale(1.1);
+
+}
+
+/* ==========================================
+            MARK ALL
+========================================== */
+
+.view-all-btn{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-top:1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    position:sticky;
+
+    bottom:0;
+
+}
+
+.view-all-btn:hover{
+
+    background:var(--hover-bg);
+
+}
+
+/* ==========================================
+            EMPTY
+========================================== */
+
+.notification-empty{
+
+    padding:40px;
+
+    text-align:center;
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            ANIMATION
+========================================== */
+
+@keyframes notificationDropdown{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

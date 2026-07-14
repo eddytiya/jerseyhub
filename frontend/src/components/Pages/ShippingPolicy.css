@@ -1,0 +1,471 @@
+/* ==========================================
+                SHIPPING PAGE
+========================================== */
+
+.shipping-page{
+
+    min-height:100vh;
+
+    padding:90px 0 120px;
+
+    background:var(--background);
+
+}
+
+/* ==========================================
+                HERO
+========================================== */
+
+.shipping-hero{
+
+    position:relative;
+
+    text-align:center;
+
+    padding:80px 40px;
+
+    margin-bottom:70px;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    background:linear-gradient(
+        135deg,
+        rgba(37,99,235,.12),
+        rgba(79,70,229,.05)
+    );
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(16px);
+
+}
+
+.shipping-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+
+    height:320px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+
+        rgba(37,99,235,.15),
+
+        transparent
+
+    );
+
+    top:-120px;
+
+    left:-120px;
+
+}
+
+.shipping-hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+
+        rgba(79,70,229,.12),
+
+        transparent
+
+    );
+
+    bottom:-100px;
+
+    right:-100px;
+
+}
+
+.shipping-hero span{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:rgba(37,99,235,.12);
+
+    color:var(--primary);
+
+    font-size:.9rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    margin-bottom:20px;
+
+}
+
+.shipping-hero h1{
+
+    font-size:3.5rem;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    color:var(--text-primary);
+
+}
+
+.shipping-hero p{
+
+    max-width:760px;
+
+    margin:auto;
+
+    color:var(--text-secondary);
+
+    line-height:2;
+
+    font-size:1.15rem;
+
+}
+
+/* ==========================================
+                GRID
+========================================== */
+
+.shipping-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:28px;
+
+    margin-bottom:70px;
+
+}
+
+/* ==========================================
+                CARD
+========================================== */
+
+.shipping-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:40px 32px;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.shipping-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:4px;
+
+    background:linear-gradient(
+
+        90deg,
+
+        var(--primary),
+
+        #4f46e5
+
+    );
+
+    transform:scaleX(0);
+
+    transition:.35s;
+
+}
+
+.shipping-card:hover::before{
+
+    transform:scaleX(1);
+
+}
+
+.shipping-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 25px 45px rgba(0,0,0,.18);
+
+}
+
+/* ==========================================
+                ICON
+========================================== */
+
+.shipping-icon{
+
+    width:72px;
+
+    height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:18px;
+
+    margin-bottom:25px;
+
+    color:#fff;
+
+    font-size:1.8rem;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        #4f46e5
+
+    );
+
+    box-shadow:0 15px 30px rgba(37,99,235,.25);
+
+}
+
+.shipping-card h3{
+
+    margin-bottom:15px;
+
+    font-size:1.35rem;
+
+    font-weight:700;
+
+    color:var(--text-primary);
+
+}
+
+.shipping-card p{
+
+    margin:0;
+
+    color:var(--text-secondary);
+
+    line-height:1.9;
+
+}
+
+/* ==========================================
+            INFORMATION BOX
+========================================== */
+
+.shipping-note{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    padding:45px;
+
+}
+
+.shipping-note h2{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--text-primary);
+
+    margin-bottom:28px;
+
+}
+
+.shipping-note ul{
+
+    list-style:none;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+.shipping-note li{
+
+    position:relative;
+
+    padding-left:35px;
+
+    margin-bottom:20px;
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+}
+
+.shipping-note li::before{
+
+    content:"🚚";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+}
+
+/* ==========================================
+                ANIMATION
+========================================== */
+
+.shipping-card{
+
+    animation:shippingFade .6s ease forwards;
+
+}
+
+@keyframes shippingFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+                RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+.shipping-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.shipping-page{
+
+padding:60px 0 90px;
+
+}
+
+.shipping-hero{
+
+padding:50px 25px;
+
+}
+
+.shipping-hero h1{
+
+font-size:2.4rem;
+
+}
+
+.shipping-hero p{
+
+font-size:1rem;
+
+}
+
+.shipping-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.shipping-note{
+
+padding:30px 24px;
+
+}
+
+.shipping-note h2{
+
+font-size:1.6rem;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.shipping-hero{
+
+padding:40px 20px;
+
+}
+
+.shipping-hero h1{
+
+font-size:2rem;
+
+}
+
+.shipping-card{
+
+padding:30px 24px;
+
+}
+
+.shipping-icon{
+
+width:60px;
+
+height:60px;
+
+font-size:1.5rem;
+
+}
+
+}

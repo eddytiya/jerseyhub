@@ -1,0 +1,89 @@
+/* ==========================================================
+                    ANALYTICS
+========================================================== */
+
+.analytics-card{
+
+    border:none;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    margin:45px 0;
+
+    box-shadow:0 18px 40px rgba(15,23,42,.08);
+
+}
+
+.analytics-header{
+
+    padding:18px 28px;
+
+    color:#fff;
+
+}
+
+.analytics-header.revenue{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+}
+
+.analytics-header.orders{
+
+    background:linear-gradient(135deg,#111827,#374151);
+
+}
+
+.analytics-header h4{
+
+    margin:0;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.analytics-body{
+
+    padding:35px;
+
+    background:#fff;
+
+}
+
+.analytics-pie{
+
+    max-width:430px;
+
+    margin:0 auto;
+
+}
+
+[data-theme="dark"] .analytics-body{
+
+    background:#1e293b;
+
+}
+
+[data-theme="dark"] .analytics-card{
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+
+}
+
+@media(max-width:768px){
+
+    .analytics-body{
+
+        padding:22px;
+
+    }
+
+}

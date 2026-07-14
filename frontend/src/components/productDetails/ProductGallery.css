@@ -1,0 +1,572 @@
+/* =====================================================
+                    GALLERY CARD
+===================================================== */
+
+.gallery-card{
+
+    position:sticky;
+
+    top:100px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+
+}
+
+/* =====================================================
+                    MAIN IMAGE
+===================================================== */
+
+.gallery-main{
+
+    position:relative;
+
+    height:620px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:var(--shadow);
+
+    backdrop-filter:blur(25px);
+
+    transition:.4s;
+
+}
+
+.gallery-main:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+
+        0 25px 60px rgba(37,99,235,.25);
+
+}
+
+.gallery-main::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            rgba(255,255,255,.12),
+
+            transparent 35%,
+
+            transparent 65%,
+
+            rgba(255,255,255,.08)
+
+        );
+
+    pointer-events:none;
+
+}
+
+/* =====================================================
+                    IMAGE
+===================================================== */
+
+.gallery-main img{
+
+    width:90%;
+
+    height:90%;
+
+    object-fit:contain;
+
+    transition:.45s;
+
+    cursor:zoom-in;
+
+}
+
+.gallery-main:hover img{
+
+    transform:scale(1.08);
+
+}
+/* =====================================================
+                IMPROVED OVERLAY
+===================================================== */
+
+.gallery-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:14px;
+
+    background:rgba(15,23,42,.55);
+
+    color:#fff;
+
+    font-weight:700;
+
+    font-size:18px;
+
+    backdrop-filter:blur(4px);
+
+    opacity:0;
+
+    transition:.35s;
+
+}
+
+.gallery-overlay svg{
+
+    font-size:42px;
+
+}
+
+.gallery-main:hover .gallery-overlay{
+
+    opacity:1;
+
+}
+
+/* =====================================================
+            FULLSCREEN IMAGE VIEWER
+===================================================== */
+
+.image-preview{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.95);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+    animation:fadePreview .25s ease;
+
+}
+
+.preview-container{
+
+    position:relative;
+
+    width:95vw;
+
+    height:95vh;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:#0f1117;
+
+}
+.preview-image{
+
+    width:auto;
+
+    height:auto;
+
+    max-width:none;
+
+    max-height:none;
+
+    object-fit:contain;
+
+    cursor:grab;
+
+    user-select:none;
+
+}
+
+.preview-image:active{
+
+    cursor:grabbing;
+
+}
+
+/* =====================================================
+                    ZOOM TOOLBAR
+===================================================== */
+
+.zoom-toolbar{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    display:flex;
+
+    gap:12px;
+
+    z-index:1000;
+
+}
+
+.zoom-toolbar button{
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(32,37,49,.92);
+
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+
+}
+
+.zoom-toolbar button:hover{
+
+    background:var(--primary);
+
+    transform:scale(1.08);
+
+}
+
+/* =====================================================
+                THUMBNAIL ANIMATION
+===================================================== */
+
+.thumb{
+
+    position:relative;
+
+}
+
+.thumb::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:18px;
+
+    background:linear-gradient(
+
+        135deg,
+
+        rgba(37,99,235,.15),
+
+        transparent
+
+    );
+
+    opacity:0;
+
+    transition:.3s;
+
+}
+
+.thumb:hover::after{
+
+    opacity:1;
+
+}
+
+/* =====================================================
+                GLOSS REFLECTION
+===================================================== */
+
+.gallery-main::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-120%;
+
+    left:-40%;
+
+    width:45%;
+
+    height:300%;
+
+    background:linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.18),
+
+        transparent
+
+    );
+
+    transform:rotate(25deg);
+
+    transition:1s;
+
+}
+
+.gallery-main:hover::after{
+
+    left:120%;
+
+}
+
+/* =====================================================
+                FADE ANIMATION
+===================================================== */
+
+@keyframes fadePreview{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+/* =====================================================
+                    FLOATING ICONS
+===================================================== */
+
+.gallery-icons{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    z-index:20;
+
+}
+
+.gallery-icons button{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.92);
+
+    color:#111827;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.18);
+
+    transition:.3s;
+
+}
+
+.gallery-icons button:hover{
+
+    transform:translateY(-3px) scale(1.08);
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/* =====================================================
+                    THUMBNAILS
+===================================================== */
+
+.gallery-thumbnails{
+
+    display:flex;
+
+    gap:16px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+.thumb{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    border:2px solid transparent;
+
+    background:var(--card);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:var(--shadow);
+
+}
+
+.thumb img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:contain;
+
+    padding:10px;
+
+}
+
+.thumb:hover{
+
+    transform:translateY(-5px);
+
+    border-color:var(--primary);
+
+}
+
+.thumb.active{
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+        0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+/* =====================================================
+                    RESPONSIVE
+===================================================== */
+
+@media(max-width:1100px){
+
+    .gallery-card{
+
+        position:static;
+
+    }
+
+    .gallery-main{
+
+        height:500px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .gallery-main{
+
+        height:380px;
+
+        border-radius:20px;
+
+    }
+
+    .thumb{
+
+        width:70px;
+
+        height:70px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .gallery-main{
+
+        height:300px;
+
+    }
+
+}
+
+/* =====================================================
+                    DARK MODE
+===================================================== */
+
+[data-theme="dark"] .gallery-icons button{
+
+    background:rgba(32,37,49,.92);
+
+    color:white;
+
+}
+
+[data-theme="dark"] .gallery-main{
+
+    background:var(--card);
+
+}
+
+[data-theme="dark"] .thumb{
+
+    background:var(--card);
+
+}

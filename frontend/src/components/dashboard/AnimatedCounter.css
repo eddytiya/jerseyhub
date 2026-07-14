@@ -1,0 +1,29 @@
+/* ==========================================================
+                    ANIMATED COUNTER
+========================================================== */
+
+.animated-counter{
+
+    font-weight:800;
+
+    font-size:2.3rem;
+
+    letter-spacing:-0.5px;
+
+    color:inherit;
+
+    transition:all .3s ease;
+
+    display:inline-block;
+
+}
+
+@media(max-width:768px){
+
+    .animated-counter{
+
+        font-size:2rem;
+
+    }
+
+}

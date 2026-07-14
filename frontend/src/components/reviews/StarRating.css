@@ -1,0 +1,63 @@
+/* ==========================================
+        STAR RATING
+========================================== */
+
+.star-rating{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.star-rating-star{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.star-rating-star:hover{
+
+    transform:scale(1.15);
+
+}
+
+.star-rating.read-only .star-rating-star{
+
+    cursor:default;
+
+}
+
+.star-rating.read-only .star-rating-star:hover{
+
+    transform:none;
+
+}
+
+.star-rating-star .active{
+
+    color:#fbbf24;
+
+}
+
+.star-rating-star .inactive{
+
+    color:var(--text-muted);
+
+}
+
+.star-rating svg{
+
+    transition:.25s;
+
+}

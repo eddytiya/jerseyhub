@@ -1,0 +1,51 @@
+.product-types-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+
+    gap:28px;
+
+}
+
+.product-types-empty{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:70px 30px;
+
+    text-align:center;
+
+    border:2px dashed #dbeafe;
+
+}
+
+.product-types-empty h2{
+
+    color:#111827;
+
+    font-size:28px;
+
+    margin-bottom:12px;
+
+}
+
+.product-types-empty p{
+
+    color:#6b7280;
+
+    font-size:16px;
+
+}
+
+@media(max-width:768px){
+
+.product-types-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}

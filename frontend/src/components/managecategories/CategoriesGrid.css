@@ -1,0 +1,47 @@
+/* ==========================================
+            GRID
+========================================== */
+
+.categories-admin-grid{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+    width:100%;
+
+    margin-bottom:40px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-grid>.categories-admin-card{
+
+    animation:categories-admin-fade .45s ease;
+
+}
+
+/* ========================================== */
+
+@keyframes categories-admin-fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}

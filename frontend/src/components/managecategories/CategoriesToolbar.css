@@ -1,0 +1,239 @@
+/* ==========================================
+            TOOLBAR
+========================================== */
+
+.categories-admin-toolbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+    padding:22px;
+
+    margin-bottom:34px;
+
+    border-radius:22px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    flex-wrap:wrap;
+
+}
+
+/* ========================================== */
+
+.categories-admin-search-wrapper{
+
+    position:relative;
+
+    flex:1;
+
+    min-width:280px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-search{
+
+    width:100%;
+
+    height:58px;
+
+    border-radius:16px;
+
+    border:1px solid var(--border);
+
+    background:var(--input-bg);
+
+    color:var(--text);
+
+    outline:none;
+
+    padding-left:60px;
+
+    padding-right:20px;
+
+    font-size:16px;
+
+    transition:.35s;
+
+}
+
+.categories-admin-search::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+.categories-admin-search:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px var(--glass);
+
+}
+
+/* ========================================== */
+
+.categories-admin-search-icon{
+
+    position:absolute;
+
+    left:22px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:var(--text-secondary);
+
+    font-size:22px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-toolbar-right{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-select{
+
+    min-width:180px;
+
+    height:58px;
+
+    padding:0 18px;
+
+    border-radius:16px;
+
+    border:1px solid var(--border);
+
+    background:var(--input-bg);
+
+    color:var(--text);
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    outline:none;
+
+    transition:.35s;
+
+}
+
+.categories-admin-select:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px var(--glass);
+
+}
+
+/* ========================================== */
+
+.categories-admin-results{
+
+    margin-left:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:var(--text-secondary);
+
+    font-weight:600;
+
+}
+
+.categories-admin-results span{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.categories-admin-toolbar{
+
+    flex-direction:column;
+
+    align-items:stretch;
+
+}
+
+.categories-admin-toolbar-right{
+
+    width:100%;
+
+}
+
+.categories-admin-select{
+
+    flex:1;
+
+}
+
+.categories-admin-results{
+
+    width:100%;
+
+    justify-content:center;
+
+    margin-left:0;
+
+}
+
+}
+
+@media(max-width:650px){
+
+.categories-admin-toolbar-right{
+
+    flex-direction:column;
+
+}
+
+.categories-admin-select{
+
+    width:100%;
+
+}
+
+}

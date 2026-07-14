@@ -1,0 +1,45 @@
+.review-section{
+
+    margin-top:70px;
+
+}
+
+.review-list{
+
+    margin-top:35px;
+
+}
+
+.review-empty{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    padding:70px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.review-empty h3{
+
+    color:var(--text);
+
+    margin-bottom:12px;
+
+    font-weight:700;
+
+}
+
+.review-empty p{
+
+    color:var(--text-secondary);
+
+    margin:0;
+
+}

@@ -1,0 +1,219 @@
+/* ==========================================================
+                    INVENTORY CARDS
+========================================================== */
+
+.inventory-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    color:#fff;
+
+    height:100%;
+
+    transition:.35s ease;
+
+    box-shadow:
+        0 18px 40px rgba(15,23,42,.15);
+
+}
+
+.inventory-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:
+        0 30px 60px rgba(37,99,235,.25);
+
+}
+
+.inventory-card-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+}
+
+.inventory-text{
+
+    z-index:2;
+
+}
+
+.inventory-title{
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    opacity:.95;
+
+    margin-bottom:12px;
+
+}
+
+.inventory-value{
+
+    font-size:2.7rem;
+
+    font-weight:800;
+
+    line-height:1;
+
+    margin-bottom:10px;
+
+}
+
+.inventory-subtitle{
+
+    opacity:.88;
+
+    font-size:.95rem;
+
+    margin-top:6px;
+
+}
+
+.inventory-icon{
+
+    width:72px;
+
+    height:72px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(10px);
+
+    font-size:30px;
+
+    flex-shrink:0;
+
+}
+
+.inventory-bg-icon{
+
+    position:absolute;
+
+    right:18px;
+
+    bottom:12px;
+
+    font-size:92px;
+
+    opacity:.08;
+
+}
+
+.inventory-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        rgba(255,255,255,.18),
+
+        transparent 45%
+
+    );
+
+}
+
+.inventory-shine{
+
+    position:absolute;
+
+    inset:0;
+
+    overflow:hidden;
+
+}
+
+.inventory-shine::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-180%;
+
+    width:60%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+
+        120deg,
+
+        transparent,
+
+        rgba(255,255,255,.35),
+
+        transparent
+
+    );
+
+    transform:skewX(-25deg);
+
+    transition:left .9s;
+
+}
+
+.inventory-card:hover .inventory-shine::before{
+
+    left:180%;
+
+}
+
+@media(max-width:768px){
+
+    .inventory-card{
+
+        padding:22px;
+
+    }
+
+    .inventory-value{
+
+        font-size:2.2rem;
+
+    }
+
+    .inventory-icon{
+
+        width:60px;
+
+        height:60px;
+
+        font-size:25px;
+
+    }
+
+}

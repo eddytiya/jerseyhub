@@ -1,0 +1,531 @@
+/* =====================================================
+                    BACKDROP
+===================================================== */
+
+.drawer-backdrop{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    backdrop-filter:blur(10px);
+
+    z-index:999;
+
+    animation:fadeIn .35s ease;
+
+}
+
+/* =====================================================
+                    DRAWER
+===================================================== */
+
+.order-drawer{
+
+    position:fixed;
+
+    top:0;
+
+    right:0;
+
+    width:520px;
+
+    height:100vh;
+
+    overflow-y:auto;
+
+    z-index:1000;
+
+    padding:35px;
+
+    background:
+
+        linear-gradient(
+
+            180deg,
+
+            rgba(22,25,35,.98),
+
+            rgba(15,18,27,.98)
+
+        );
+
+    border-left:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+
+        -20px 0 60px rgba(0,0,0,.45);
+
+    animation:slideDrawer .4s ease;
+
+}
+
+/* =====================================================
+                    HEADER
+===================================================== */
+
+.drawer-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+.drawer-header h2{
+
+    margin:0;
+
+    color:white;
+
+    font-size:34px;
+
+}
+
+.drawer-header small{
+
+    color:#9ca3af;
+
+}
+
+.drawer-header button{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    color:white;
+
+    background:rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.drawer-header button:hover{
+
+    background:#2563eb;
+
+    transform:rotate(90deg);
+
+}
+
+/* =====================================================
+                    PRODUCT
+===================================================== */
+
+.drawer-product{
+
+    display:flex;
+
+    gap:22px;
+
+    align-items:center;
+
+    padding:22px;
+
+    border-radius:24px;
+
+    margin-bottom:30px;
+
+    background:
+
+        rgba(255,255,255,.04);
+
+}
+
+.drawer-product img{
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:contain;
+
+    border-radius:18px;
+
+    background:white;
+
+    padding:10px;
+
+}
+
+.drawer-product h3{
+
+    margin:0;
+
+    color:white;
+
+}
+
+.drawer-product p{
+
+    color:#cbd5e1;
+
+    margin:8px 0;
+
+}
+
+.drawer-product span{
+
+    color:#60a5fa;
+
+}
+
+/* =====================================================
+                    SECTIONS
+===================================================== */
+
+.drawer-section{
+
+    padding:24px;
+
+    margin-bottom:22px;
+
+    border-radius:22px;
+
+    background:
+
+        rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.06);
+
+}
+
+.drawer-section h4{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:white;
+
+    margin-bottom:18px;
+
+}
+
+.drawer-section p{
+
+    color:#cbd5e1;
+
+}
+
+.drawer-section h2{
+
+    color:#2563eb;
+
+    margin-top:10px;
+
+}
+
+/* =====================================================
+                    STATUS
+===================================================== */
+
+.drawer-status{
+
+    display:flex;
+
+    justify-content:flex-start;
+
+}
+
+.status{
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.status.pending{
+
+    background:#f59e0b22;
+
+    color:#f59e0b;
+
+}
+
+.status.processing{
+
+    background:#0ea5e922;
+
+    color:#0ea5e9;
+
+}
+
+.status.shipped{
+
+    background:#3b82f622;
+
+    color:#3b82f6;
+
+}
+
+.status.delivered{
+
+    background:#22c55e22;
+
+    color:#22c55e;
+
+}
+
+/* =====================================================
+                    TIMELINE
+===================================================== */
+
+.timeline{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.timeline li{
+
+    position:relative;
+
+    padding-left:35px;
+
+    margin-bottom:25px;
+
+    color:#64748b;
+
+}
+
+.timeline li::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:4px;
+
+    width:16px;
+
+    height:16px;
+
+    border-radius:50%;
+
+    background:#374151;
+
+}
+
+.timeline li.active{
+
+    color:white;
+
+}
+
+.timeline li.active::before{
+
+    background:#22c55e;
+
+    box-shadow:
+
+        0 0 15px #22c55e;
+
+}
+
+/* =====================================================
+                    ACTION BUTTONS
+===================================================== */
+
+.drawer-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+    margin-top:30px;
+
+}
+
+.drawer-actions button{
+
+    height:58px;
+
+    border:none;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    color:white;
+
+    transition:.35s;
+
+}
+
+.drawer-actions button:nth-child(1){
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #2563eb,
+
+            #4f46e5
+
+        );
+
+}
+
+.drawer-actions button:nth-child(2){
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #10b981,
+
+            #22c55e
+
+        );
+
+}
+
+.drawer-actions button:nth-child(3){
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #f59e0b,
+
+            #f97316
+
+        );
+
+}
+
+.drawer-actions button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 15px 35px rgba(37,99,235,.25);
+
+}
+
+/* =====================================================
+                    SCROLLBAR
+===================================================== */
+
+.order-drawer::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.order-drawer::-webkit-scrollbar-thumb{
+
+    background:#374151;
+
+    border-radius:20px;
+
+}
+
+/* =====================================================
+                    ANIMATIONS
+===================================================== */
+
+@keyframes slideDrawer{
+
+    from{
+
+        transform:translateX(100%);
+
+    }
+
+    to{
+
+        transform:translateX(0);
+
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+/* =====================================================
+                    RESPONSIVE
+===================================================== */
+
+@media(max-width:768px){
+
+    .order-drawer{
+
+        width:100%;
+
+        padding:22px;
+
+    }
+
+    .drawer-product{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+}

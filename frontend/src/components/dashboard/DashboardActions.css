@@ -1,0 +1,325 @@
+/* ==========================================================
+                    ADMIN PAGE ACTIONS
+========================================================== */
+
+.adminpage-actions{
+
+    margin-bottom:48px;
+
+}
+
+/* ==========================================================
+                    CARD
+========================================================== */
+
+.adminpage-actions-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+}
+
+.adminpage-actions-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+/* ==========================================================
+                    HEADER
+========================================================== */
+
+.adminpage-actions-header{
+
+    padding:24px 30px;
+
+    background:linear-gradient(135deg,#111827,#1e293b);
+
+    color:#fff;
+
+}
+
+.adminpage-actions-title{
+
+    margin:0;
+
+    font-size:30px;
+
+    font-weight:800;
+
+}
+
+.adminpage-actions-subtitle{
+
+    margin-top:6px;
+
+    margin-bottom:0;
+
+    opacity:.85;
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+                    BODY
+========================================================== */
+
+.adminpage-actions-body{
+
+    padding:30px;
+
+}
+
+/* ==========================================================
+                    ACTION CARD
+========================================================== */
+
+.adminpage-action-card{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:220px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    transition:.35s;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+}
+
+.adminpage-action-card:hover{
+
+    color:#fff;
+
+    transform:translateY(-10px) scale(1.03);
+
+    box-shadow:0 35px 60px rgba(37,99,235,.28);
+
+}
+
+/* Shine */
+
+.adminpage-action-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        rgba(255,255,255,.18),
+
+        transparent 55%
+
+    );
+
+}
+
+/* Huge Background Icon */
+
+.adminpage-action-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:120px;
+
+    height:120px;
+
+    right:-18px;
+
+    bottom:-18px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+}
+
+/* ==========================================================
+                    ICON
+========================================================== */
+
+.adminpage-action-icon{
+
+    width:78px;
+
+    height:78px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:22px;
+
+    background:rgba(255,255,255,.18);
+
+    backdrop-filter:blur(16px);
+
+    font-size:34px;
+
+    z-index:2;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================================
+                    TITLE
+========================================================== */
+
+.adminpage-action-title{
+
+    margin:0;
+
+    font-size:22px;
+
+    font-weight:800;
+
+    z-index:2;
+
+}
+
+/* ==========================================================
+                    SUBTITLE
+========================================================== */
+
+.adminpage-action-subtitle{
+
+    margin-top:8px;
+
+    font-size:14px;
+
+    opacity:.95;
+
+    z-index:2;
+
+}
+
+/* ==========================================================
+                    ARROW
+========================================================== */
+
+.adminpage-action-arrow{
+
+    margin-top:20px;
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.18);
+
+    font-size:22px;
+
+    font-weight:700;
+
+    transition:.35s;
+
+    z-index:2;
+
+}
+
+.adminpage-action-card:hover .adminpage-action-arrow{
+
+    transform:translateX(6px);
+
+}
+
+/* ==========================================================
+                    DARK MODE
+========================================================== */
+
+[data-theme="dark"] .adminpage-actions-header{
+
+    background:linear-gradient(135deg,#111827,#0f172a);
+
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:992px){
+
+    .adminpage-action-card{
+
+        min-height:190px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .adminpage-actions-body{
+
+        padding:20px;
+
+    }
+
+    .adminpage-actions-title{
+
+        font-size:24px;
+
+    }
+
+    .adminpage-action-card{
+
+        min-height:170px;
+
+    }
+
+    .adminpage-action-icon{
+
+        width:64px;
+
+        height:64px;
+
+        font-size:28px;
+
+    }
+
+}

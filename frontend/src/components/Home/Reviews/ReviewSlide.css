@@ -1,0 +1,205 @@
+.review-slide{
+
+    position:relative;
+
+   max-width:1100px;
+
+width:100%;
+
+    margin:auto;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+   padding:70px 80px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.review-slide-quote{
+
+    position:absolute;
+
+    top:25px;
+
+    right:25px;
+
+   font-size:5rem;
+
+    color:var(--primary);
+
+    opacity:.15;
+
+}
+
+.review-slide-stars{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:6px;
+
+    margin-bottom:25px;
+
+}
+
+.review-slide-star{
+
+    color:#fbbf24;
+
+    font-size:1.2rem;
+
+}
+
+.review-slide-comment{
+
+    font-size:2rem;
+
+    line-height:1.8;
+
+    color:var(--text);
+
+    margin-bottom:40px;
+
+    font-weight:600;
+
+}
+
+.review-slide-jersey{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:35px;
+
+}
+
+.review-slide-jersey img{
+
+    width:110px;
+
+height:110px;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+}
+
+.review-slide-jersey h4{
+
+    margin:0;
+
+    color:var(--text);
+
+    font-size:1.7rem;
+
+font-weight:700;
+
+}
+
+.review-slide-jersey p{
+
+    margin:5px 0 0;
+
+    color:var(--text-secondary);
+
+}
+
+.review-slide-user{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.review-slide-user img,
+
+.review-slide-avatar{
+
+    width:72px;
+
+height:72px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:bold;
+
+}
+
+.review-slide-user h5{
+
+    margin:0;
+
+    color:var(--text);
+
+    font-size:1.3rem;
+
+font-weight:700;
+
+}
+
+.review-slide-user span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#22c55e;
+
+    font-size:.9rem;
+
+    margin-top:4px;
+
+}
+
+@media(max-width:768px){
+
+.review-slide{
+
+padding:30px 20px;
+
+}
+
+.review-slide-comment{
+
+font-size:1.15rem;
+
+}
+
+.review-slide-jersey{
+
+flex-direction:column;
+
+}
+
+}

@@ -1,0 +1,571 @@
+/* ==========================================
+            PAGE
+========================================== */
+
+.categories-page{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:100vh;
+
+    padding:70px 8%;
+
+    background:
+
+        radial-gradient(
+
+            circle at top left,
+
+            rgba(37,99,235,.10),
+
+            transparent 35%
+
+        ),
+
+        radial-gradient(
+
+            circle at bottom right,
+
+            rgba(99,102,241,.10),
+
+            transparent 30%
+
+        ),
+
+        var(--bg);
+
+    transition:.35s;
+
+}
+
+/* ==========================================
+            BACKGROUND GLOW
+========================================== */
+
+.categories-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:520px;
+
+    height:520px;
+
+    top:-220px;
+
+    right:-180px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+            rgba(37,99,235,.18),
+
+            transparent 70%
+
+        );
+
+    filter:blur(90px);
+
+    pointer-events:none;
+
+}
+
+.categories-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+
+    height:420px;
+
+    bottom:-180px;
+
+    left:-150px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+            rgba(99,102,241,.15),
+
+            transparent 70%
+
+        );
+
+    filter:blur(90px);
+
+    pointer-events:none;
+
+}
+/* ==========================================
+                HERO SECTION
+========================================== */
+
+.categories-hero{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:70px;
+
+    margin-bottom:60px;
+
+}
+
+.hero-left{
+
+    flex:1;
+
+}
+
+.hero-right{
+
+    width:380px;
+
+    flex-shrink:0;
+
+}
+
+/* ========================================== */
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 20px;
+
+    border-radius:999px;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            #2563eb,
+
+            #4f46e5
+
+        );
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    box-shadow:
+
+        0 12px 30px rgba(37,99,235,.30);
+
+}
+
+/* ========================================== */
+
+.hero-left h1{
+
+    color:var(--text);
+
+    font-size:62px;
+
+    font-weight:900;
+
+    line-height:1.1;
+
+    margin-bottom:22px;
+
+}
+
+/* ========================================== */
+
+.hero-left p{
+
+    color:var(--text-secondary);
+
+    font-size:18px;
+
+    line-height:1.9;
+
+    max-width:720px;
+
+}
+
+/* ==========================================
+                STATS
+========================================== */
+
+.hero-stats{
+
+    display:flex;
+
+    gap:55px;
+
+    margin-top:42px;
+
+}
+
+.hero-stats div{
+
+    min-width:110px;
+
+    padding:18px;
+
+    border-radius:20px;
+
+    background:var(--glass);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    text-align:center;
+
+}
+
+.hero-stats h2{
+
+    color:var(--primary);
+
+    font-size:38px;
+
+    font-weight:900;
+
+    margin:0;
+
+}
+
+.hero-stats span{
+
+    color:var(--text-secondary);
+
+    font-size:15px;
+
+    margin-top:4px;
+
+}
+
+/* ==========================================
+            GLASS INFO CARD
+========================================== */
+
+.hero-glass{
+
+    padding:36px;
+
+    border-radius:28px;
+
+    background:var(--glass);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(24px);
+
+    -webkit-backdrop-filter:blur(24px);
+
+    box-shadow:
+
+        0 25px 50px rgba(0,0,0,.18);
+
+}
+
+.hero-glass{
+
+    animation:floatCard 5s ease-in-out infinite;
+
+}
+
+@keyframes floatCard{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-10px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+.hero-glass h3{
+
+    color:var(--text);
+
+    font-size:32px;
+
+    font-weight:800;
+
+    margin-bottom:18px;
+
+    line-height:1.35;
+
+}
+
+.hero-glass p{
+
+    color:var(--text-secondary);
+
+    line-height:1.9;
+
+    font-size:17px;
+
+}
+
+/* ==========================================
+            SEARCH
+========================================== */
+
+.category-search{
+
+    width:650px;
+
+    max-width:100%;
+
+    margin:0 auto 55px;
+
+    position:relative;
+
+}
+
+.category-search input{
+
+    width:100%;
+
+    height:62px;
+
+    padding:0 25px 0 65px;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:var(--glass);
+
+backdrop-filter:blur(18px);
+
+-webkit-backdrop-filter:blur(18px);
+
+    color:var(--text);
+
+    font-size:17px;
+
+    outline:none;
+
+    transition:.35s;
+
+}
+
+.category-search input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+.category-search input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+        0 0 0 4px rgba(37,99,235,.12),
+
+        0 15px 35px rgba(37,99,235,.15);
+
+}
+
+.category-search-icon{
+
+    position:absolute;
+
+    left:24px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:var(--text-secondary);
+
+    font-size:22px;
+
+}
+
+/* ==========================================
+            CATEGORY LIST
+========================================== */
+
+.categories-container{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+}
+
+/* ==========================================
+            EMPTY STATE
+========================================== */
+
+.empty-category{
+
+    padding:90px 20px;
+
+    text-align:center;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:28px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.empty-category h2{
+
+    color:var(--text);
+
+    margin-bottom:12px;
+
+}
+
+.empty-category p{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1100px){
+
+.categories-hero{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+.hero-right{
+
+    width:100%;
+
+}
+
+.hero-left p{
+
+    margin:auto;
+
+}
+
+.hero-stats{
+
+    justify-content:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.categories-page{
+
+    padding:45px 22px;
+
+}
+
+.hero-left h1{
+
+    font-size:46px;
+
+}
+
+.hero-left p{
+
+    font-size:16px;
+
+}
+
+.hero-stats{
+
+    gap:30px;
+
+    flex-wrap:wrap;
+
+}
+
+.category-search{
+
+    width:100%;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.hero-left h1{
+
+    font-size:36px;
+
+}
+
+.hero-glass{
+
+    padding:24px;
+
+}
+
+.hero-glass h3{
+
+    font-size:24px;
+
+}
+
+.hero-stats{
+
+    gap:22px;
+
+}
+
+.hero-stats h2{
+
+    font-size:30px;
+
+}
+
+}

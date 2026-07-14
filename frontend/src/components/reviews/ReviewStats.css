@@ -1,0 +1,101 @@
+.review-stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:24px;
+
+    margin-bottom:35px;
+
+}
+
+.review-stat-card{
+
+    background:#1f2937;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    transition:.3s;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.review-stat-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+
+}
+
+.review-stat-icon{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+    font-size:26px;
+
+}
+
+.review-stat-card h3{
+
+    color:#fff;
+
+    font-size:30px;
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+.review-stat-card p{
+
+    color:#9ca3af;
+
+    margin-top:6px;
+
+    margin-bottom:0;
+
+}
+
+@media(max-width:1200px){
+
+    .review-stats-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .review-stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

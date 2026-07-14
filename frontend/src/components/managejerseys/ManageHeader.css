@@ -1,0 +1,436 @@
+/* ==========================================================
+                    HEADER
+========================================================== */
+
+.adminjersey-header{
+
+    margin-bottom:50px;
+
+}
+
+/* ==========================================================
+                    HERO CARD
+========================================================== */
+
+.adminjersey-header-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:40px;
+
+    padding:45px;
+
+    border-radius:32px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color:#fff;
+
+    box-shadow:
+
+        0 25px 60px rgba(37,99,235,.30);
+
+    transition:
+        transform .4s,
+        box-shadow .4s;
+
+}
+
+.adminjersey-header-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+
+        0 35px 75px rgba(37,99,235,.40);
+
+}
+
+/* ==========================================================
+                    BACKGROUND BLOBS
+========================================================== */
+
+.adminjersey-header-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+
+    height:340px;
+
+    right:-120px;
+
+    top:-120px;
+
+    border-radius:50%;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+    animation:
+
+        adminjerseyFloatOne 12s ease-in-out infinite;
+
+}
+
+.adminjersey-header-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+
+    height:220px;
+
+    left:-70px;
+
+    bottom:-90px;
+
+    border-radius:50%;
+
+    background:
+
+        rgba(255,255,255,.05);
+
+    animation:
+
+        adminjerseyFloatTwo 16s ease-in-out infinite;
+
+}
+
+.adminjersey-header-card>*{
+
+    position:relative;
+
+    z-index:5;
+
+}
+
+/* ==========================================================
+                    LEFT
+========================================================== */
+
+.adminjersey-header-left{
+
+    flex:1;
+
+}
+
+/* ==========================================================
+                    BADGE
+========================================================== */
+
+.adminjersey-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    background:
+
+        rgba(255,255,255,.18);
+
+    backdrop-filter:blur(14px);
+
+    font-size:13px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+/* ==========================================================
+                    TITLE
+========================================================== */
+
+.adminjersey-title{
+
+    margin:22px 0 12px;
+
+    font-size:54px;
+
+    font-weight:900;
+
+    line-height:1.1;
+
+}
+
+.adminjersey-description{
+
+    max-width:640px;
+
+    margin:0;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+    opacity:.95;
+
+}
+
+/* ==========================================================
+                    INFO CHIPS
+========================================================== */
+
+.adminjersey-header-info{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-top:30px;
+
+}
+
+.adminjersey-info-chip{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 20px;
+
+    border-radius:18px;
+
+    background:
+
+        rgba(255,255,255,.14);
+
+    backdrop-filter:blur(14px);
+
+    border:
+
+        1px solid rgba(255,255,255,.12);
+
+    font-weight:700;
+
+    transition:.35s;
+
+}
+
+.adminjersey-info-chip:hover{
+
+    transform:translateY(-3px);
+
+    background:
+
+        rgba(255,255,255,.20);
+
+}
+
+/* ==========================================================
+                    RIGHT
+========================================================== */
+
+.adminjersey-header-right{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+/* ==========================================================
+                    BUTTON
+========================================================== */
+
+.adminjersey-add-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    min-width:230px;
+
+    height:64px;
+
+    border-radius:18px;
+
+    background:#fff;
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:800;
+
+    font-size:16px;
+
+    transition:
+        transform .35s,
+        box-shadow .35s;
+
+}
+
+.adminjersey-add-btn:hover{
+
+    color:#2563eb;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+
+        0 18px 40px rgba(0,0,0,.22);
+
+}
+
+/* ==========================================================
+                    ANIMATIONS
+========================================================== */
+
+@keyframes adminjerseyFloatOne{
+
+    0%{
+
+        transform:translate(0,0);
+
+    }
+
+    50%{
+
+        transform:translate(-25px,20px);
+
+    }
+
+    100%{
+
+        transform:translate(0,0);
+
+    }
+
+}
+
+@keyframes adminjerseyFloatTwo{
+
+    0%{
+
+        transform:translate(0,0);
+
+    }
+
+    50%{
+
+        transform:translate(20px,-18px);
+
+    }
+
+    100%{
+
+        transform:translate(0,0);
+
+    }
+
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:992px){
+
+    .adminjersey-header-card{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .adminjersey-header-right{
+
+        width:100%;
+
+        justify-content:flex-start;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .adminjersey-header-card{
+
+        padding:30px;
+
+        border-radius:24px;
+
+    }
+
+    .adminjersey-title{
+
+        font-size:38px;
+
+    }
+
+    .adminjersey-description{
+
+        font-size:15px;
+
+    }
+
+    .adminjersey-add-btn{
+
+        width:100%;
+
+        min-width:unset;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .adminjersey-header-info{
+
+        flex-direction:column;
+
+        width:100%;
+
+    }
+
+    .adminjersey-info-chip{
+
+        width:100%;
+
+    }
+
+}

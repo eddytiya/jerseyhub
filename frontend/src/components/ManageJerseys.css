@@ -1,0 +1,81 @@
+/* ==========================================================
+                    PAGE
+========================================================== */
+
+.adminjersey-page{
+
+    width:95%;
+
+    max-width:1750px;
+
+    margin:auto;
+
+    padding:30px 0 60px;
+
+}
+
+/* ==========================================================
+                    SECTIONS
+========================================================== */
+
+.adminjersey-page section{
+
+    margin-bottom:32px;
+
+}
+
+/* ==========================================================
+                    SMOOTH ANIMATION
+========================================================== */
+
+.adminjersey-page>*{
+
+    animation:adminjerseyFade .45s ease;
+
+}
+
+@keyframes adminjerseyFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:1200px){
+
+    .adminjersey-page{
+
+        width:96%;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .adminjersey-page{
+
+        width:94%;
+
+        padding-top:20px;
+
+    }
+
+}

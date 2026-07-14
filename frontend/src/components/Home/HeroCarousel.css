@@ -1,0 +1,866 @@
+/* ==========================================================
+                    HERO THEME
+========================================================== */
+
+:root{
+
+    --hero-bg:#ffffff;
+
+    --hero-text:#111827;
+
+    --hero-sub:#475569;
+
+    --hero-tag:#2563eb;
+
+    --hero-overlay:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.80) 0%,
+            rgba(255,255,255,.45) 40%,
+            rgba(255,255,255,.10) 100%
+        );
+
+}
+
+[data-theme="dark"]{
+
+    --hero-bg:#0f172a;
+
+    --hero-text:#ffffff;
+
+    --hero-sub:#d1d5db;
+
+    --hero-tag:#60a5fa;
+
+    --hero-overlay:
+        linear-gradient(
+            90deg,
+            rgba(5,10,20,.88) 0%,
+            rgba(5,10,20,.60) 35%,
+            rgba(5,10,20,.25) 65%,
+            rgba(5,10,20,.05) 100%
+        );
+
+}
+
+
+/* ==========================================================
+                    HERO SECTION
+========================================================== */
+
+.hero-carousel{
+
+    position:relative;
+
+    overflow:hidden;
+
+    margin-top:-10px;
+
+}
+
+.carousel-item{
+
+    position:relative;
+
+    cursor:pointer;
+
+}
+
+.hero-image{
+
+    width:100%;
+
+    height:74vh;
+
+    object-fit:cover;
+
+    animation:heroZoom 14s ease-in-out infinite;
+
+    filter:
+
+        brightness(.72)
+
+        contrast(1.08)
+
+        saturate(1.05);
+
+}
+[data-theme="light"] .hero-image{
+
+    filter:
+
+        brightness(.88)
+
+        contrast(1.05)
+
+        saturate(1.05);
+
+}
+
+@keyframes heroZoom{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.06);
+
+    }
+
+    100%{
+
+        transform:scale(1.1);
+
+    }
+
+}
+
+/* ==========================================================
+                    HERO OVERLAY
+========================================================== */
+
+.hero-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            rgba(3,8,18,.92) 0%,
+
+            rgba(3,8,18,.82) 25%,
+
+            rgba(3,8,18,.68) 45%,
+
+            rgba(3,8,18,.45) 70%,
+
+            rgba(3,8,18,.22) 100%
+
+        );
+
+    transition:.4s ease;
+
+}
+.hero-overlay::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+
+            circle at center,
+
+            transparent 45%,
+
+            rgba(0,0,0,.25) 100%
+
+        );
+
+}
+/* ==========================================================
+                    CAPTION
+========================================================== */
+
+.carousel-caption{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    width:100%;
+
+    height:100%;
+
+    padding:0 8%;
+
+    text-align:left;
+
+}
+
+
+/* ==========================================================
+                    CONTENT
+========================================================== */
+
+.hero-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    width:100%;
+
+    max-width:520px;
+
+    animation:fadeHero .8s ease;
+
+}
+
+@keyframes fadeHero{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+/* ==========================================================
+                    HERO TAG
+========================================================== */
+
+.hero-tag{
+
+    display:inline-block;
+
+    margin-bottom:18px;
+
+    color:var(--hero-tag);
+
+    font-size:.78rem;
+
+    font-weight:700;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+}
+
+
+/* ==========================================================
+                    HERO TITLE
+========================================================== */
+
+.hero-content h1{
+
+    margin:0;
+
+    font-size:clamp(3.5rem,7vw,5.8rem);
+
+    line-height:.95;
+
+    font-weight:900;
+
+    color:var(--hero-text);
+
+     text-shadow:
+
+        0 10px 35px rgba(0,0,0,.75);
+
+
+}
+
+
+/* ==========================================================
+                    HERO SUBTITLE
+========================================================== */
+
+.hero-content p{
+
+    margin-top:26px;
+
+    margin-bottom:0;
+
+    max-width:430px;
+
+    font-size:1.2rem;
+
+    line-height:1.8;
+
+    color:var(--hero-sub);
+
+    font-weight:400;
+
+}
+
+
+/* ==========================================================
+                    HOVER EFFECT
+========================================================== */
+
+.carousel-item:hover .hero-content{
+
+    transform:translateY(-4px);
+
+    transition:.35s ease;
+
+}
+
+.carousel-item:hover .hero-content h1{
+
+    text-shadow:
+
+        0 10px 28px rgba(37,99,235,.30);
+
+}
+
+
+/* ==========================================================
+                    IMAGE EFFECT
+========================================================== */
+
+.hero-image{
+
+    filter:
+
+        brightness(.88)
+
+        contrast(1.05)
+
+        saturate(1.05);
+
+}
+
+[data-theme="light"] .hero-image{
+
+    filter:
+
+        brightness(.96)
+
+        contrast(1.05);
+
+}
+
+
+/* ==========================================================
+                    TEXT ANIMATION
+========================================================== */
+
+.hero-tag{
+
+    animation:slideUp .5s ease;
+
+}
+
+.hero-content h1{
+
+    animation:slideUp .75s ease;
+
+}
+
+.hero-content p{
+
+    animation:slideUp 1s ease;
+
+}
+
+@keyframes slideUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+/* ==========================================================
+                    CAROUSEL INDICATORS
+========================================================== */
+
+.carousel-indicators{
+
+    bottom:28px;
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+}
+
+.carousel-indicators button{
+
+    width:42px !important;
+
+    height:5px !important;
+
+    margin:0 !important;
+
+    border:none !important;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.35);
+
+    opacity:1;
+
+    transition:all .35s ease;
+
+}
+
+.carousel-indicators button:hover{
+
+    background:#60a5fa;
+
+}
+
+.carousel-indicators .active{
+
+    width:80px !important;
+
+    background:linear-gradient(
+
+        90deg,
+
+        #2563eb,
+
+        #60a5fa
+
+    );
+
+    box-shadow:
+
+        0 0 20px rgba(37,99,235,.45);
+
+}
+
+
+/* ==========================================================
+                    NAVIGATION BUTTONS
+========================================================== */
+
+.carousel-control-prev,
+
+.carousel-control-next{
+
+    width:80px;
+
+    opacity:1;
+
+}
+/* ==========================================================
+                    NAVIGATION BUTTONS
+========================================================== */
+
+.carousel-control-prev,
+.carousel-control-next{
+
+    width:70px;
+
+    opacity:.9;
+
+    transition:.3s;
+
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover{
+
+    opacity:1;
+
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon{
+
+    width:42px;
+
+    height:42px;
+
+    background-size:100%;
+
+    background-color:transparent;
+
+    border:none;
+
+    box-shadow:none;
+
+}
+
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon{
+
+    background-color:transparent;
+
+    transform:scale(1.08);
+
+}
+
+
+/* ==========================================================
+                    IMAGE HOVER
+========================================================== */
+
+.carousel-item{
+
+    overflow:hidden;
+
+}
+
+.carousel-item:hover .hero-image{
+
+    transform:scale(1.08);
+
+}
+
+
+/* ==========================================================
+                    PREMIUM OVERLAY
+========================================================== */
+
+.hero-overlay{
+
+    transition:.35s ease;
+
+}
+
+.carousel-item:hover .hero-overlay{
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        rgba(5,10,20,.92) 0%,
+
+        rgba(5,10,20,.62) 35%,
+
+        rgba(5,10,20,.22) 65%,
+
+        rgba(5,10,20,0) 100%
+
+    );
+
+}
+
+
+/* ==========================================================
+                    SMOOTH TRANSITIONS
+========================================================== */
+
+.hero-image,
+
+.hero-content,
+
+.hero-tag,
+
+.hero-content h1,
+
+.hero-content p,
+
+.carousel-control-prev-icon,
+
+.carousel-control-next-icon,
+
+.carousel-indicators button{
+
+    transition:all .35s ease;
+
+}
+
+/* ==========================================================
+                    DESKTOP POLISH
+========================================================== */
+
+@media (min-width:1400px){
+
+    .carousel-caption{
+
+        padding-left:10%;
+
+    }
+
+    .hero-content{
+
+        max-width:620px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:6rem;
+
+    }
+
+    .hero-content p{
+
+        max-width:500px;
+
+        font-size:1.3rem;
+
+    }
+
+}
+
+
+/* ==========================================================
+                    TABLET
+========================================================== */
+
+@media (max-width:992px){
+
+    .hero-image{
+
+        height:68vh;
+
+    }
+
+    .carousel-caption{
+
+        justify-content:center;
+
+        align-items:center;
+
+        text-align:center;
+
+        padding:0 40px;
+
+    }
+
+    .hero-content{
+
+        align-items:center;
+
+        max-width:650px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:3.8rem;
+
+        line-height:1.05;
+
+    }
+
+    .hero-content p{
+
+        max-width:520px;
+
+        font-size:1.1rem;
+
+    }
+
+}
+
+
+/* ==========================================================
+                    MOBILE
+========================================================== */
+
+@media (max-width:768px){
+
+    .hero-image{
+
+        height:60vh;
+
+    }
+
+    .carousel-caption{
+
+        padding:0 24px;
+
+    }
+
+    .hero-content{
+
+        align-items:center;
+
+        text-align:center;
+
+    }
+
+    .hero-tag{
+
+        font-size:.72rem;
+
+        letter-spacing:3px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:2.8rem;
+
+        line-height:1.05;
+
+    }
+
+    .hero-content p{
+
+        font-size:1rem;
+
+        line-height:1.7;
+
+        max-width:320px;
+
+    }
+
+    .carousel-control-prev,
+
+    .carousel-control-next{
+
+        display:none;
+
+    }
+
+}
+
+
+/* ==========================================================
+                    SMALL MOBILE
+========================================================== */
+
+@media (max-width:480px){
+
+    .hero-image{
+
+        height:54vh;
+
+    }
+
+    .hero-content h1{
+
+        font-size:2.2rem;
+
+    }
+
+    .hero-content p{
+
+        font-size:.95rem;
+
+        max-width:280px;
+
+    }
+
+}
+
+
+/* ==========================================================
+                    LIGHT THEME
+========================================================== */
+
+[data-theme="light"] .hero-content h1{
+
+    color:#111827;
+
+    text-shadow:none;
+
+}
+
+[data-theme="light"] .hero-content p{
+
+    color:#475569;
+
+}
+
+[data-theme="light"] .hero-tag{
+
+    color:#2563eb;
+
+}
+
+[data-theme="light"] .carousel-control-prev-icon,
+
+[data-theme="light"] .carousel-control-next-icon{
+
+    background-color:rgba(255,255,255,.75);
+
+    border:1px solid rgba(0,0,0,.08);
+
+}
+
+
+/* ==========================================================
+                    DARK THEME
+========================================================== */
+
+[data-theme="dark"] .hero-content h1{
+
+    color:#ffffff;
+
+}
+
+[data-theme="dark"] .hero-content p{
+
+    color:#d1d5db;
+
+}
+
+[data-theme="dark"] .hero-tag{
+
+    color:#60a5fa;
+
+}
+
+
+/* ==========================================================
+                    PERFORMANCE
+========================================================== */
+
+.hero-image,
+
+.hero-content,
+
+.hero-overlay{
+
+    will-change:transform,opacity;
+
+}
+
+
+/* ==========================================================
+                    SELECTION
+========================================================== */
+
+.hero-content h1::selection,
+
+.hero-content p::selection,
+
+.hero-tag::selection{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+

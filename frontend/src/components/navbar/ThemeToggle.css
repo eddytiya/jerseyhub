@@ -1,0 +1,111 @@
+.theme-toggle{
+
+    width:72px;
+
+    height:42px;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 8px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:transparent;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+}
+
+.theme-toggle:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.theme-icon{
+
+    z-index:2;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.sun{
+
+    color:#fbbf24;
+
+}
+
+.moon{
+
+    color:#94a3b8;
+
+}
+
+.theme-slider{
+
+    position:absolute;
+
+    top:3px;
+
+    left:4px;
+
+    width:36px;
+
+    height:36px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+
+        135deg,
+
+        var(--primary),
+
+        var(--primary-hover)
+
+    );
+
+    transition:.3s;
+
+    box-shadow:
+
+        0 10px 22px rgba(37,99,235,.28);
+
+}
+
+/* Dark */
+
+.theme-toggle.dark .theme-slider{
+
+    transform:translateX(36px);
+
+}
+
+/* Light */
+
+.theme-toggle.light .theme-slider{
+
+    transform:translateX(0);
+
+}
+
+.theme-toggle:active{
+
+    transform:scale(.95);
+
+}

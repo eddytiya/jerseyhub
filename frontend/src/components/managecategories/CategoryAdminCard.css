@@ -1,0 +1,393 @@
+/* ==========================================
+            CATEGORY CARD
+========================================== */
+
+.categories-admin-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:26px;
+
+    padding:22px;
+
+    margin-bottom:22px;
+
+    border-radius:22px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.categories-admin-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    bottom:0;
+
+    width:5px;
+
+    background:var(--primary);
+
+}
+
+.categories-admin-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:var(--primary);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ========================================== */
+
+.categories-admin-card-image{
+
+    width:180px;
+
+    height:140px;
+
+    flex-shrink:0;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+}
+
+.categories-admin-card-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.35s;
+
+}
+
+.categories-admin-card:hover img{
+
+    transform:scale(1.06);
+
+}
+
+/* ========================================== */
+
+.categories-admin-card-content{
+
+    flex:1;
+
+}
+
+.categories-admin-card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:16px;
+
+}
+
+.categories-admin-card-top h3{
+
+    margin:0;
+
+    font-size:28px;
+
+    color:var(--text);
+
+    font-weight:800;
+
+}
+
+/* ========================================== */
+
+.categories-admin-card-content p{
+
+    color:var(--text-secondary);
+
+    line-height:1.8;
+
+    margin-bottom:20px;
+
+    display:-webkit-box;
+
+    -webkit-box-orient:vertical;
+
+    -webkit-line-clamp:2;
+
+    line-clamp:2;
+
+    overflow:hidden;
+
+}
+
+/* ==========================================
+            STATUS
+========================================== */
+
+.categories-admin-status{
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    border:1px solid var(--border);
+
+}
+
+.categories-admin-status.featured{
+
+    background:rgba(34,197,94,.12);
+
+    color:var(--success);
+
+}
+
+.categories-admin-status.hidden{
+
+    background:var(--glass);
+
+    color:var(--text-secondary);
+
+}
+
+/* ========================================== */
+
+.categories-admin-count{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:var(--glass);
+
+    border:1px solid var(--border);
+
+    color:var(--primary);
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+            ACTIONS
+========================================== */
+
+.categories-admin-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+/* ========================================== */
+
+.categories-admin-toggle-btn{
+
+    border:none;
+
+    outline:none;
+
+    padding:12px 22px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.3s;
+
+    color:#fff;
+
+}
+
+.show-btn{
+
+    background:var(--success);
+
+}
+
+.show-btn:hover{
+
+    transform:translateY(-3px);
+
+    filter:brightness(.95);
+
+}
+
+.hide-btn{
+
+    background:var(--primary);
+
+}
+
+.hide-btn:hover{
+
+    transform:translateY(-3px);
+
+    background:var(--primary-hover);
+
+}
+
+/* ========================================== */
+
+.categories-admin-icon{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    background:var(--glass);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+    transition:.3s;
+
+    font-size:18px;
+
+}
+
+.categories-admin-icon.edit:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+.categories-admin-icon.delete:hover{
+
+    background:var(--danger);
+
+    color:#fff;
+
+}
+
+.categories-admin-icon:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================
+            RESPONSIVE
+========================================== */
+
+@media(max-width:1000px){
+
+.categories-admin-card{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.categories-admin-card-image{
+
+    width:100%;
+
+    height:230px;
+
+}
+
+.categories-admin-actions{
+
+    width:100%;
+
+    justify-content:flex-end;
+
+}
+
+}
+
+@media(max-width:650px){
+
+.categories-admin-card-top{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.categories-admin-actions{
+
+    width:100%;
+
+    flex-wrap:wrap;
+
+    justify-content:flex-start;
+
+}
+
+.categories-admin-toggle-btn{
+
+    width:100%;
+
+}
+
+}

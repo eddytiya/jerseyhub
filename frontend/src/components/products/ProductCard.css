@@ -1,0 +1,290 @@
+/* ==========================================================
+   PRODUCT CARD - Premium Dark Theme
+   Replace your existing ProductCard.css with this file
+========================================================== */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+    gap:32px;
+    width:100%;
+    margin:40px auto;
+    align-items:start;
+}
+
+.gridddddd-product-card{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    background:var(--card-bg);
+
+    border:1px solid var(--border-color);
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:all .35s ease;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.10);
+
+    backdrop-filter:blur(16px);
+
+}
+.gridddddd-product-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(135deg,rgba(59,130,246,.08),transparent 45%,rgba(255,255,255,.03));
+    pointer-events:none;
+}
+
+.gridddddd-product-card:hover{
+    transform:translateY(-10px) scale(1.02);
+    border-color:#3b82f6;
+    box-shadow:0 0 0 1px rgba(59,130,246,.18),0 25px 45px rgba(37,99,235,.32);
+}
+
+.gridddddd-featured-badge{
+    position:absolute;
+    left:15px;
+    top:15px;
+    padding:6px 14px;
+    border-radius:999px;
+    background:linear-gradient(90deg,#f59e0b,#ea580c);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:700;
+    z-index:5;
+}
+.gridddddd-category-pill{
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(10px);
+
+    color:#fff;
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:.72rem;
+
+    font-weight:600;
+
+    z-index:20;
+}
+.gridddddd-wishlist-btn{
+
+    position:absolute;
+
+    top:60px;
+
+    right:12px;
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.95);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    z-index:12;
+
+    transition:.3s;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+
+}
+
+.gridddddd-wishlist-btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+.gridddddd-wishlist-btn.active{
+
+    color:#ff3b5c;
+
+}
+
+.gridddddd-wishlist-btn:hover{
+    background:#ef4444;
+    transform:scale(1.1);
+}
+
+.gridddddd-product-image{
+    height:280px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--surface-bg);
+    overflow:hidden;
+}
+
+.gridddddd-product-image img{
+    width:82%;
+    height:82%;
+    object-fit:contain;
+    transition:.45s;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,.35));
+}
+
+.gridddddd-product-card:hover .gridddddd-product-image img{
+    transform:scale(1.08) rotate(-3deg) translateY(-5px);
+}
+
+.gridddddd-product-body{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:22px;
+    flex:1;
+    text-align:center;
+}
+
+.gridddddd-product-body h3{
+    margin:0;
+    color:var(--text-primary);
+    font-size:1.15rem;
+    font-weight:700;
+    line-height:1.4;
+    min-height:52px;
+}
+
+.gridddddd-team-name{
+    margin:0;
+    color:var(--text-secondary);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:.8rem;
+    font-weight:600;
+}
+
+.gridddddd-stock{
+    display:inline-flex;
+    align-self:center;
+    padding:7px 15px;
+    border-radius:999px;
+    font-size:.75rem;
+    font-weight:700;
+}
+
+.gridddddd-available{
+    background:rgba(34,197,94,.15);
+    color:#4ade80;
+}
+
+.gridddddd-low-stock{
+    background:rgba(245,158,11,.15);
+    color:#fbbf24;
+}
+
+.gridddddd-unavailable{
+    background:rgba(239,68,68,.15);
+    color:#f87171;
+}
+
+.gridddddd-price{
+    color:#60a5fa;
+    font-size:1.75rem;
+    font-weight:800;
+    margin-top:6px;
+}
+
+.gridddddd-view-btn{
+    margin-top:auto;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    cursor:pointer;
+    color:#fff;
+    font-weight:700;
+    background:linear-gradient(90deg,#2563eb,#4f46e5);
+    transition:.3s;
+}
+
+.gridddddd-view-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(37,99,235,.35);
+}
+
+@media (max-width:768px){
+    .product-grid{
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:20px;
+    }
+
+    .gridddddd-product-image{
+        height:220px;
+    }
+
+    .gridddddd-product-body{
+        padding:18px;
+    }
+
+    .gridddddd-price{
+        font-size:1.5rem;
+    }
+}
+.gridddddd-wishlist-btn{
+
+    transition:.35s;
+
+}
+
+.gridddddd-wishlist-btn.active{
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+.gridddddd-wishlist-btn.active svg{
+
+    animation:wishlistPop .35s;
+
+}
+
+@keyframes wishlistPop{
+
+    0%{
+
+        transform:scale(.7);
+
+    }
+
+    50%{
+
+        transform:scale(1.3);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}

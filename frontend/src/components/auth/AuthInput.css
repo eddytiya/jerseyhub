@@ -1,0 +1,137 @@
+/* ==========================================
+            INPUT GROUP
+========================================== */
+
+.admin-auth-input-group{
+
+    margin-bottom:24px;
+
+}
+
+/* ========================================== */
+
+.admin-auth-input-group label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:var(--text);
+
+}
+
+/* ==========================================
+            INPUT WRAPPER
+========================================== */
+
+.admin-auth-input-wrapper{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    height:58px;
+
+    padding:0 18px;
+
+    border-radius:16px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    transition:
+
+        border-color .3s,
+
+        box-shadow .3s,
+
+        transform .3s;
+
+}
+
+/* ========================================== */
+
+.admin-auth-input-wrapper:focus-within{
+
+    border-color:var(--primary);
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+        0 0 0 4px rgba(37,99,235,.12),
+
+        0 10px 25px rgba(37,99,235,.12);
+
+}
+
+/* ========================================== */
+
+.admin-auth-input-icon{
+
+    font-size:18px;
+
+    color:var(--text-secondary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+/* ========================================== */
+
+.admin-auth-input-wrapper input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+/* ========================================== */
+
+.admin-auth-input-wrapper input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================
+            DARK
+========================================== */
+
+[data-theme="dark"] .admin-auth-input-wrapper{
+
+    background:rgba(255,255,255,.04);
+
+}
+
+/* ==========================================
+            LIGHT
+========================================== */
+
+[data-theme="light"] .admin-auth-input-wrapper{
+
+    background:white;
+
+}
