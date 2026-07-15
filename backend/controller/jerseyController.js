@@ -76,15 +76,16 @@ const addJersey = async (req, res) => {
 const getAllJerseys = async (req, res) => {
     try {
         const jerseys = await Jersey.find()
-.populate("productType");
+            .populate("productType");
 
-        if (jerseys.length > 0) {
-            res.status(200).json(jerseys);
-        } else {
-            res.status(404).json({ message: "No jerseys found" });
-        }
+        // Always return an array.
+        // If there are no jerseys, Jersey.find() already returns [].
+        return res.status(200).json(jerseys);
+
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        return res.status(500).json({
+            message: err.message
+        });
     }
 };
 
