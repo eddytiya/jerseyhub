@@ -21,8 +21,8 @@ const Products = () => {
 
     useEffect(() => {
 
-        axios
-    .get(`${API_URL}/product`)
+      axios
+    .get(`${API_URL}/jersey`)
     .then((resp) => {
         setProducts(resp.data);
     })
