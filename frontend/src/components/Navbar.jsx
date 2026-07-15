@@ -13,14 +13,14 @@ import UserMenu from './navbar/UserMenu'
 import NotificationBell from './navbar/NotificationBell'
 import ThemeToggle from './navbar/ThemeToggle'
 import WishlistButton from './navbar/WishlistButton';
-
+import { FaBars, FaTimes } from "react-icons/fa";
 import "./navbar/AdminNavbar.css";
 
 const Navbar = () => {
 
     const [search, setSearch] = useState('')
     const [userMenuOpen, setUserMenuOpen] = useState(false)
-
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const navigate = useNavigate()
 
     const role = localStorage.getItem('role')
@@ -140,7 +140,20 @@ const Navbar = () => {
                 }
 
             </div>
+                {/* MOBILE MENU BUTTON */}
 
+                <button
+                    className="mobile-menu-btn"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+
+                    {
+                        mobileMenuOpen
+                            ? <FaTimes />
+                            : <FaBars />
+                    }
+
+                </button>
             {/* RIGHT */}
 
             <div className="navbar-right">
