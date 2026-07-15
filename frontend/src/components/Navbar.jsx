@@ -107,39 +107,52 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
             {/* CENTER */}
 
-            <div className="navbar-center">
+
+            <div className="navbar-center desktop-navbar">
 
                 {
-
-                    role === 'admin'
-
-                    &&
-
+                    role === "admin" &&
                     <AdminNavbar />
-
                 }
 
                 {
-
-                    role === 'customer'
-
-                    &&
-
+                    role === "customer" &&
                     <CustomerNavbar />
-
                 }
 
                 {
-
-                    !role
-
-                    &&
-
+                    !role &&
                     <GuestNavbar />
-
                 }
 
             </div>
+
+            {/* MOBILE DROPDOWN */}
+
+            {
+                mobileMenuOpen && (
+
+                    <div className="mobile-navbar">
+
+                        {
+                            role === "admin" &&
+                            <AdminNavbar />
+                        }
+
+                        {
+                            role === "customer" &&
+                            <CustomerNavbar />
+                        }
+
+                        {
+                            !role &&
+                            <GuestNavbar />
+                        }
+
+                    </div>
+
+                )
+            }
                 {/* MOBILE MENU BUTTON */}
 
                 <button
