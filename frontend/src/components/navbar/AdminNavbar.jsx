@@ -1,21 +1,13 @@
 import React from "react";
-
 import { NavLink } from "react-router-dom";
 
 import {
-
     FaTachometerAlt,
-
     FaTshirt,
-
     FaTags,
-
     FaClipboardList,
-
     FaStar,
-
     FaLayerGroup
-
 } from "../../utils/navbarIcons";
 
 const AdminNavbar = () => {
@@ -25,7 +17,7 @@ const AdminNavbar = () => {
         <nav className="admin-navbar">
 
             <NavLink
-                to="/"
+                to="/admin"
                 end
                 className={({ isActive }) =>
                     isActive
@@ -36,9 +28,7 @@ const AdminNavbar = () => {
                 <FaTachometerAlt />
 
                 <span>
-
                     Dashboard
-
                 </span>
 
             </NavLink>
@@ -54,9 +44,7 @@ const AdminNavbar = () => {
                 <FaTshirt />
 
                 <span>
-
                     Jerseys
-
                 </span>
 
             </NavLink>
@@ -72,14 +60,10 @@ const AdminNavbar = () => {
                 <FaTags />
 
                 <span>
-
                     Categories
-
                 </span>
 
             </NavLink>
-
-            {/* NEW PRODUCT TYPES */}
 
             <NavLink
                 to="/product-types"
@@ -92,9 +76,7 @@ const AdminNavbar = () => {
                 <FaLayerGroup />
 
                 <span>
-
                     Product Types
-
                 </span>
 
             </NavLink>
@@ -110,9 +92,7 @@ const AdminNavbar = () => {
                 <FaClipboardList />
 
                 <span>
-
                     Orders
-
                 </span>
 
             </NavLink>
@@ -128,9 +108,7 @@ const AdminNavbar = () => {
                 <FaStar />
 
                 <span>
-
                     Reviews
-
                 </span>
 
             </NavLink>

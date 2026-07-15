@@ -72,18 +72,10 @@ const Navbar = () => {
                     className="logo"
 
                     to={
-
-                        role === 'admin'
-
-                        ?
-
-                        '/'
-
-                        :
-
-                        '/jerseys'
-
-                    }
+    role === "admin"
+        ? "/admin"
+        : "/"
+}
 
                 >
 
