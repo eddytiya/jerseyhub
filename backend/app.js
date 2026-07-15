@@ -36,13 +36,14 @@ connectDB();
 ========================================== */
 
 app.use(
-    cors({
-        origin: [
-            "http://localhost:5173",
-            process.env.FRONTEND_URL
-        ],
-        credentials: true
-    })
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://jerseyhub-git-main-eddytiyaa.vercel.app",
+      "https://jerseyhub-lilac.vercel.app",
+    ],
+    credentials: true,
+  })
 );
 
 app.use(express.json());
