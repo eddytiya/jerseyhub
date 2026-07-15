@@ -23,6 +23,8 @@ const newsletterRoute = require("./route/newsletterRoute");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 /* ==========================================
             DATABASE CONNECTION
 ========================================== */
@@ -56,10 +58,15 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+        proxy: true,
         cookie: {
             maxAge: 1000 * 60 * 60,
-            secure: false
-        }
+            secure: process.env.NODE_ENV === "production",
+            sameSite:
+                process.env.NODE_ENV === "production"
+                    ? "none"
+                    : "lax",
+        },
     })
 );
 
