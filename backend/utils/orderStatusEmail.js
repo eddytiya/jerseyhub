@@ -168,7 +168,7 @@ If you have any questions regarding your order, feel free to contact JerseyHub S
 
 <a
 
-href="http://localhost:5173/orders"
+href="${process.env.FRONTEND_URL}/orders"
 
 style="display:inline-block;padding:16px 40px;background:${color};color:white;text-decoration:none;border-radius:10px;font-weight:bold;">
 

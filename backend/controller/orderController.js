@@ -631,7 +631,7 @@ Paid
 
 <a
 
-href="http://localhost:5173/orders"
+href="${process.env.FRONTEND_URL}/orders"
 
 style="display:inline-block;background:#2563eb;color:white;text-decoration:none;padding:16px 42px;border-radius:10px;font-size:17px;font-weight:bold;">
 
