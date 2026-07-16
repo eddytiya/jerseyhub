@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const dns = require("dns");
 
 /* ==========================================
             DEBUG ENV VARIABLES
@@ -18,10 +19,24 @@ const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
     secure: false, // STARTTLS
-    family: 4,     // Force IPv4
+
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
+    },
+
+    tls: {
+        rejectUnauthorized: false,
+    },
+
+    // Force IPv4
+    getSocket: (options, callback) => {
+        dns.lookup(options.host, { family: 4 }, (err, address) => {
+            if (err) return callback(err);
+
+            options.host = address;
+            callback(null, false);
+        });
     },
 });
 
@@ -42,12 +57,20 @@ transporter.verify((error, success) => {
 ========================================== */
 
 const sendEmail = async ({ to, subject, html }) => {
-    await transporter.sendMail({
-        from: `"JerseyHub ⚽" <${process.env.EMAIL_USER}>`,
-        to,
-        subject,
-        html,
-    });
+    try {
+        const info = await transporter.sendMail({
+            from: `"JerseyHub ⚽" <${process.env.EMAIL_USER}>`,
+            to,
+            subject,
+            html,
+        });
+
+        console.log("✅ Email Sent:", info.messageId);
+    } catch (err) {
+        console.log("❌ Send Email Failed");
+        console.log(err);
+        throw err;
+    }
 };
 
 module.exports = sendEmail;
