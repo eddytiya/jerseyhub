@@ -21,7 +21,7 @@ const Orders = () => {
         if (!userId) return;
 
         axios
-            .get(`${API_URL}/order/user/${userId}`)
+            axios.get(`${API_URL}/order/${userId}`)
             .then((resp) => {
                 setOrders(resp.data);
             })
