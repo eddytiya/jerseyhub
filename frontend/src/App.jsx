@@ -8,6 +8,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer/Footer'
+import CompareBar from './components/compare/CompareBar'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './components/AdminEffects.css'
@@ -55,6 +56,7 @@ const Products = lazy(() => import('./components/products/Products'))
 const ManageCoupons = lazy(() => import('./components/managecoupons/ManageCoupons'))
 const ManageBulkInquiries = lazy(() => import('./components/managecoupons/ManageBulkInquiries'))
 const BulkOrderInquiry = lazy(() => import('./components/Pages/BulkOrderInquiry'))
+const ComparePage = lazy(() => import('./components/compare/ComparePage'))
 
 const RouteLoader = () => (
     <div style={{ padding: '120px 0', textAlign: 'center' }}>
@@ -227,6 +229,10 @@ const App = () => {
                 <Route
                     path="/bulk-order"
                     element={<BulkOrderInquiry />}
+                />
+                <Route
+                    path="/compare"
+                    element={<ComparePage />}
                 />
                 {/* =====================================
                         CUSTOMER ROUTES
@@ -406,6 +412,8 @@ const App = () => {
             <Suspense fallback={null}>
                 <AIAssistant />
             </Suspense>
+
+            <CompareBar />
 
 
         </BrowserRouter>

@@ -65,6 +65,20 @@ const Profile = () => {
 
     }
 
+    const referralLink = profile.referralCode
+
+        ? `${window.location.origin}/register?ref=${profile.referralCode}`
+
+        : ""
+
+    const copyReferralLink = () => {
+
+        navigator.clipboard.writeText(referralLink)
+
+        showSuccess("Referral Link Copied")
+
+    }
+
     const handleDeleteAddress = (id) => {
 
         axios.delete(
@@ -508,6 +522,61 @@ Confirm Password
 
                                         </div>
                                     ))
+                                )
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div className="col-lg-6 mb-4">
+
+                    <div className="card shadow">
+
+                        <div className="card-body">
+
+                            <div className="profile-section-title">
+
+                                <i className="fa-solid fa-award"></i>
+
+                                <span>
+                                    Rewards & Referral
+                                </span>
+
+                            </div>
+
+                            <div className="loyalty-points-box">
+                                <span>Loyalty Points Balance</span>
+                                <strong>{profile.loyaltyPoints || 0}</strong>
+                                <small>1 Point = ₹1 Off At Checkout</small>
+                            </div>
+
+                            {
+                                profile.referralCode && (
+                                    <div className="referral-box">
+
+                                        <span>Your Referral Code</span>
+
+                                        <div className="referral-code-row">
+                                            <code>{profile.referralCode}</code>
+                                        </div>
+
+                                        <p className="referral-hint">
+                                            Share your link — you and your friend
+                                            each get a ₹100 coupon when they sign up.
+                                        </p>
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary btn-sm w-100"
+                                            onClick={copyReferralLink}
+                                        >
+                                            Copy Referral Link
+                                        </button>
+
+                                    </div>
                                 )
                             }
 

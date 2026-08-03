@@ -200,6 +200,46 @@
 
 }
 
+.review-feature-btn{
+
+    background:transparent;
+
+    border:1px solid var(--border);
+
+    color:var(--text-secondary);
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:.3s;
+
+}
+
+.review-feature-btn:hover:not(:disabled){
+
+    border-color:#ef4444;
+
+}
+
+.review-feature-btn:disabled{
+
+    opacity:.4;
+
+    cursor:not-allowed;
+
+}
+
 .review-delete-btn:hover{
 
     background:#dc2626;

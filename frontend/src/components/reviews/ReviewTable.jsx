@@ -7,14 +7,21 @@ import {
 
     FaCheckCircle,
 
-    FaThumbsUp
+    FaThumbsUp,
+
+    FaHeart,
+
+    FaRegHeart
 
 } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
+import { showSuccess, showError } from "../../utils/toastUtils";
 
 import "./ReviewTable.css";
 
 import ReviewModal from "./ReviewModal";
+
+const MAX_FEATURED = 6;
 
 const ReviewTable = ({
 
@@ -27,6 +34,36 @@ const ReviewTable = ({
     refreshReviews
 
 }) => {
+
+    const featuredCount = reviews.filter((r) => r.isHomepageFeatured).length;
+
+    const toggleFeatured = async (id) => {
+
+        try {
+
+            const resp = await axios.put(
+
+                `${API_URL}/review/admin/${id}/feature`,
+
+                {},
+
+                { withCredentials: true }
+
+            );
+
+            showSuccess(resp.data.message);
+
+            refreshReviews();
+
+        }
+
+        catch (err) {
+
+            showError(err.response?.data?.message || "Failed To Update");
+
+        }
+
+    };
 
 
     if (loading) {
@@ -119,6 +156,8 @@ const ReviewTable = ({
 
                         <th>Date</th>
 
+                        <th>Featured ({featuredCount}/{MAX_FEATURED})</th>
+
                         <th>Actions</th>
 
                     </tr>
@@ -189,7 +228,9 @@ const ReviewTable = ({
 
                                     {
 
-                                        review.jersey?.name ||
+                                        review.jersey?.teamName ||
+
+                                        review.jersey?.jerseyName ||
 
                                         "Jersey"
 
@@ -276,6 +317,48 @@ const ReviewTable = ({
                                         ).toLocaleDateString()
 
                                     }
+
+                                </td>
+
+                                <td>
+
+                                    <button
+
+                                        className="review-feature-btn"
+
+                                        disabled={
+
+                                            !review.isHomepageFeatured &&
+
+                                            featuredCount >= MAX_FEATURED
+
+                                        }
+
+                                        title={
+
+                                            review.isHomepageFeatured
+
+                                                ? "Remove From Homepage"
+
+                                                : "Feature On Homepage"
+
+                                        }
+
+                                        onClick={() => toggleFeatured(review._id)}
+
+                                    >
+
+                                        {
+
+                                            review.isHomepageFeatured
+
+                                                ? <FaHeart color="#ef4444" />
+
+                                                : <FaRegHeart />
+
+                                        }
+
+                                    </button>
 
                                 </td>
 

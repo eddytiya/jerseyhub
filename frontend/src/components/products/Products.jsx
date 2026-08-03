@@ -5,6 +5,7 @@ import "./Products.css";
 import API_URL from "../../utils/api";
 import ProductHero from "./ProductHero";
 import ProductToolbar from "./ProductToolbar";
+import ProductFilters from "./ProductFilters";
 import ProductGrid from "./ProductGrid";
 
 const Products = () => {
@@ -18,6 +19,18 @@ const Products = () => {
     const [selectedCategory, setSelectedCategory] = useState("All");
 
     const [sort, setSort] = useState("featured");
+
+    const [filters, setFilters] = useState({
+
+        minPrice: "",
+
+        maxPrice: "",
+
+        sizes: [],
+
+        inStockOnly: false
+
+    });
 
     useEffect(() => {
 
@@ -56,7 +69,39 @@ axios
 
                 : product.category === selectedCategory;
 
-        return nameMatch && categoryMatch;
+        const minPriceMatch =
+
+            filters.minPrice === "" ? true : product.price >= filters.minPrice;
+
+        const maxPriceMatch =
+
+            filters.maxPrice === "" ? true : product.price <= filters.maxPrice;
+
+        const sizeMatch =
+
+            filters.sizes.length === 0
+
+                ? true
+
+                : filters.sizes.some((size) => product.sizes?.includes(size));
+
+        const stockMatch = filters.inStockOnly ? product.stock > 0 : true;
+
+        return (
+
+            nameMatch &&
+
+            categoryMatch &&
+
+            minPriceMatch &&
+
+            maxPriceMatch &&
+
+            sizeMatch &&
+
+            stockMatch
+
+        );
 
     });
 
@@ -103,6 +148,14 @@ axios
                 total={filteredProducts.length}
 
                 categories={categories}
+
+            />
+
+            <ProductFilters
+
+                filters={filters}
+
+                setFilters={setFilters}
 
             />
 

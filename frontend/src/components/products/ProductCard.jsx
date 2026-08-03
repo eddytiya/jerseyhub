@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
 import "./ProductCard.css";
 
 import useWishlist from "../../hooks/useWishlist";
+import { useCompare } from "../compare/CompareContext";
 
 const ProductCard = ({ product }) => {
 
@@ -19,7 +20,15 @@ const ProductCard = ({ product }) => {
 
     } = useWishlist();
 
+    const { compareList, addToCompare, removeFromCompare } = useCompare();
+
     const isWishlisted = wishlist.some(
+
+        (item) => item._id === product._id
+
+    );
+
+    const isComparing = compareList.some(
 
         (item) => item._id === product._id
 
@@ -110,6 +119,38 @@ const ProductCard = ({ product }) => {
                         <FaRegHeart />
 
                 }
+
+            </button>
+
+            {/* Compare */}
+
+            <button
+
+                className={`gridddddd-compare-btn ${isComparing ? "active" : ""}`}
+
+                title="Add To Compare"
+
+                onClick={(e) => {
+
+                    e.stopPropagation();
+
+                    if (isComparing) {
+
+                        removeFromCompare(product._id);
+
+                    }
+
+                    else {
+
+                        addToCompare(product);
+
+                    }
+
+                }}
+
+            >
+
+                <FaBalanceScale />
 
             </button>
 

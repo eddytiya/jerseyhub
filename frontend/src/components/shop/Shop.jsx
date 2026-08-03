@@ -7,12 +7,25 @@ import "./Shop.css";
 import ShopHero from "./ShopHero";
 import ShopToolbar from "./ShopToolbar";
 import ShopGrid from "./ShopGrid";
+import ProductFilters from "../products/ProductFilters";
 
 const Shop = () => {
 
     const [jerseys, setJerseys] = useState([]);
 
     const [search, setSearch] = useState("");
+
+    const [filters, setFilters] = useState({
+
+        minPrice: "",
+
+        maxPrice: "",
+
+        sizes: [],
+
+        inStockOnly: false
+
+    });
 
     useEffect(() => {
 
@@ -28,7 +41,7 @@ const Shop = () => {
 
    const filtered = jerseys.filter((jersey) => {
 
-    return (
+    const nameMatch =
 
         jersey.jerseyName
             .toLowerCase()
@@ -38,9 +51,27 @@ const Shop = () => {
 
         jersey.teamName
             .toLowerCase()
-            .includes(search.toLowerCase())
+            .includes(search.toLowerCase());
 
-    );
+    const minPriceMatch =
+
+        filters.minPrice === "" ? true : jersey.price >= filters.minPrice;
+
+    const maxPriceMatch =
+
+        filters.maxPrice === "" ? true : jersey.price <= filters.maxPrice;
+
+    const sizeMatch =
+
+        filters.sizes.length === 0
+
+            ? true
+
+            : filters.sizes.some((size) => jersey.sizes?.includes(size));
+
+    const stockMatch = filters.inStockOnly ? jersey.stock > 0 : true;
+
+    return nameMatch && minPriceMatch && maxPriceMatch && sizeMatch && stockMatch;
 
 });
 
@@ -63,6 +94,14 @@ const Shop = () => {
                     setSearch={setSearch}
 
                     total={filtered.length}
+
+                />
+
+                <ProductFilters
+
+                    filters={filters}
+
+                    setFilters={setFilters}
 
                 />
 

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import API_URL from "../utils/api";
 import {
 
     FaUser,
 
-    FaEnvelope
+    FaEnvelope,
+
+    FaGift
 
 } from "react-icons/fa";
 
@@ -25,13 +27,17 @@ import AuthButton from "./auth/AuthButton";
 
 const Register = () => {
 
+    const [searchParams] = useSearchParams();
+
     const [user, setUser] = useState({
 
         uname: "",
 
         email: "",
 
-        password: ""
+        password: "",
+
+        referralCode: searchParams.get("ref") || ""
 
     });
 
@@ -162,6 +168,30 @@ const Register = () => {
                             ...user,
 
                             password:e.target.value
+
+                        })
+
+                    }
+
+                />
+
+                <AuthInput
+
+                    label="Referral Code (Optional)"
+
+                    icon={<FaGift />}
+
+                    value={user.referralCode}
+
+                    placeholder="Have a referral code?"
+
+                    onChange={(e)=>
+
+                        setUser({
+
+                            ...user,
+
+                            referralCode:e.target.value.toUpperCase()
 
                         })
 

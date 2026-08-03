@@ -5,10 +5,12 @@ import {
     FaSearchPlus,
     FaHeart,
     FaRegHeart,
-    FaShareAlt
+    FaShareAlt,
+    FaBalanceScale
 } from "react-icons/fa";
 
 import useWishlist from "../../hooks/useWishlist";
+import { useCompare } from "../compare/CompareContext";
 
 import "./ProductGallery.css";
 
@@ -63,6 +65,18 @@ const ProductGallery = ({ jersey }) => {
     } = useWishlist();
 
     const isWishlisted = wishlist.some(
+
+        item => item._id === jersey._id
+
+    );
+
+    /* ==========================================
+                COMPARE
+    ========================================== */
+
+    const { compareList, addToCompare, removeFromCompare } = useCompare();
+
+    const isComparing = compareList.some(
 
         item => item._id === jersey._id
 
@@ -125,6 +139,32 @@ const ProductGallery = ({ jersey }) => {
                 <button>
 
                     <FaShareAlt />
+
+                </button>
+
+                <button
+
+                    title="Add To Compare"
+
+                    onClick={() => {
+
+                        if (isComparing) {
+
+                            removeFromCompare(jersey._id);
+
+                        }
+
+                        else {
+
+                            addToCompare(jersey);
+
+                        }
+
+                    }}
+
+                >
+
+                    <FaBalanceScale color={isComparing ? "#2563eb" : undefined} />
 
                 </button>
 

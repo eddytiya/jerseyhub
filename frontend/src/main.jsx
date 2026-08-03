@@ -22,6 +22,12 @@ import {
 
 } from "./components/wishlist/WishlistContext";
 
+import {
+
+    CompareProvider
+
+} from "./components/compare/CompareContext";
+
 axios.defaults.withCredentials = true;
 
 createRoot(document.getElementById('root')).render(
@@ -38,31 +44,35 @@ createRoot(document.getElementById('root')).render(
 
         <WishlistProvider>
 
-            <ThemeProvider>
+            <CompareProvider>
 
-                <App />
+                <ThemeProvider>
 
-                <ToastContainer
+                    <App />
 
-                    position="top-right"
+                    <ToastContainer
 
-                    autoClose={3000}
+                        position="top-right"
 
-                    hideProgressBar={false}
+                        autoClose={3000}
 
-                    newestOnTop={true}
+                        hideProgressBar={false}
 
-                    closeOnClick
+                        newestOnTop={true}
 
-                    pauseOnHover
+                        closeOnClick
 
-                    draggable
+                        pauseOnHover
 
-                    theme="colored"
+                        draggable
 
-                />
+                        theme="colored"
 
-            </ThemeProvider>
+                    />
+
+                </ThemeProvider>
+
+            </CompareProvider>
 
         </WishlistProvider>
 

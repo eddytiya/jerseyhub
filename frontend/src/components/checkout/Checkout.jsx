@@ -62,6 +62,10 @@ const Checkout = () => {
     const [selectedAddressId, setSelectedAddressId] = useState("");
     const [saveAddress, setSaveAddress] = useState(false);
 
+    const [loyaltyPoints, setLoyaltyPoints] = useState(0);
+    const [pointsToRedeem, setPointsToRedeem] = useState(0);
+    const [usePoints, setUsePoints] = useState(false);
+
     const [form, setForm] = useState({
 
         fullName: "",
@@ -148,6 +152,8 @@ const fetchUser = () => {
 
         }));
 
+        setLoyaltyPoints(resp.data.loyaltyPoints || 0);
+
     })
 
     .catch((err) => {
@@ -229,7 +235,27 @@ const handleSelectAddress = (id) => {
 
     );
 
-    const grandTotal = totalPrice - (appliedCoupon?.discountAmount || 0);
+    const maxRedeemablePoints = Math.min(
+
+        loyaltyPoints,
+
+        Math.max(0, totalPrice - (appliedCoupon?.discountAmount || 0))
+
+    );
+
+    const effectivePointsRedeemed = usePoints
+
+        ? Math.min(pointsToRedeem, maxRedeemablePoints)
+
+        : 0;
+
+    const grandTotal =
+
+        totalPrice -
+
+        (appliedCoupon?.discountAmount || 0) -
+
+        effectivePointsRedeemed;
 
     const handleApplyCoupon = () => {
 
@@ -445,7 +471,9 @@ const startRazorpayPayment = async () => {
 
                         deliveryInfo: form,
 
-                        couponCode: appliedCoupon?.code
+                        couponCode: appliedCoupon?.code,
+
+                        redeemPoints: effectivePointsRedeemed
 
                     }
 
@@ -616,7 +644,9 @@ if (paymentMethod === "COD") {
 
             paymentMethod,
 
-            couponCode: appliedCoupon?.code
+            couponCode: appliedCoupon?.code,
+
+            redeemPoints: effectivePointsRedeemed
 
         }
 
@@ -1026,6 +1056,49 @@ return (
 
                 </div>
 
+                {
+                    userId && loyaltyPoints > 0 && (
+                        <div className="coupon-box">
+
+                            <label className="save-address-checkbox">
+                                <input
+                                    type="checkbox"
+                                    checked={usePoints}
+                                    onChange={(e) => {
+                                        setUsePoints(e.target.checked);
+                                        if (e.target.checked && pointsToRedeem === 0) {
+                                            setPointsToRedeem(maxRedeemablePoints);
+                                        }
+                                    }}
+                                />
+                                Use Loyalty Points ({loyaltyPoints} Available)
+                            </label>
+
+                            {
+                                usePoints && (
+                                    <div className="coupon-input-row" style={{ marginTop: "10px" }}>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max={maxRedeemablePoints}
+                                            value={pointsToRedeem}
+                                            onChange={(e) =>
+                                                setPointsToRedeem(
+                                                    Math.max(0, Math.min(Number(e.target.value), maxRedeemablePoints))
+                                                )
+                                            }
+                                        />
+                                        <span style={{ color: "var(--text-secondary)", fontSize: "13px" }}>
+                                            = ₹{effectivePointsRedeemed} Off
+                                        </span>
+                                    </div>
+                                )
+                            }
+
+                        </div>
+                    )
+                }
+
                 <div className="shipping-row">
 
                     <span>
@@ -1050,6 +1123,19 @@ return (
                             </span>
                             <strong>
                                 -₹{appliedCoupon.discountAmount}
+                            </strong>
+                        </div>
+                    )
+                }
+
+                {
+                    effectivePointsRedeemed > 0 && (
+                        <div className="shipping-row discount-row">
+                            <span>
+                                Points Redeemed
+                            </span>
+                            <strong>
+                                -₹{effectivePointsRedeemed}
                             </strong>
                         </div>
                     )
