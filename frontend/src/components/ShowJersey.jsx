@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../utils/api";
 import {
     showSuccess,
-    showError,
-    showWarning
+    showError
 } from "../utils/toastUtils";
 
 import Breadcrumb from "./productDetails/Breadcrumb";
@@ -14,6 +13,9 @@ import ProductInfo from "./productDetails/ProductInfo";
 import ProductActions from "./productDetails/ProductActions";
 import ProductTabs from "./productDetails/ProductTabs";
 import RelatedProducts from "./productDetails/RelatedProducts";
+import RecentlyViewed from "./productDetails/RecentlyViewed";
+import { trackRecentlyViewed } from "../utils/recentlyViewed";
+import useSEO from "../hooks/useSEO";
 
 import "./productDetails/ShowJersey.css";
 
@@ -25,9 +27,19 @@ const ShowJersey = () => {
 
     const { id } = useParams();
 
-    const navigate = useNavigate();
+    useSEO({
 
-    const userId = localStorage.getItem("userId");
+        title: jersey._id
+            ? `${jersey.teamName} - ${jersey.jerseyName}`
+            : "",
+
+        description: jersey.description
+            ? jersey.description.slice(0, 160)
+            : "Shop authentic football jerseys at JerseyHub.",
+
+        image: jersey.imageUrl
+
+    });
 
     useEffect(() => {
 
@@ -38,6 +50,8 @@ const ShowJersey = () => {
             .then((resp) => {
 
                 setJersey(resp.data);
+
+                trackRecentlyViewed(resp.data._id);
 
             })
 
@@ -74,16 +88,6 @@ const ShowJersey = () => {
 
     const handleAddToCart = () => {
 
-        if (!userId) {
-
-            showWarning("Please login first");
-
-            navigate("/login");
-
-            return;
-
-        }
-
         axios
 
             .post(
@@ -92,11 +96,15 @@ const ShowJersey = () => {
 
                 {
 
-                    userId,
-
                     jerseyId: jersey._id,
 
                     quantity: 1
+
+                },
+
+                {
+
+                    withCredentials: true
 
                 }
 
@@ -165,6 +173,8 @@ const ShowJersey = () => {
         <ProductTabs jersey={jersey} />
 
         <RelatedProducts jerseys={relatedProducts} />
+
+        <RecentlyViewed excludeId={jersey._id} />
 
     </div>
 

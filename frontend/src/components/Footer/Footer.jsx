@@ -306,6 +306,12 @@ const subscribeNewsletter = async () => {
 
                         </Link>
 
+                        <Link to="/bulk-order">
+
+                            Bulk / Team Orders
+
+                        </Link>
+
                     </div>
 
                     {/* ================= LEGAL ================= */}

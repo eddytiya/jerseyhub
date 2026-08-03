@@ -1,49 +1,66 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from './components/Navbar'
 import Home from './components/Home'
-import AddJersey from './components/AddJersey'
-import EditJersey from './components/EditJersey'
-import ShowJersey from './components/ShowJersey'
 import Register from './components/Register'
 import Login from './components/Login'
-import CategoryPage from './components/CategoryPage'
-import Categories from './components/Categories'
-import SearchResults from './components/SearchResults'
-import AdminDashboard from './components/AdminDashboard'
-import ManageJerseys from './components/ManageJerseys'
-import Cart from './components/Cart'
-import Orders from './components/orders/Orders'
-import ManageOrders from './components/ManageOrders'
 import AdminRoute from './components/AdminRoute'
-import OrderDetailsPage from "./components/orders/OrderDetailsPage";
-import Wishlist from "./components/Wishlist";
-import ManageReviews from "./components/reviews/ManageReviews";
-import Checkout from "./components/checkout/Checkout";
-import OrderSuccess from "./components/OrderSuccess";
-import ManageProductTypes from "./components/ManageProductTypes";
-import AIAssistant from "./components/AIAssistant/AIAssistant";
-import ReviewsSection from "./components/Home/Reviews/ReviewsSection";
-import Footer from "./components/Footer/Footer";
-import ManageSubscribers from "./components/Newsletter/ManageSubscribers";
-import ReturnPolicy from "./components/Pages/ReturnPolicy";
-import ShippingPolicy from "./components/Pages/ShippingPolicy";
-import PrivacyPolicy from "./components/Pages/PrivacyPolicy";
-import TermsConditions from "./components/Pages/TermsConditions";
-import FAQ from "./components/Pages/FAQ";
-import ContactUs from "./components/Pages/ContactUs";
+import Footer from './components/Footer/Footer'
 
-import OrderDetails from './components/OrderDetails'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import AddCategory from './components/AddCategory'
-import ManageCategories from './components/ManageCategories'
-import EditCategory from './components/EditCategory'
-import Profile from './components/Profile'
 import './components/AdminEffects.css'
-import Shop from './components/shop'
-import Products from "./components/products/Products";
+
+/* =====================================
+        LAZY-LOADED ROUTES
+        (split out of the main bundle —
+        admin panel, checkout, and the
+        static pages aren't needed on
+        first paint)
+===================================== */
+
+const AddJersey = lazy(() => import('./components/AddJersey'))
+const EditJersey = lazy(() => import('./components/EditJersey'))
+const ShowJersey = lazy(() => import('./components/ShowJersey'))
+const CategoryPage = lazy(() => import('./components/CategoryPage'))
+const Categories = lazy(() => import('./components/Categories'))
+const SearchResults = lazy(() => import('./components/SearchResults'))
+const AdminDashboard = lazy(() => import('./components/AdminDashboard'))
+const ManageJerseys = lazy(() => import('./components/ManageJerseys'))
+const Cart = lazy(() => import('./components/Cart'))
+const Orders = lazy(() => import('./components/orders/Orders'))
+const ManageOrders = lazy(() => import('./components/ManageOrders'))
+const OrderDetailsPage = lazy(() => import('./components/orders/OrderDetailsPage'))
+const Wishlist = lazy(() => import('./components/Wishlist'))
+const ManageReviews = lazy(() => import('./components/reviews/ManageReviews'))
+const Checkout = lazy(() => import('./components/checkout/Checkout'))
+const OrderSuccess = lazy(() => import('./components/OrderSuccess'))
+const ManageProductTypes = lazy(() => import('./components/ManageProductTypes'))
+const AIAssistant = lazy(() => import('./components/AIAssistant/AIAssistant'))
+const ManageSubscribers = lazy(() => import('./components/Newsletter/ManageSubscribers'))
+const ReturnPolicy = lazy(() => import('./components/Pages/ReturnPolicy'))
+const ShippingPolicy = lazy(() => import('./components/Pages/ShippingPolicy'))
+const PrivacyPolicy = lazy(() => import('./components/Pages/PrivacyPolicy'))
+const TermsConditions = lazy(() => import('./components/Pages/TermsConditions'))
+const FAQ = lazy(() => import('./components/Pages/FAQ'))
+const ContactUs = lazy(() => import('./components/Pages/ContactUs'))
+const OrderDetails = lazy(() => import('./components/OrderDetails'))
+const AddCategory = lazy(() => import('./components/AddCategory'))
+const ManageCategories = lazy(() => import('./components/ManageCategories'))
+const EditCategory = lazy(() => import('./components/EditCategory'))
+const Profile = lazy(() => import('./components/Profile'))
+const Shop = lazy(() => import('./components/shop'))
+const Products = lazy(() => import('./components/products/Products'))
+const ManageCoupons = lazy(() => import('./components/managecoupons/ManageCoupons'))
+const ManageBulkInquiries = lazy(() => import('./components/managecoupons/ManageBulkInquiries'))
+const BulkOrderInquiry = lazy(() => import('./components/Pages/BulkOrderInquiry'))
+
+const RouteLoader = () => (
+    <div style={{ padding: '120px 0', textAlign: 'center' }}>
+        Loading...
+    </div>
+)
 
 const App = () => {
 
@@ -54,6 +71,8 @@ const App = () => {
             {/* Global Navigation Bar */}
 
             <Navbar />
+
+            <Suspense fallback={<RouteLoader />}>
 
             <Routes>
 
@@ -166,7 +185,7 @@ const App = () => {
 
                 />
 
-                
+
 
                 <Route
                     path="/manage-orders/:id"
@@ -189,6 +208,26 @@ const App = () => {
         </AdminRoute>
     }
 />
+                <Route
+    path="/manage-coupons"
+    element={
+        <AdminRoute>
+            <ManageCoupons />
+        </AdminRoute>
+    }
+/>
+                <Route
+    path="/manage-bulk-inquiries"
+    element={
+        <AdminRoute>
+            <ManageBulkInquiries />
+        </AdminRoute>
+    }
+/>
+                <Route
+                    path="/bulk-order"
+                    element={<BulkOrderInquiry />}
+                />
                 {/* =====================================
                         CUSTOMER ROUTES
                 ===================================== */}
@@ -332,6 +371,7 @@ const App = () => {
 
                         </Routes>
 
+            </Suspense>
 
                         {/* =====================================
             GLOBAL FOOTER
@@ -363,8 +403,10 @@ const App = () => {
                     GLOBAL AI ASSISTANT
             ===================================== */}
 
-            <AIAssistant />
-            
+            <Suspense fallback={null}>
+                <AIAssistant />
+            </Suspense>
+
 
         </BrowserRouter>
 

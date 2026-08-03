@@ -24,9 +24,9 @@
 
     max-width:95%;
 
-    background:#1f2937;
+    background:var(--card);
 
-    color:#fff;
+    color:var(--text);
 
     border-radius:20px;
 
@@ -130,7 +130,7 @@
 
     line-height:1.9;
 
-    color:#d1d5db;
+    color:var(--text-secondary);
 
     margin-bottom:25px;
 
@@ -190,7 +190,7 @@
 
     margin-top:8px;
 
-    color:#d1d5db;
+    color:var(--text-secondary);
 
 }
 
@@ -215,7 +215,7 @@ font-size:13px;
 
 font-weight:600;
 
-color:#8ca3c7;
+color:var(--text-secondary);
 
 margin-bottom:6px;
 
@@ -229,7 +229,7 @@ font-size:15px;
 
 font-weight:600;
 
-color:#fff;
+color:var(--text);
 
 }
 

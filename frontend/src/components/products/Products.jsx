@@ -33,7 +33,7 @@ axios
     .then((resp) => {
         setCategories([
             "All",
-            ...resp.data.map((category) => category.categoryName),
+            ...resp.data.map((category) => category.name),
         ]);
     })
     .catch((err) => console.log(err));

@@ -31,7 +31,6 @@ const Cart = () => {
 
     const [cartItems, setCartItems] = useState([])
 
-    const userId = localStorage.getItem('userId')
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -47,11 +46,7 @@ const buyNow = new URLSearchParams(
 
     useEffect(() => {
 
-    if (userId) {
-
-        fetchCart()
-
-    }
+    fetchCart()
 
 }, [])
 const fetchCart = () => {
@@ -60,13 +55,13 @@ const fetchCart = () => {
 
         ?
 
-        `${API_URL}/cart/buy-now/${userId}`
+        `${API_URL}/cart/buy-now/me`
 
         :
 
-        `${API_URL}/cart/${userId}`;
+        `${API_URL}/cart/me`;
 
-    axios.get(url)
+    axios.get(url, { withCredentials: true })
 
     .then((resp) => {
 

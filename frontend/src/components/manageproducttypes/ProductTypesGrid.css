@@ -10,7 +10,7 @@
 
 .product-types-empty{
 
-    background:#fff;
+    background:var(--card);
 
     border-radius:22px;
 
@@ -18,13 +18,13 @@
 
     text-align:center;
 
-    border:2px dashed #dbeafe;
+    border:2px dashed var(--border);
 
 }
 
 .product-types-empty h2{
 
-    color:#111827;
+    color:var(--text);
 
     font-size:28px;
 
@@ -34,7 +34,7 @@
 
 .product-types-empty p{
 
-    color:#6b7280;
+    color:var(--text-secondary);
 
     font-size:16px;
 

@@ -48,7 +48,7 @@ const ManageReviews = () => {
 
             setReviews(
 
-                resp.data
+                resp.data.reviews
 
             );
 

@@ -42,7 +42,8 @@ FaFire,
     FaLayerGroup,FaRobot,
 FaTimes,
 FaPaperPlane,
-FaQuestionCircle
+FaQuestionCircle,
+FaUsers
 
 } from "react-icons/fa";
 
@@ -105,6 +106,6 @@ FaShippingFast,
     FiFilter,FaLayerGroup,FaFutbol,FaRobot,
 FaTimes,
 FaPaperPlane,
-FaQuestionCircle,FaFire
+FaQuestionCircle,FaFire,FaUsers
 
 };

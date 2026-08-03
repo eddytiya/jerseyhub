@@ -19,9 +19,9 @@
 
     border-radius:28px;
 
-    background:linear-gradient(145deg,#181c28,#121722);
+    background:var(--card);
 
-    border:1px solid rgba(255,255,255,.06);
+    border:1px solid var(--border);
 
     overflow:hidden;
 
@@ -327,7 +327,7 @@
 
     font-weight:700;
 
-    border:3px solid #181c28;
+    border:3px solid var(--card);
 
     box-shadow:
 
@@ -376,7 +376,7 @@
 
     font-weight:800;
 
-    color:#ffffff;
+    color:var(--text);
 
     letter-spacing:-0.5px;
 
@@ -436,7 +436,7 @@
 
     margin:0;
 
-    color:#d1d5db;
+    color:var(--text-secondary);
 
     font-size:15px;
 
@@ -448,7 +448,7 @@
 
 .order-row:hover .ordered-product{
 
-    color:#ffffff;
+    color:var(--text);
 
 }
 
@@ -492,9 +492,9 @@
 
     border-radius:999px;
 
-    background:rgba(255,255,255,.04);
+    background:var(--hover-bg);
 
-    color:#b8c2d1;
+    color:var(--text-secondary);
 
     font-size:13px;
 
@@ -592,7 +592,7 @@
 
 .order-price-box small{
 
-    color:#94a3b8;
+    color:var(--text-secondary);
 
     font-size:13px;
 
@@ -608,7 +608,7 @@
 
     margin:0;
 
-    color:white;
+    color:var(--text);
 
     font-size:42px;
 

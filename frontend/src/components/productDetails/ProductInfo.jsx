@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaCalendarAlt, FaTshirt, FaRulerHorizontal } from "react-icons/fa";
+import SizeGuideModal from "./SizeGuideModal";
+import ShareButtons from "./ShareButtons";
 
 const ProductInfo = ({ jersey }) => {
+
+    const [showSizeGuide, setShowSizeGuide] = useState(false);
 
     return (
 
@@ -60,31 +65,68 @@ const ProductInfo = ({ jersey }) => {
 
             <div className="product-meta">
 
-                <p>
+                <div className="meta-badge">
 
-                    <strong>Season:</strong> {jersey.season}
+                    <FaCalendarAlt />
 
-                </p>
+                    <div>
+                        <span className="meta-label">Season</span>
+                        <strong>{jersey.season}</strong>
+                    </div>
 
-                <p>
+                </div>
 
-                    <strong>Type:</strong> {jersey.type}
+                {
+                    jersey.productType?.typeName && (
+                        <div className="meta-badge">
 
-                </p>
+                            <FaTshirt />
 
-                <p>
+                            <div>
+                                <span className="meta-label">Type</span>
+                                <strong>{jersey.productType.typeName}</strong>
+                            </div>
 
-                    <strong>Sizes:</strong>
+                        </div>
+                    )
+                }
 
-                    {
+                <div className="meta-badge sizes-meta">
 
-                        jersey.sizes?.join(", ")
+                    <FaRulerHorizontal />
 
-                    }
+                    <div>
+                        <span className="meta-label">Sizes</span>
+                        <div className="size-pills">
+                            {
+                                jersey.sizes?.map((size) => (
+                                    <span className="size-pill" key={size}>
+                                        {size}
+                                    </span>
+                                ))
+                            }
+                        </div>
+                    </div>
 
-                </p>
+                    <button
+                        type="button"
+                        className="size-guide-trigger"
+                        onClick={() => setShowSizeGuide(true)}
+                    >
+                        Size Guide
+                    </button>
+
+                </div>
 
             </div>
+
+            <ShareButtons title={`${jersey.teamName} - ${jersey.jerseyName}`} />
+
+            {
+                showSizeGuide && (
+                    <SizeGuideModal onClose={() => setShowSizeGuide(false)} />
+                )
+            }
 
         </div>
 

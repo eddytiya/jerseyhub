@@ -7,7 +7,9 @@ import {
     FaTags,
     FaClipboardList,
     FaStar,
-    FaLayerGroup
+    FaLayerGroup,
+    FaGift,
+    FaUsers
 } from "../../utils/navbarIcons";
 
 const AdminNavbar = () => {
@@ -109,6 +111,38 @@ const AdminNavbar = () => {
 
                 <span>
                     Reviews
+                </span>
+
+            </NavLink>
+
+            <NavLink
+                to="/manage-coupons"
+                className={({ isActive }) =>
+                    isActive
+                        ? "admin-nav-link active"
+                        : "admin-nav-link"
+                }
+            >
+                <FaGift />
+
+                <span>
+                    Coupons
+                </span>
+
+            </NavLink>
+
+            <NavLink
+                to="/manage-bulk-inquiries"
+                className={({ isActive }) =>
+                    isActive
+                        ? "admin-nav-link active"
+                        : "admin-nav-link"
+                }
+            >
+                <FaUsers />
+
+                <span>
+                    Bulk Orders
                 </span>
 
             </NavLink>

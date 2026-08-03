@@ -1,12 +1,12 @@
 .review-table-wrapper{
 
-    background:#1f2937;
+    background:var(--card);
 
     border-radius:18px;
 
     overflow:hidden;
 
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid var(--border);
 
 }
 
@@ -20,9 +20,9 @@
 
 .review-table th{
 
-    background:#111827;
+    background:var(--bg-secondary);
 
-    color:#fff;
+    color:var(--text);
 
     padding:18px;
 
@@ -36,9 +36,9 @@
 
     padding:18px;
 
-    border-top:1px solid rgba(255,255,255,.08);
+    border-top:1px solid var(--border);
 
-    color:#d1d5db;
+    color:var(--text-secondary);
 
     vertical-align:middle;
 
@@ -168,9 +168,9 @@
 
 .review-table-empty{
 
-    background:#1f2937;
+    background:var(--card);
 
-    color:#fff;
+    color:var(--text);
 
     padding:60px;
 

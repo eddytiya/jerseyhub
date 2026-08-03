@@ -20,8 +20,7 @@ const Orders = () => {
     useEffect(() => {
         if (!userId) return;
 
-        axios
-            axios.get(`${API_URL}/order/${userId}`)
+        axios.get(`${API_URL}/order/${userId}`)
             .then((resp) => {
                 setOrders(resp.data);
             })

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams, NavLink } from 'react-router-dom'
 import API_URL from "../utils/api";
+import { showSuccess, showError } from "../utils/toastUtils";
 const OrderDetails = () => {
 
     const { id } = useParams()
 
     const [order, setOrder] = useState(null)
 
-    useEffect(() => {
+    const fetchOrder = () => {
 
         axios.get(
 
@@ -32,7 +33,41 @@ const OrderDetails = () => {
 
         })
 
+    }
+
+    useEffect(() => {
+
+        fetchOrder()
+
     }, [id])
+
+    const handleReturnStatus = (returnStatus) => {
+
+        axios.put(
+
+            `${API_URL}/order/${order._id}/return-status`,
+
+            { returnStatus },
+
+            { withCredentials: true }
+
+        )
+
+        .then(() => {
+
+            showSuccess(`Return ${returnStatus}`)
+
+            fetchOrder()
+
+        })
+
+        .catch((err) => {
+
+            showError(err.response?.data?.message || "Failed To Update Return Status")
+
+        })
+
+    }
 
     if (!order) {
 
@@ -91,7 +126,7 @@ const OrderDetails = () => {
 
                                     <h5>Name</h5>
 
-                                    <p>{order.customer?.uname}</p>
+                                    <p>{order.customer?.uname || order.deliveryInfo?.fullName} {!order.customer && <small>(Guest)</small>}</p>
 
                                 </div>
 
@@ -99,7 +134,7 @@ const OrderDetails = () => {
 
                                     <h5>Email</h5>
 
-                                    <p>{order.customer?.email}</p>
+                                    <p>{order.customer?.email || order.deliveryInfo?.email}</p>
 
                                 </div>
 
@@ -234,6 +269,64 @@ const OrderDetails = () => {
                         </div>
 
                     </div>
+
+                    {/* Return / Refund */}
+
+                    {
+                        order.returnStatus !== "None" && (
+                            <div className="card mb-4">
+
+                                <div className="card-header bg-warning text-dark">
+                                    Return / Refund Request
+                                </div>
+
+                                <div className="card-body">
+
+                                    <p>
+                                        Status :{" "}
+                                        <span className="badge bg-secondary">
+                                            {order.returnStatus}
+                                        </span>
+                                    </p>
+
+                                    {order.returnReason && (
+                                        <p>Reason : {order.returnReason}</p>
+                                    )}
+
+                                    {order.returnStatus === "Requested" && (
+                                        <div className="d-flex gap-2 mt-3">
+
+                                            <button
+                                                className="btn btn-success"
+                                                onClick={() => handleReturnStatus("Approved")}
+                                            >
+                                                Approve
+                                            </button>
+
+                                            <button
+                                                className="btn btn-danger"
+                                                onClick={() => handleReturnStatus("Rejected")}
+                                            >
+                                                Reject
+                                            </button>
+
+                                        </div>
+                                    )}
+
+                                    {order.returnStatus === "Approved" && (
+                                        <button
+                                            className="btn btn-primary mt-3"
+                                            onClick={() => handleReturnStatus("Refunded")}
+                                        >
+                                            Mark As Refunded
+                                        </button>
+                                    )}
+
+                                </div>
+
+                            </div>
+                        )
+                    }
 
                     {/* Timeline */}
 

@@ -54,6 +54,14 @@ const Checkout = () => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("COD");
 
+    const [couponInput, setCouponInput] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
+    const [couponLoading, setCouponLoading] = useState(false);
+
+    const [savedAddresses, setSavedAddresses] = useState([]);
+    const [selectedAddressId, setSelectedAddressId] = useState("");
+    const [saveAddress, setSaveAddress] = useState(false);
+
     const [form, setForm] = useState({
 
         fullName: "",
@@ -81,6 +89,8 @@ const Checkout = () => {
     fetchCart();
 
     fetchUser();
+
+    fetchAddresses();
 
 }, []);
 
@@ -148,6 +158,63 @@ const fetchUser = () => {
 
 };
 
+    /* ==========================================
+            SAVED ADDRESSES
+========================================== */
+
+const fetchAddresses = () => {
+
+    axios.get(
+
+        `${API_URL}/profile/addresses`,
+
+        { withCredentials: true }
+
+    )
+
+    .then((resp) => {
+
+        setSavedAddresses(resp.data);
+    })
+
+    .catch(() => {});
+
+};
+
+const handleSelectAddress = (id) => {
+
+    setSelectedAddressId(id);
+
+    const addr = savedAddresses.find((a) => a._id === id);
+
+    if (addr) {
+
+        setForm((prev) => ({
+
+            ...prev,
+
+            fullName: addr.fullName,
+
+            phone: addr.phone,
+
+            address1: addr.address1,
+
+            address2: addr.address2 || "",
+
+            city: addr.city,
+
+            state: addr.state,
+
+            pincode: addr.pincode,
+
+            landmark: addr.landmark || ""
+
+        }));
+
+    }
+
+};
+
     const totalPrice = cartItems.reduce(
 
         (total, item) =>
@@ -161,6 +228,76 @@ const fetchUser = () => {
         0
 
     );
+
+    const grandTotal = totalPrice - (appliedCoupon?.discountAmount || 0);
+
+    const handleApplyCoupon = () => {
+
+        if (!couponInput.trim()) return;
+
+        setCouponLoading(true);
+
+        axios.post(
+
+            `${API_URL}/coupon/validate`,
+
+            {
+
+                code: couponInput.trim(),
+
+                orderAmount: totalPrice
+
+            },
+
+            {
+
+                withCredentials: true
+
+            }
+
+        )
+
+        .then((resp) => {
+
+            setAppliedCoupon({
+
+                code: resp.data.code,
+
+                discountAmount: resp.data.discountAmount
+
+            });
+
+        })
+
+        .catch((err) => {
+
+            setAppliedCoupon(null);
+
+            showError(
+
+                err.response?.data?.message ||
+
+                "Invalid Coupon"
+
+            );
+
+        })
+
+        .finally(() => {
+
+            setCouponLoading(false);
+
+        });
+
+    };
+
+    const handleRemoveCoupon = () => {
+
+        setAppliedCoupon(null);
+
+        setCouponInput("");
+
+    };
 
     const handleChange = (e) => {
 
@@ -254,7 +391,7 @@ const startRazorpayPayment = async () => {
 
             {
 
-                amount: totalPrice
+                amount: grandTotal
 
             }
 
@@ -292,13 +429,83 @@ const startRazorpayPayment = async () => {
 
             handler: function (response) {
 
-                console.log(response);
+                axios.post(
+
+                    `${API_URL}/order/verify-payment`,
+
+                    {
+
+                        razorpay_order_id: response.razorpay_order_id,
+
+                        razorpay_payment_id: response.razorpay_payment_id,
+
+                        razorpay_signature: response.razorpay_signature,
+
+                        buyNow: buyNow === "true",
+
+                        deliveryInfo: form,
+
+                        couponCode: appliedCoupon?.code
+
+                    }
+
+                )
+
+                .then((resp) => {
+
+                    navigate("/order-success", {
+
+                        state: {
+
+                            order: resp.data.order
+
+                        }
+
+                    });
+
+                })
+
+                .catch((err) => {
+
+                    showError(
+
+                        err.response?.data?.message ||
+
+                        "Payment Verification Failed"
+
+                    );
+
+                })
+
+                .finally(() => {
+
+                    setLoading(false);
+
+                });
+
+            },
+
+            modal: {
+
+                ondismiss: function () {
+
+                    setLoading(false);
+
+                }
 
             }
 
         };
 
         const razor = new window.Razorpay(options);
+
+        razor.on("payment.failed", function () {
+
+            showError("Payment Failed. Please try again.");
+
+            setLoading(false);
+
+        });
 
         razor.open();
 
@@ -313,10 +520,6 @@ const startRazorpayPayment = async () => {
             "Unable to start payment."
 
         );
-
-    }
-
-    finally {
 
         setLoading(false);
 
@@ -381,6 +584,20 @@ const confirmPlaceOrder = () => {
 
     }
 
+    if (saveAddress && userId) {
+
+        axios.post(
+
+            `${API_URL}/profile/addresses`,
+
+            form,
+
+            { withCredentials: true }
+
+        ).catch(() => {});
+
+    }
+
     setLoading(true);
 
 if (paymentMethod === "COD") {
@@ -397,7 +614,9 @@ if (paymentMethod === "COD") {
 
             deliveryInfo: form,
 
-            paymentMethod
+            paymentMethod,
+
+            couponCode: appliedCoupon?.code
 
         }
 
@@ -462,6 +681,25 @@ return (
                 Delivery Information
 
             </h2>
+
+            {
+                savedAddresses.length > 0 && (
+                    <div className="saved-address-row">
+                        {
+                            savedAddresses.map((addr) => (
+                                <button
+                                    type="button"
+                                    key={addr._id}
+                                    className={`saved-address-chip ${selectedAddressId === addr._id ? "active" : ""}`}
+                                    onClick={() => handleSelectAddress(addr._id)}
+                                >
+                                    {addr.label || "Address"} — {addr.city}
+                                </button>
+                            ))
+                        }
+                    </div>
+                )
+            }
 
             <div className="checkout-grid">
 
@@ -550,6 +788,19 @@ return (
                 />
 
             </div>
+
+            {
+                userId && (
+                    <label className="save-address-checkbox">
+                        <input
+                            type="checkbox"
+                            checked={saveAddress}
+                            onChange={(e) => setSaveAddress(e.target.checked)}
+                        />
+                        Save This Address For Next Time
+                    </label>
+                )
+            }
 
             <div className="payment-box">
 
@@ -739,6 +990,42 @@ return (
 
                 <hr />
 
+                <div className="coupon-box">
+
+                    {
+                        appliedCoupon ? (
+                            <div className="coupon-applied">
+                                <span>
+                                    🎟 {appliedCoupon.code} Applied
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={handleRemoveCoupon}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="coupon-input-row">
+                                <input
+                                    type="text"
+                                    placeholder="Coupon Code"
+                                    value={couponInput}
+                                    onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                                />
+                                <button
+                                    type="button"
+                                    disabled={couponLoading}
+                                    onClick={handleApplyCoupon}
+                                >
+                                    {couponLoading ? "..." : "Apply"}
+                                </button>
+                            </div>
+                        )
+                    }
+
+                </div>
+
                 <div className="shipping-row">
 
                     <span>
@@ -755,6 +1042,19 @@ return (
 
                 </div>
 
+                {
+                    appliedCoupon && (
+                        <div className="shipping-row discount-row">
+                            <span>
+                                Discount ({appliedCoupon.code})
+                            </span>
+                            <strong>
+                                -₹{appliedCoupon.discountAmount}
+                            </strong>
+                        </div>
+                    )
+                }
+
                 <div className="summary-total">
 
                     <h2>
@@ -769,7 +1069,7 @@ return (
 
                         {
 
-                            totalPrice
+                            grandTotal
 
                         }
 
@@ -867,7 +1167,7 @@ return (
 
         form={form}
 
-        total={totalPrice}
+        total={grandTotal}
 
     />
 

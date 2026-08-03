@@ -61,7 +61,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
 
-        <header className="custom-navbar">
+        <header className={`custom-navbar ${role === "admin" ? "admin-hover-nav" : ""}`}>
 
             {/* LEFT */}
 

@@ -936,3 +936,87 @@
 }
 
 }
+
+/* =====================================================
+    ADMIN NAVBAR — HOVER TO REVEAL (DESKTOP / TABLET)
+    Keeps only logo + notifications + theme + user
+    visible by default; full nav appears on hover so it
+    never overflows the header at any window width.
+===================================================== */
+
+@media (min-width: 769px){
+
+.admin-hover-nav{
+
+    position:relative;
+
+}
+
+.admin-hover-nav .admin-navbar{
+
+    position:absolute;
+
+    top:100%;
+
+    left:0;
+
+    right:0;
+
+    width:100%;
+
+    background:var(--navbar);
+
+    border-top:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    padding:14px 32px;
+
+    box-shadow:var(--shadow);
+
+    flex-wrap:nowrap;
+
+    justify-content:space-around;
+
+    gap:6px;
+
+    max-width:none;
+
+    overflow-x:auto;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transform:translateY(-8px);
+
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+
+    z-index:998;
+
+}
+
+.admin-hover-nav .admin-navbar .admin-nav-link{
+
+    padding:12px 18px;
+
+    white-space:nowrap;
+
+}
+
+.admin-hover-nav:hover .admin-navbar,
+.admin-hover-nav:focus-within .admin-navbar{
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+
+    transform:translateY(0);
+
+}
+
+}

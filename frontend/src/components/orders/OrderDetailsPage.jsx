@@ -15,6 +15,8 @@ import {
     FaStar
 } from "react-icons/fa";
 
+import { showSuccess, showError } from "../../utils/toastUtils";
+
 import "./OrderDetailsPage.css";
 
 const OrderDetailsPage = () => {
@@ -25,7 +27,15 @@ const OrderDetailsPage = () => {
 
     const [order, setOrder] = useState(null);
 
-    useEffect(() => {
+    const [showReturnForm, setShowReturnForm] = useState(false);
+
+    const [returnReason, setReturnReason] = useState("");
+
+    const [returnLoading, setReturnLoading] = useState(false);
+
+    const [cancelLoading, setCancelLoading] = useState(false);
+
+    const fetchOrder = () => {
 
         const userId = localStorage.getItem("userId");
 
@@ -42,7 +52,97 @@ const OrderDetailsPage = () => {
     })
     .catch(console.log);
 
+    };
+
+    useEffect(() => {
+
+        fetchOrder();
+
     }, [id]);
+
+    const handleRequestReturn = () => {
+
+        if (!returnReason.trim()) {
+
+            showError("Please Tell Us Why You're Returning This Order.");
+
+            return;
+
+        }
+
+        setReturnLoading(true);
+
+        axios.post(
+
+            `${API_URL}/order/${order._id}/return-request`,
+
+            { reason: returnReason },
+
+            { withCredentials: true }
+
+        )
+
+        .then(() => {
+
+            showSuccess("Return Request Submitted");
+
+            setShowReturnForm(false);
+
+            fetchOrder();
+
+        })
+
+        .catch((err) => {
+
+            showError(err.response?.data?.message || "Failed To Submit Return Request");
+
+        })
+
+        .finally(() => {
+
+            setReturnLoading(false);
+
+        });
+
+    };
+
+    const handleCancelOrder = () => {
+
+        if (!window.confirm("Cancel This Order?")) return;
+
+        setCancelLoading(true);
+
+        axios.put(
+
+            `${API_URL}/order/${order._id}/cancel`,
+
+            {},
+
+            { withCredentials: true }
+
+        )
+
+        .then(() => {
+
+            showSuccess("Order Cancelled");
+
+            fetchOrder();
+
+        })
+
+        .catch((err) => {
+
+            showError(err.response?.data?.message || "Failed To Cancel Order");
+
+        })
+
+        .finally(() => {
+
+            setCancelLoading(false);
+
+        });
+
+    };
 
     const handleDownloadInvoice = () => {
 
@@ -387,7 +487,61 @@ const OrderDetailsPage = () => {
         Download Invoice
     </button>
 
+    {
+        order.status === "Delivered" && order.returnStatus === "None" && (
+            <button
+                className="invoice-btn"
+                onClick={() => setShowReturnForm(!showReturnForm)}
+            >
+                <FaRedo />
+                Request Return
+            </button>
+        )
+    }
+
+    {
+        order.status === "Pending" && (
+            <button
+                className="cancel-order-btn"
+                disabled={cancelLoading}
+                onClick={handleCancelOrder}
+            >
+                {cancelLoading ? "Cancelling..." : "Cancel Order"}
+            </button>
+        )
+    }
+
 </div>
+
+    {
+        order.returnStatus !== "None" && (
+            <div className="return-status-box">
+                Return Status : <strong>{order.returnStatus}</strong>
+                {order.returnReason && (
+                    <p className="return-reason">Reason : {order.returnReason}</p>
+                )}
+            </div>
+        )
+    }
+
+    {
+        showReturnForm && (
+            <div className="return-form">
+                <textarea
+                    placeholder="Why are you returning this order?"
+                    value={returnReason}
+                    onChange={(e) => setReturnReason(e.target.value)}
+                />
+                <button
+                    className="invoice-btn"
+                    disabled={returnLoading}
+                    onClick={handleRequestReturn}
+                >
+                    {returnLoading ? "Submitting..." : "Submit Return Request"}
+                </button>
+            </div>
+        )
+    }
 
     </div>
 
@@ -471,11 +625,46 @@ const OrderDetailsPage = () => {
 
             <h4>Delivered</h4>
 
-            <p>Completed</p>
+            <p>
+                {
+                    order.deliveredAt
+                        ? new Date(order.deliveredAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })
+                        : "Completed"
+                }
+            </p>
 
         </div>
 
     </div>
+
+    {
+        order.status === "Cancelled" && (
+            <div className="cancelled-banner">
+                This order has been cancelled.
+            </div>
+        )
+    }
+
+    {
+        order.trackingNumber && (
+            <p className="tracking-number">
+                Tracking Number : <strong>{order.trackingNumber}</strong>
+            </p>
+        )
+    }
+
+    {
+        order.estimatedDelivery && order.status !== "Delivered" && order.status !== "Cancelled" && (
+            <p className="tracking-number">
+                Estimated Delivery :{" "}
+                <strong>
+                    {
+                        new Date(order.estimatedDelivery).toLocaleDateString("en-IN", { day: "numeric", month: "long" })
+                    }
+                </strong>
+            </p>
+        )
+    }
 
 </div>
 
@@ -505,9 +694,9 @@ const OrderDetailsPage = () => {
 
             </span>
 
-            <span className="info-value paid">
+            <span className={`info-value ${order.paymentStatus === "Paid" ? "paid" : "pending"}`}>
 
-                Paid
+                {order.paymentStatus}
 
             </span>
 
@@ -523,7 +712,7 @@ const OrderDetailsPage = () => {
 
             <span className="info-value cod">
 
-                Cash On Delivery
+                {order.paymentMethod}
 
             </span>
 
@@ -545,12 +734,16 @@ const OrderDetailsPage = () => {
 
         <div className="address-box">
 
-            <strong>Customer Address</strong>
+            <strong>{order.deliveryInfo?.fullName}</strong>
 
             <br /><br />
 
-            Address integration will appear here once
-            the checkout address system is added.
+            {order.deliveryInfo?.address1}
+            {order.deliveryInfo?.address2 ? `, ${order.deliveryInfo.address2}` : ""}
+            <br />
+            {order.deliveryInfo?.city}, {order.deliveryInfo?.state} - {order.deliveryInfo?.pincode}
+            <br /><br />
+            📞 {order.deliveryInfo?.phone}
 
         </div>
 

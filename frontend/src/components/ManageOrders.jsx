@@ -11,6 +11,7 @@ import OrderDetailsModal from "./manageorders/OrderDetailsModal";
 
 import useManageOrders from "../hooks/useManageOrders";
 import { motion } from "framer-motion";
+import API_URL from "../utils/api";
 import {
 
     getTotalOrders,
@@ -132,6 +133,15 @@ const ManageOrders = () => {
         <motion.div variants={itemVariants}>
 
             <OrdersHeader />
+
+            <div style={{ textAlign: "right", marginBottom: "16px" }}>
+                <a
+                    href={`${API_URL}/order/admin/export`}
+                    className="btn btn-outline-primary"
+                >
+                    ⬇ Export Orders CSV
+                </a>
+            </div>
 
         </motion.div>
 

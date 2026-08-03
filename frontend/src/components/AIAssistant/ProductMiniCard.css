@@ -6,13 +6,13 @@ gap:12px;
 
 padding:12px;
 
-background:#2b303b;
+background:var(--card);
 
 border-radius:14px;
 
 margin-top:12px;
 
-border:1px solid rgba(255,255,255,.06);
+border:1px solid var(--border);
 
 }
 
@@ -44,7 +44,7 @@ margin:0;
 
 font-size:15px;
 
-color:white;
+color:var(--text);
 
 }
 
@@ -52,7 +52,7 @@ color:white;
 
 margin:4px 0;
 
-color:#bfc7d5;
+color:var(--text-secondary);
 
 font-size:13px;
 

@@ -36,9 +36,9 @@
 
     border-radius:50%;
 
-    background:#dee2e6;
+    background:var(--hover-bg);
 
-    color:#666;
+    color:var(--text-secondary);
 
     display:flex;
 
@@ -57,6 +57,8 @@
     font-size:14px;
 
     font-weight:600;
+
+    color:var(--text-secondary);
 
 }
 
@@ -84,7 +86,7 @@
 
     height:4px;
 
-    background:#dee2e6;
+    background:var(--hover-bg);
 
     border-radius:20px;
 

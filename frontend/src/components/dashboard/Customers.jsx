@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import "./Customers.css";
+import API_URL from "../../utils/api";
 
 const Customers = ({ filteredCustomers }) => {
 
@@ -27,11 +28,22 @@ const Customers = ({ filteredCustomers }) => {
 
                     </div>
 
-                    <span className="adminpage-customers-count">
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
 
-                        {filteredCustomers.length} Customers
+                        <span className="adminpage-customers-count">
 
-                    </span>
+                            {filteredCustomers.length} Customers
+
+                        </span>
+
+                        <a
+                            href={`${API_URL}/user/export-customers`}
+                            className="btn btn-sm btn-outline-primary"
+                        >
+                            ⬇ Export CSV
+                        </a>
+
+                    </div>
 
                 </div>
 

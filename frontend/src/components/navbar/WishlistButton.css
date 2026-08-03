@@ -14,9 +14,9 @@
 
     justify-content:center;
 
-    background:#2a3145;
+    background:var(--card);
 
-    color:#fff;
+    color:var(--text);
 
     text-decoration:none;
 
@@ -28,7 +28,7 @@
 
 .wishlist-navbar-btn:hover{
 
-    background:#3563ff;
+    background:var(--primary);
 
     color:#fff;
 

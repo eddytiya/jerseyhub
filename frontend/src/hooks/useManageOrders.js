@@ -29,7 +29,7 @@ const useManageOrders = () => {
 
             const res = await axios.get(
 
-                `${API_URL}/order/admin/all`,
+                `${API_URL}/order/admin/all?limit=1000`,
 
                 {
 
@@ -39,7 +39,7 @@ const useManageOrders = () => {
 
             );
 
-            setOrders(res.data);
+            setOrders(res.data.orders);
 
         }
 

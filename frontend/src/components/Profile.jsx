@@ -23,6 +23,8 @@ const Profile = () => {
         confirmPassword: ''
     })
 
+    const [addresses, setAddresses] = useState([])
+
     useEffect(() => {
 
         axios.get(
@@ -44,7 +46,40 @@ const Profile = () => {
 
         })
 
+        fetchAddresses()
+
     }, [])
+
+    const fetchAddresses = () => {
+
+        axios.get(
+            `${API_URL}/profile/addresses`,
+            { withCredentials: true }
+        )
+        .then((resp) => {
+            setAddresses(resp.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+    }
+
+    const handleDeleteAddress = (id) => {
+
+        axios.delete(
+            `${API_URL}/profile/addresses/${id}`,
+            { withCredentials: true }
+        )
+        .then(() => {
+            showSuccess("Address Removed")
+            fetchAddresses()
+        })
+        .catch((err) => {
+            showError(err.response?.data?.message || "Failed To Remove Address")
+        })
+
+    }
 
     const handleChange = (e) => {
 
@@ -420,6 +455,61 @@ Confirm Password
                                 </button>
 
                             </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div className="col-lg-6 mb-4">
+
+                    <div className="card shadow">
+
+                        <div className="card-body">
+
+                            <div className="profile-section-title">
+
+                                <i className="fa-solid fa-location-dot"></i>
+
+                                <span>
+                                    Saved Addresses
+                                </span>
+
+                            </div>
+
+                            {
+                                addresses.length === 0 ? (
+                                    <p className="text-muted">
+                                        No saved addresses yet. Addresses you
+                                        save at checkout will appear here.
+                                    </p>
+                                ) : (
+                                    addresses.map((addr) => (
+                                        <div className="saved-address-card" key={addr._id}>
+
+                                            <div>
+                                                <strong>{addr.label || "Address"}</strong>
+                                                <p>
+                                                    {addr.fullName}, {addr.address1}
+                                                    {addr.address2 ? `, ${addr.address2}` : ""}
+                                                    <br />
+                                                    {addr.city}, {addr.state} - {addr.pincode}
+                                                </p>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger btn-sm"
+                                                onClick={() => handleDeleteAddress(addr._id)}
+                                            >
+                                                Remove
+                                            </button>
+
+                                        </div>
+                                    ))
+                                )
+                            }
 
                         </div>
 

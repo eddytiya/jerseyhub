@@ -21,20 +21,20 @@
 .profile-page h2,
 .profile-page h3{
     font-weight:700;
-    color:#1f2937;
+    color:var(--text);
     margin-bottom:30px;
 }
 
 .profile-page .form-label{
     font-weight:600;
-    color:#374151;
+    color:var(--text);
     margin-bottom:10px;
 }
 
 .profile-page .form-control{
     height:58px;
     border-radius:14px;
-    border:1px solid #dbe3ec;
+    border:1px solid var(--border);
     font-size:16px;
 }
 
@@ -97,7 +97,7 @@
 
     margin-top:8px;
 
-    color:#6b7280;
+    color:var(--text-secondary);
 
     font-size:17px;
 
@@ -121,7 +121,7 @@
 
     font-weight:700;
 
-    color:#1f2937;
+    color:var(--text);
 
     margin-bottom:35px;
 
@@ -132,6 +132,36 @@
     color:#2563eb;
 
     font-size:30px;
+
+}
+
+.saved-address-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:14px;
+
+    padding:16px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    margin-bottom:14px;
+
+}
+
+.saved-address-card p{
+
+    margin:6px 0 0;
+
+    color:var(--text-secondary);
+
+    font-size:14px;
 
 }
 
@@ -185,9 +215,9 @@
 
     border-radius:14px;
 
-    background:#eff6ff;
+    background:rgba(37,99,235,.12);
 
-    color:#2563eb;
+    color:var(--primary);
 
     display:flex;
 
@@ -199,7 +229,7 @@
 
     letter-spacing:1px;
 
-    border:1px solid #bfdbfe;
+    border:1px solid rgba(37,99,235,.3);
 
 }
 
@@ -266,13 +296,13 @@
 
     font-weight:800;
 
-    color:#1f2937;
+    color:var(--text);
 
 }
 
 .profile-title p{
 
-    color:#6b7280;
+    color:var(--text-secondary);
 
     font-size:18px;
 
@@ -282,7 +312,7 @@
 
 .profile-page .col-lg-6:first-child{
 
-    border-right:1px solid #edf2f7;
+    border-right:1px solid var(--divider);
 
 }
 
