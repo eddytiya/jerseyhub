@@ -138,7 +138,9 @@
 
     max-height:520px;
 
-    overflow-y:auto;
+    display:flex;
+
+    flex-direction:column;
 
     background:var(--card);
 
@@ -174,29 +176,37 @@
 
     background:var(--card);
 
-    position:sticky;
-
-    top:0;
-
-    z-index:20;
+    flex-shrink:0;
 
 }
 
-/* ========================================== */
+/* ==========================================
+            SCROLLABLE LIST
+========================================== */
 
-.notification-dropdown::-webkit-scrollbar{
+.notification-list{
+
+    overflow-y:auto;
+
+    flex:1;
+
+    min-height:0;
+
+}
+
+.notification-list::-webkit-scrollbar{
 
     width:8px;
 
 }
 
-.notification-dropdown::-webkit-scrollbar-track{
+.notification-list::-webkit-scrollbar-track{
 
     background:var(--bg-secondary);
 
 }
 
-.notification-dropdown::-webkit-scrollbar-thumb{
+.notification-list::-webkit-scrollbar-thumb{
 
     background:var(--primary);
 
@@ -204,7 +214,7 @@
 
 }
 
-.notification-dropdown::-webkit-scrollbar-thumb:hover{
+.notification-list::-webkit-scrollbar-thumb:hover{
 
     background:var(--primary-hover);
 
@@ -352,9 +362,7 @@
 
     transition:.3s;
 
-    position:sticky;
-
-    bottom:0;
+    flex-shrink:0;
 
 }
 

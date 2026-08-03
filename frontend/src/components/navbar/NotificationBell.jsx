@@ -299,6 +299,8 @@ useEffect(() => {
 
                 </h5>
 
+                <div className="notification-list">
+
                 {
 
                     notifications.length === 0 ?
@@ -500,6 +502,8 @@ useEffect(() => {
                     )
 
                 }
+
+                </div>
 
                 <button
 
