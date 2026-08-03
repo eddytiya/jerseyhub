@@ -11,11 +11,39 @@ const buildRequest = (message) => {
     let action = ACTIONS.SEARCH_PRODUCTS;
 
     if (
-        normalized.includes("track") &&
-        normalized.includes("order")
+        (
+            normalized.includes("track") &&
+            normalized.includes("order")
+        ) ||
+        entities.orderId
     ) {
 
         action = ACTIONS.TRACK_ORDER;
+
+    }
+
+    else if (
+        normalized.includes("size") &&
+        (
+            normalized.includes("guide") ||
+            normalized.includes("chart") ||
+            normalized.includes("what") ||
+            normalized.includes("which") ||
+            normalized.includes("should") ||
+            normalized.includes("fit")
+        )
+    ) {
+
+        action = ACTIONS.SIZE_GUIDE;
+
+    }
+
+    else if (
+        normalized.includes("recommend") ||
+        normalized.includes("suggest")
+    ) {
+
+        action = ACTIONS.RECOMMEND;
 
     }
 

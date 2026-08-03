@@ -115,3 +115,19 @@ export const aiSearchProducts = async (
     return data;
 
 };
+
+/* ==========================================
+            AI - TRACK ORDER
+========================================== */
+
+export const trackOrder = async (orderId) => {
+
+    const { data } = await axios.get(
+
+        `${API}/order/ai/track/${orderId}`
+
+    );
+
+    return data;
+
+};

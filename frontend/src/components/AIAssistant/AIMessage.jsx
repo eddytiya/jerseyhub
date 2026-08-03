@@ -40,11 +40,27 @@ const AIMessage = ({ message }) => {
 
                 messageType === "products" && (
 
-                    <ProductMessage
+                    <>
 
-                        products={data}
+                        {
 
-                    />
+                            content && (
+
+                                <div className="ai-bubble">
+                                    {content}
+                                </div>
+
+                            )
+
+                        }
+
+                        <ProductMessage
+
+                            products={data}
+
+                        />
+
+                    </>
 
                 )
 

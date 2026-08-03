@@ -27,6 +27,7 @@ const AIChatWindow = ({ onClose }) => {
 const [messages, setMessages] = useState([]);
 
 const [typing, setTyping] = useState(false);
+const [awaitingOrderId, setAwaitingOrderId] = useState(false);
 const hasMessages = messages.length > 0;
 
 
@@ -107,16 +108,13 @@ const handleSendMessage = async (text) => {
 
     try {
 
-        console.log("2️⃣ Creating fake reply");
-
-        // Temporary test
         console.log("2️⃣ Calling sendToAI...");
 
-            const reply = await sendToAI(trimmedMessage);
+            const reply = await sendToAI(trimmedMessage, { awaitingOrderId });
 
             console.log("3️⃣ Reply:", reply);
 
-        console.log("3️⃣ Reply:", reply);
+        setAwaitingOrderId(Boolean(reply.awaitingOrderId));
 
         setMessages(prev => [
 

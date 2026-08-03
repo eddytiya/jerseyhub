@@ -30,7 +30,9 @@ const {
 
     updateReturnStatus,
 
-    cancelOrder
+    cancelOrder,
+
+    trackOrderAI
 
 } = require("../controller/orderController");
 
@@ -175,6 +177,18 @@ router.put(
     identifyUser,
 
     cancelOrder
+
+);
+
+// AI Assistant - Track Order
+
+router.get(
+
+    "/ai/track/:id",
+
+    identifyUser,
+
+    trackOrderAI
 
 );
 

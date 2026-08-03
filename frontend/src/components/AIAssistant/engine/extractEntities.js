@@ -18,9 +18,25 @@ const extractEntities = (message) => {
 
         minPrice: null,
 
-        category: null
+        category: null,
+
+        orderId: null
 
     };
+
+    /* ==========================
+            ORDER ID
+    ========================== */
+
+    const orderIdMatch = message.match(
+        /\b[a-f0-9]{24}\b/i
+    );
+
+    if (orderIdMatch) {
+
+        entities.orderId = orderIdMatch[0];
+
+    }
 
     const metadata = getMetadata();
 

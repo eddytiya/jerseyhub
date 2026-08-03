@@ -1407,6 +1407,77 @@ const downloadInvoice = async (req, res) => {
 };
 
 /* ==========================================
+        AI ASSISTANT - TRACK ORDER
+========================================== */
+
+const trackOrderAI = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+
+            return res.status(404).json({
+                message: "Order Not Found"
+            });
+
+        }
+
+        const order = await Order.findById(id);
+
+        if (!order) {
+
+            return res.status(404).json({
+                message: "Order Not Found"
+            });
+
+        }
+
+        if (
+            order.userId !== String(req.session.userId || req.session.guestId) &&
+            req.session.role !== 'admin'
+        ) {
+
+            return res.status(403).json({
+                message: "Not Authorized"
+            });
+
+        }
+
+        return res.status(200).json({
+
+            orderId: order._id,
+            status: order.status,
+            paymentStatus: order.paymentStatus,
+            trackingNumber: order.trackingNumber,
+            totalAmount: order.totalAmount,
+            orderDate: order.orderDate,
+            estimatedDelivery: order.estimatedDelivery,
+            shippedAt: order.shippedAt,
+            deliveredAt: order.deliveredAt,
+            returnStatus: order.returnStatus,
+            items: order.items.map(item => ({
+                teamName: item.teamName,
+                jerseyName: item.jerseyName,
+                quantity: item.quantity
+            }))
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+            message: err.message
+        });
+
+    }
+
+};
+
+/* ==========================================
         CUSTOMER - CANCEL ORDER
 ========================================== */
 
@@ -1738,6 +1809,7 @@ module.exports = {
 
     updateOrderStatus,
     downloadInvoice,
-    getSingleOrder
+    getSingleOrder,
+    trackOrderAI
 
 }

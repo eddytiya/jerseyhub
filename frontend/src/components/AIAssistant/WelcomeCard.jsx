@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import API_URL from "../../utils/api";
 import "./WelcomeCard.css";
 
 const WelcomeCard = () => {
+
+    const [uname, setUname] = useState("");
+
+    useEffect(() => {
+
+        axios.get(`${API_URL}/user/me`, { withCredentials: true })
+
+            .then(resp => setUname(resp.data?.uname || ""))
+
+            .catch(() => setUname(""));
+
+    }, []);
 
     const hour = new Date().getHours();
 
@@ -23,7 +37,7 @@ const WelcomeCard = () => {
 
             <div className="ai-welcome-badge">
 
-                👋 {greeting}, Aditya
+                👋 {greeting}{uname ? `, ${uname}` : ""}
 
             </div>
 
