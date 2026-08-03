@@ -7,9 +7,9 @@ const addToCart = async (req, res) => {
 
     try {
 
-        const {
+        const userId = req.session.userId || req.session.guestId
 
-            userId,
+        const {
 
             jerseyId,
 
@@ -143,7 +143,7 @@ const getCart = async (req, res) => {
 
         const cart = await Cart.find({
 
-            userId: req.params.userId
+            userId: req.session.userId || req.session.guestId
 
         })
 
@@ -182,6 +182,16 @@ const updateQuantity = async (req, res) => {
             return res.status(404).json({
 
                 message: 'Cart Item Not Found'
+
+            })
+
+        }
+
+        if (cartItem.userId !== String(req.session.userId || req.session.guestId)) {
+
+            return res.status(403).json({
+
+                message: 'Not Authorized'
 
             })
 
@@ -235,6 +245,32 @@ const removeFromCart = async (req, res) => {
 
     try {
 
+        const cartItem = await Cart.findById(
+
+            req.params.id
+
+        )
+
+        if (!cartItem) {
+
+            return res.status(404).json({
+
+                message: 'Cart Item Not Found'
+
+            })
+
+        }
+
+        if (cartItem.userId !== String(req.session.userId || req.session.guestId)) {
+
+            return res.status(403).json({
+
+                message: 'Not Authorized'
+
+            })
+
+        }
+
         await Cart.findByIdAndDelete(
 
             req.params.id
@@ -268,9 +304,9 @@ const buyNow = async (req, res) => {
 
     try {
 
-        const {
+        const userId = req.session.userId || req.session.guestId;
 
-            userId,
+        const {
 
             jerseyId,
 
@@ -310,7 +346,7 @@ const buyNow = async (req, res) => {
 
     userId,
 
-    buyNow: buyNow ? true : false
+    buyNow: true
 
 });
 
@@ -361,7 +397,7 @@ const getBuyNowCart = async (req, res) => {
 
         const item = await Cart.find({
 
-            userId: req.params.userId,
+            userId: req.session.userId || req.session.guestId,
 
             buyNow: true
 

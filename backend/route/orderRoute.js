@@ -4,39 +4,73 @@ const router = express.Router();
 
 const adminAuth = require('../adminAuth');
 
+const userAuth = require('../userAuth');
+
+const identifyUser = require('../identifyUser');
+
 const {
 
     placeOrder,
+
+    verifyPayment,
 
     getOrders,
 
     getAllOrders,
 
+    exportOrdersCSV,
+
     getSingleOrder,
 
     updateOrderStatus,
 
-    downloadInvoice,createRazorpayOrder
+    downloadInvoice,
+
+    requestReturn,
+
+    updateReturnStatus,
+
+    cancelOrder
 
 } = require("../controller/orderController");
+
+const { createRazorpayOrder } = require("../controller/paymentController");
 
 router.post(
 
     "/create-order",
+
+    identifyUser,
 
     createRazorpayOrder
 
 );
 
 /* ==========================================
-            CHECKOUT
+            CHECKOUT (LOGGED-IN OR GUEST)
 ========================================== */
 
 router.post(
 
     "/checkout",
 
+    identifyUser,
+
     placeOrder
+
+);
+
+/* ==========================================
+            VERIFY RAZORPAY PAYMENT
+========================================== */
+
+router.post(
+
+    "/verify-payment",
+
+    identifyUser,
+
+    verifyPayment
 
 );
 
@@ -53,6 +87,18 @@ router.get(
     adminAuth,
 
     getAllOrders
+
+);
+
+// Export Orders To CSV
+
+router.get(
+
+    "/admin/export",
+
+    adminAuth,
+
+    exportOrdersCSV
 
 );
 
@@ -80,6 +126,18 @@ router.put(
 
 );
 
+// Update Return Status
+
+router.put(
+
+    "/:id/return-status",
+
+    adminAuth,
+
+    updateReturnStatus
+
+);
+
 /* ==========================================
             CUSTOMER ROUTES
 ========================================== */
@@ -90,7 +148,33 @@ router.get(
 
     "/invoice/:id",
 
+    identifyUser,
+
     downloadInvoice
+
+);
+
+// Request Return / Refund
+
+router.post(
+
+    "/:id/return-request",
+
+    identifyUser,
+
+    requestReturn
+
+);
+
+// Cancel Order
+
+router.put(
+
+    "/:id/cancel",
+
+    identifyUser,
+
+    cancelOrder
 
 );
 
@@ -99,6 +183,8 @@ router.get(
 router.get(
 
     "/:userId",
+
+    userAuth,
 
     getOrders
 

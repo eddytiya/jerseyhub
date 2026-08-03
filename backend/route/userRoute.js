@@ -11,9 +11,13 @@ const {
 
     logout,
 
-    getCurrentUser
+    getCurrentUser,
+
+    exportCustomersCSV
 
 } = require("../controller/userController");
+
+const adminAuth = require('../adminAuth');
 
 const router = express.Router();
 
@@ -29,6 +33,16 @@ router.get(
     "/me",
 
     getCurrentUser
+
+);
+
+router.get(
+
+    "/export-customers",
+
+    adminAuth,
+
+    exportCustomersCSV
 
 );
 module.exports = router;

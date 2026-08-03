@@ -6,7 +6,10 @@ const {
 
     getProfile,
     updateProfile,
-    changePassword
+    changePassword,
+    getAddresses,
+    addAddress,
+    deleteAddress
 
 } = require('../controller/profileController')
 
@@ -31,6 +34,30 @@ router.put(
     '/change-password',
 
     changePassword
+
+)
+
+router.get(
+
+    '/addresses',
+
+    getAddresses
+
+)
+
+router.post(
+
+    '/addresses',
+
+    addAddress
+
+)
+
+router.delete(
+
+    '/addresses/:id',
+
+    deleteAddress
 
 )
 

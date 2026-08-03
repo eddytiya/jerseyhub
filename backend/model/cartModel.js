@@ -21,7 +21,16 @@ const cartSchema = mongoose.Schema({
     buyNow: {
         type: Boolean,
         default: false
+    },
+
+    reminderSent: {
+        type: Boolean,
+        default: false
     }
+
+}, {
+
+    timestamps: true
 
 })
 

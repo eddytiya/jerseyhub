@@ -2,6 +2,8 @@ const express = require('express')
 
 const router = express.Router()
 
+const identifyUser = require('../identifyUser')
+
 const {
 
     addToCart,
@@ -20,6 +22,7 @@ const {
 // Add item to cart
 router.post(
     '/add',
+    identifyUser,
     addToCart
 )
 /* ==========================================
@@ -30,12 +33,15 @@ router.post(
 
     '/buy-now',
 
+    identifyUser,
+
     buyNow
 
 );
 // Get user cart
 router.get(
     '/:userId',
+    identifyUser,
     getCart
 )
 
@@ -47,6 +53,8 @@ router.get(
 
     '/buy-now/:userId',
 
+    identifyUser,
+
     getBuyNowCart
 
 );
@@ -54,12 +62,14 @@ router.get(
 // Update quantity
 router.put(
     '/update/:id',
+    identifyUser,
     updateQuantity
 )
 
 // Remove item
 router.delete(
     '/remove/:id',
+    identifyUser,
     removeFromCart
 )
 

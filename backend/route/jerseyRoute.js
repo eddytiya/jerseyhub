@@ -3,6 +3,7 @@ const express = require('express');
 const {
 
     getAllJerseys,
+    getJerseysByIds,
     addJersey,
     updateJersey,
     deleteJersey,
@@ -34,6 +35,12 @@ router.get(
 router.get(
     '/search',
     searchJersey
+);
+
+// Batch Fetch By IDs
+router.get(
+    '/batch',
+    getJerseysByIds
 );
 
 // Category Filter

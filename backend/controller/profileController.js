@@ -244,12 +244,146 @@ const changePassword = async (req, res) => {
 
 }
 
+/* ==========================================
+            SAVED ADDRESSES
+========================================== */
+
+const getAddresses = async (req, res) => {
+
+    try {
+
+        if (!req.session.userId) {
+
+            return res.status(401).json({ message: 'Please Login First' })
+
+        }
+
+        const user = await User.findById(req.session.userId).select('addresses')
+
+        res.status(200).json(user?.addresses || [])
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({ message: err.message })
+
+    }
+
+}
+
+const addAddress = async (req, res) => {
+
+    try {
+
+        if (!req.session.userId) {
+
+            return res.status(401).json({ message: 'Please Login First' })
+
+        }
+
+        const user = await User.findById(req.session.userId)
+
+        if (!user) {
+
+            return res.status(404).json({ message: 'User Not Found' })
+
+        }
+
+        if (user.addresses.length >= 5) {
+
+            return res.status(400).json({ message: 'You Can Save Up To 5 Addresses' })
+
+        }
+
+        const {
+            label,
+            fullName,
+            phone,
+            address1,
+            address2,
+            city,
+            state,
+            pincode,
+            landmark
+        } = req.body
+
+        user.addresses.push({
+            label,
+            fullName,
+            phone,
+            address1,
+            address2,
+            city,
+            state,
+            pincode,
+            landmark
+        })
+
+        await user.save()
+
+        res.status(201).json(user.addresses)
+
+    }
+
+    catch (err) {
+
+        res.status(400).json({ message: err.message })
+
+    }
+
+}
+
+const deleteAddress = async (req, res) => {
+
+    try {
+
+        if (!req.session.userId) {
+
+            return res.status(401).json({ message: 'Please Login First' })
+
+        }
+
+        const user = await User.findById(req.session.userId)
+
+        if (!user) {
+
+            return res.status(404).json({ message: 'User Not Found' })
+
+        }
+
+        user.addresses = user.addresses.filter(
+
+            (addr) => String(addr._id) !== req.params.id
+
+        )
+
+        await user.save()
+
+        res.status(200).json(user.addresses)
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({ message: err.message })
+
+    }
+
+}
+
 module.exports = {
 
     getProfile,
 
     updateProfile,
 
-    changePassword
+    changePassword,
+
+    getAddresses,
+
+    addAddress,
+
+    deleteAddress
 
 }

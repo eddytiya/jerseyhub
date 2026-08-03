@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Order = require('../model/orderModel')
 const Cart = require('../model/cartModel')
 const Jersey = require('../model/jerseyModel')
@@ -6,70 +7,109 @@ const Notification = require('../model/Notification')
 const sendEmail = require("../utils/sendEmail");
 const buildOrderStatusEmail = require("../utils/orderStatusEmail");
 const generateInvoice = require("../utils/generateInvoice");
-const Razorpay = require("razorpay");
+const Coupon = require("../model/Coupon");
+const { evaluateCoupon } = require("./couponController");
+const toCSV = require("../utils/toCSV");
 const crypto = require("crypto");
 
+// =====================================
+// Verify Razorpay Signature Then Place Order
+// =====================================
+const verifyPayment = async (req, res) => {
 
-const razorpay = new Razorpay({
+    const {
 
-    key_id: process.env.RAZORPAY_KEY_ID,
+        razorpay_order_id,
 
-    key_secret: process.env.RAZORPAY_KEY_SECRET
+        razorpay_payment_id,
 
-});
+        razorpay_signature
 
+    } = req.body;
 
-/* ==========================================
-        CREATE RAZORPAY ORDER
-========================================== */
+    if (
 
-const createRazorpayOrder = async (req, res) => {
+        !razorpay_order_id ||
 
-    try {
+        !razorpay_payment_id ||
 
-        const { amount } = req.body;
+        !razorpay_signature
 
-        const options = {
+    ) {
 
-            amount: amount * 100,
+        return res.status(400).json({
 
-            currency: "INR",
-
-            receipt: "receipt_" + Date.now()
-
-        };
-
-        const order = await razorpay.orders.create(options);
-
-        res.status(200).json(order);
-
-    }
-
-    catch (err) {
-
-        res.status(500).json({
-
-            message: err.message
+            message: "Missing Payment Verification Data"
 
         });
 
     }
 
+    const expectedSignature = crypto
+
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+
+        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+
+        .digest("hex");
+
+    if (expectedSignature !== razorpay_signature) {
+
+        return res.status(400).json({
+
+            message: "Payment Verification Failed"
+
+        });
+
+    }
+
+    return processOrder(req, res, {
+
+        paymentMethod: "Razorpay",
+
+        paymentStatus: "Paid",
+
+        razorpayOrderId: razorpay_order_id,
+
+        razorpayPaymentId: razorpay_payment_id
+
+    });
+
 };
+
 // =====================================
-// Place Order
+// Place Order (Cash On Delivery)
 // =====================================
 const placeOrder = async (req, res) => {
 
+    return processOrder(req, res, {
+
+        paymentMethod: "Cash On Delivery",
+
+        paymentStatus: "Pending"
+
+    });
+
+};
+
+// =====================================
+// Shared Order Creation Logic
+// =====================================
+const processOrder = async (req, res, paymentInfo) => {
+
     try {
+
+      const isGuest = !req.session.userId;
+
+      const userId = req.session.userId || req.session.guestId;
 
       const {
 
-    userId,
-
     buyNow,
 
-    deliveryInfo
+    deliveryInfo,
+
+    couponCode
 
 } = req.body;
 
@@ -115,23 +155,13 @@ const placeOrder = async (req, res) => {
 
             }
 
-            if (item.quantity > item.jerseyId.stock) {
-
-                return res.status(400).json({
-
-                    message: `${item.jerseyId.jerseyName} has only ${item.jerseyId.stock} item(s) left in stock.`
-
-                });
-
-            }
-
         }
 
         // =====================================
-        // Calculate Grand Total
+        // Calculate Subtotal
         // =====================================
 
-        const totalAmount = cartItems.reduce(
+        const subtotal = cartItems.reduce(
 
             (total, item) =>
 
@@ -144,6 +174,36 @@ const placeOrder = async (req, res) => {
             0
 
         );
+
+        // =====================================
+        // Apply Coupon (Re-Validated Server-Side)
+        // =====================================
+
+        let discountAmount = 0;
+
+        let appliedCouponCode = "";
+
+        if (couponCode) {
+
+            const couponResult = await evaluateCoupon(couponCode, subtotal);
+
+            if (!couponResult.valid) {
+
+                return res.status(400).json({
+
+                    message: couponResult.message
+
+                });
+
+            }
+
+            discountAmount = couponResult.discountAmount;
+
+            appliedCouponCode = couponResult.coupon.code;
+
+        }
+
+        const totalAmount = subtotal - discountAmount;
 
         // =====================================
         // Create Snapshot Of Purchased Products
@@ -183,27 +243,57 @@ const placeOrder = async (req, res) => {
 
     items: orderItems,
 
+    subtotal,
+
+    couponCode: appliedCouponCode,
+
+    discountAmount,
+
     totalAmount,
 
     deliveryInfo,
 
     status: "Pending",
 
-    paymentStatus: "Paid",
+    paymentStatus: paymentInfo.paymentStatus,
 
-    paymentMethod: "Cash On Delivery"
+    paymentMethod: paymentInfo.paymentMethod,
+
+    razorpayOrderId: paymentInfo.razorpayOrderId || "",
+
+    razorpayPaymentId: paymentInfo.razorpayPaymentId || ""
 
 });
 
+        if (appliedCouponCode) {
+
+            await Coupon.updateOne(
+
+                { code: appliedCouponCode },
+
+                { $inc: { usedCount: 1 } }
+
+            );
+
+        }
+
         // =====================================
-        // Reduce Product Stock
+        // Reduce Product Stock (Atomic, With Rollback On Insufficient Stock)
         // =====================================
+
+        const stockDecrements = [];
 
         for (const item of cartItems) {
 
-            const updatedJersey = await Jersey.findByIdAndUpdate(
+            const updatedJersey = await Jersey.findOneAndUpdate(
 
-                item.jerseyId._id,
+                {
+
+                    _id: item.jerseyId._id,
+
+                    stock: { $gte: item.quantity }
+
+                },
 
                 {
 
@@ -222,6 +312,36 @@ const placeOrder = async (req, res) => {
                 }
 
             );
+
+            if (!updatedJersey) {
+
+                for (const rollback of stockDecrements) {
+
+                    await Jersey.findByIdAndUpdate(
+
+                        rollback.jerseyId,
+
+                        { $inc: { stock: rollback.quantity } }
+
+                    );
+
+                }
+
+                return res.status(400).json({
+
+                    message: `${item.jerseyId.jerseyName} no longer has enough stock.`
+
+                });
+
+            }
+
+            stockDecrements.push({
+
+                jerseyId: item.jerseyId._id,
+
+                quantity: item.quantity
+
+            });
 
             // Low Stock
 
@@ -267,7 +387,12 @@ const placeOrder = async (req, res) => {
         // Customer Notification
         // =====================================
 
-        const customer = await User.findById(userId);
+        const customer = isGuest
+
+            ? { uname: deliveryInfo.fullName, email: deliveryInfo.email }
+
+            : await User.findById(userId);
+
         const itemRows = orderItems.map(item => `
 
 <tr>
@@ -302,20 +427,6 @@ ${item.quantity}
 
 `).join("");
 try {
-
-    console.log("========== ORDER EMAIL DEBUG ==========");
-
-    console.log("Customer:", customer);
-
-    console.log("Customer Email:", customer?.email);
-
-    console.log("Delivery Info:", deliveryInfo);
-
-    console.log("Total:", totalAmount);
-
-    console.log("Order ID:", order._id);
-
-    console.log("Items:", orderItems);
 
     await sendEmail({
 
@@ -451,7 +562,7 @@ Subtotal
 
 <td align="right">
 
-₹${totalAmount}
+₹${subtotal}
 
 </td>
 
@@ -488,6 +599,17 @@ Included
 </td>
 
 </tr>
+
+${discountAmount > 0 ? `
+<tr>
+<td style="color:#16a34a;">
+Coupon (${appliedCouponCode})
+</td>
+<td align="right" style="color:#16a34a;">
+-₹${discountAmount}
+</td>
+</tr>
+` : ""}
 
 <tr>
 
@@ -607,7 +729,7 @@ Within
 
 <p>
 
-Cash On Delivery
+${paymentInfo.paymentMethod}
 
 </p>
 
@@ -617,7 +739,7 @@ Payment Status :
 
 <strong style="color:#16a34a;">
 
-Paid
+${paymentInfo.paymentStatus}
 
 </strong>
 
@@ -779,7 +901,7 @@ const getOrders = async (req, res) => {
 
         const orders = await Order.find({
 
-            userId: req.params.userId
+            userId: req.session.userId
 
         })
 
@@ -819,45 +941,63 @@ const getAllOrders = async (req, res) => {
 
     try {
 
-        const orders = await Order.find()
+        const page = Math.max(1, parseInt(req.query.page) || 1);
 
-        .populate('items.jerseyId')
+        const limit = Math.min(100, parseInt(req.query.limit) || 20);
 
-        .sort({
+        const [orders, total] = await Promise.all([
 
-            orderDate: -1
+            Order.find()
+
+                .populate('items.jerseyId')
+
+                .sort({ orderDate: -1 })
+
+                .skip((page - 1) * limit)
+
+                .limit(limit),
+
+            Order.countDocuments()
+
+        ]);
+
+        const userIds = [...new Set(orders.map(order => order.userId))]
+
+            .filter(id => mongoose.Types.ObjectId.isValid(id));
+
+        const users = await User.find({ _id: { $in: userIds } });
+
+        const userMap = new Map(users.map(u => [String(u._id), u]));
+
+        const result = orders.map((order) => {
+
+            const user = userMap.get(order.userId);
+
+            return {
+
+                ...order._doc,
+
+                customerName: user?.uname || order.deliveryInfo?.fullName,
+
+                customerEmail: user?.email || order.deliveryInfo?.email,
+
+                isGuest: !user
+
+            };
+
+        });
+
+        res.status(200).json({
+
+            orders: result,
+
+            total,
+
+            page,
+
+            totalPages: Math.ceil(total / limit)
 
         })
-
-        const result = await Promise.all(
-
-            orders.map(async (order) => {
-
-                const user = await User.findById(
-
-                    order.userId
-
-                )
-
-                return {
-
-                    ...order._doc,
-
-                    customerName: user?.uname,
-
-                    customerEmail: user?.email
-
-                }
-
-            })
-
-        )
-
-        res.status(200).json(
-
-            result
-
-        )
 
     }
 
@@ -953,11 +1093,11 @@ const updateOrderStatus = async (req, res) => {
 
         }
 
-        const customer = await User.findById(
+        const customer = mongoose.Types.ObjectId.isValid(order.userId)
 
-            order.userId
+            ? (await User.findById(order.userId)) || { uname: order.deliveryInfo.fullName, email: order.deliveryInfo.email }
 
-        );
+            : { uname: order.deliveryInfo.fullName, email: order.deliveryInfo.email };
 
         // =====================================
         // Notification
@@ -1042,6 +1182,49 @@ const updateOrderStatus = async (req, res) => {
 };
 
 // =====================================
+// Export Orders To CSV (Admin)
+// =====================================
+
+const exportOrdersCSV = async (req, res) => {
+
+    try {
+
+        const orders = await Order.find().sort({ orderDate: -1 });
+
+        const csv = toCSV(orders, [
+
+            { label: "Order ID", value: (o) => o._id },
+            { label: "Date", value: (o) => new Date(o.orderDate).toLocaleDateString("en-IN") },
+            { label: "Customer Name", value: (o) => o.deliveryInfo?.fullName },
+            { label: "Customer Email", value: (o) => o.deliveryInfo?.email },
+            { label: "Customer Phone", value: (o) => o.deliveryInfo?.phone },
+            { label: "Items", value: (o) => o.items.length },
+            { label: "Subtotal", value: (o) => o.subtotal },
+            { label: "Discount", value: (o) => o.discountAmount },
+            { label: "Total", value: (o) => o.totalAmount },
+            { label: "Status", value: (o) => o.status },
+            { label: "Payment Status", value: (o) => o.paymentStatus },
+            { label: "Payment Method", value: (o) => o.paymentMethod }
+
+        ]);
+
+        res.header("Content-Type", "text/csv");
+
+        res.attachment(`orders-${Date.now()}.csv`);
+
+        res.send(csv);
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({ message: err.message });
+
+    }
+
+};
+
+// =====================================
 // Get Single Order (Admin)
 // =====================================
 
@@ -1071,17 +1254,11 @@ const getSingleOrder = async (req, res) => {
 
         }
 
-        const customer = await User.findById(
+        const customer = mongoose.Types.ObjectId.isValid(order.userId)
 
-            order.userId
+            ? await User.findById(order.userId).select('-password')
 
-        )
-
-        .select(
-
-            '-password'
-
-        )
+            : null
 
         res.status(200).json({
 
@@ -1129,6 +1306,22 @@ const downloadInvoice = async (req, res) => {
 
         }
 
+        if (
+
+            order.userId !== String(req.session.userId || req.session.guestId) &&
+
+            req.session.role !== 'admin'
+
+        ) {
+
+            return res.status(403).json({
+
+                message: "Not Authorized"
+
+            });
+
+        }
+
         generateInvoice(
 
             order,
@@ -1153,17 +1346,324 @@ const downloadInvoice = async (req, res) => {
 
 };
 
+/* ==========================================
+        CUSTOMER - CANCEL ORDER
+========================================== */
+
+const cancelOrder = async (req, res) => {
+
+    try {
+
+        const order = await Order.findById(req.params.id);
+
+        if (!order) {
+
+            return res.status(404).json({
+
+                message: "Order Not Found"
+
+            });
+
+        }
+
+        if (
+
+            order.userId !== String(req.session.userId || req.session.guestId) &&
+
+            req.session.role !== 'admin'
+
+        ) {
+
+            return res.status(403).json({
+
+                message: "Not Authorized"
+
+            });
+
+        }
+
+        if (order.status !== "Pending") {
+
+            return res.status(400).json({
+
+                message: "Only Pending Orders Can Be Cancelled"
+
+            });
+
+        }
+
+        order.status = "Cancelled";
+
+        await order.save();
+
+        // Restore Stock
+
+        for (const item of order.items) {
+
+            await Jersey.findByIdAndUpdate(
+
+                item.jerseyId,
+
+                { $inc: { stock: item.quantity } }
+
+            );
+
+        }
+
+        await Notification.create({
+
+            title: "Order Cancelled",
+
+            message: `Order ${order._id} was cancelled by the customer.`,
+
+            type: "order"
+
+        });
+
+        res.status(200).json({
+
+            message: "Order Cancelled Successfully",
+
+            order
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+
+            message: err.message
+
+        });
+
+    }
+
+};
+
+/* ==========================================
+        CUSTOMER - REQUEST RETURN / REFUND
+========================================== */
+
+const requestReturn = async (req, res) => {
+
+    try {
+
+        const { reason } = req.body;
+
+        const order = await Order.findById(req.params.id);
+
+        if (!order) {
+
+            return res.status(404).json({
+
+                message: "Order Not Found"
+
+            });
+
+        }
+
+        if (
+
+            order.userId !== String(req.session.userId || req.session.guestId) &&
+
+            req.session.role !== 'admin'
+
+        ) {
+
+            return res.status(403).json({
+
+                message: "Not Authorized"
+
+            });
+
+        }
+
+        if (order.status !== "Delivered") {
+
+            return res.status(400).json({
+
+                message: "Only Delivered Orders Can Be Returned"
+
+            });
+
+        }
+
+        if (order.returnStatus !== "None") {
+
+            return res.status(400).json({
+
+                message: "A Return Has Already Been Requested For This Order"
+
+            });
+
+        }
+
+        order.returnStatus = "Requested";
+
+        order.returnReason = reason || "";
+
+        order.returnRequestedAt = new Date();
+
+        await order.save();
+
+        await Notification.create({
+
+            title: "Return Requested",
+
+            message: `A return was requested for order ${order._id}.`,
+
+            type: "order"
+
+        });
+
+        res.status(200).json({
+
+            message: "Return Request Submitted",
+
+            order
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+
+            message: err.message
+
+        });
+
+    }
+
+};
+
+/* ==========================================
+        ADMIN - UPDATE RETURN STATUS
+========================================== */
+
+const updateReturnStatus = async (req, res) => {
+
+    try {
+
+        const { returnStatus } = req.body;
+
+        if (!["Approved", "Rejected", "Refunded"].includes(returnStatus)) {
+
+            return res.status(400).json({
+
+                message: "Invalid Return Status"
+
+            });
+
+        }
+
+        const order = await Order.findById(req.params.id);
+
+        if (!order) {
+
+            return res.status(404).json({
+
+                message: "Order Not Found"
+
+            });
+
+        }
+
+        if (order.returnStatus === "None") {
+
+            return res.status(400).json({
+
+                message: "No Return Was Requested For This Order"
+
+            });
+
+        }
+
+        order.returnStatus = returnStatus;
+
+        if (returnStatus === "Refunded") {
+
+            order.paymentStatus = "Refunded";
+
+        }
+
+        await order.save();
+
+        const customer = mongoose.Types.ObjectId.isValid(order.userId)
+
+            ? (await User.findById(order.userId)) || { uname: order.deliveryInfo.fullName, email: order.deliveryInfo.email }
+
+            : { uname: order.deliveryInfo.fullName, email: order.deliveryInfo.email };
+
+        try {
+
+            await sendEmail({
+
+                to: customer.email,
+
+                subject: `⚽ JerseyHub • Return ${returnStatus}`,
+
+                html: `<div style="font-family:Arial,sans-serif;padding:30px;">
+                    <h2>⚽ JerseyHub</h2>
+                    <p>Hi ${customer.uname},</p>
+                    <p>Your return request for order <strong>${order._id}</strong> has been <strong>${returnStatus}</strong>.</p>
+                </div>`
+
+            });
+
+        }
+
+        catch (err) {
+
+            console.log("Return Status Email Error:", err.message);
+
+        }
+
+        res.status(200).json({
+
+            message: "Return Status Updated",
+
+            order
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+
+            message: err.message
+
+        });
+
+    }
+
+};
+
 module.exports = {
 
     placeOrder,
+
+    verifyPayment,
+
+    cancelOrder,
+
+    requestReturn,
+
+    updateReturnStatus,
 
     getOrders,
 
     getAllOrders,
 
+    exportOrdersCSV,
+
     updateOrderStatus,
     downloadInvoice,
-    getSingleOrder,
-    createRazorpayOrder
+    getSingleOrder
 
 }

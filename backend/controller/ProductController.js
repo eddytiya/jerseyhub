@@ -8,13 +8,35 @@ const getProducts = async (req, res) => {
 
     try {
 
-        const products = await Product.find().sort({
+        const page = Math.max(1, parseInt(req.query.page) || 1);
 
-            createdAt: -1
+        const limit = Math.min(100, parseInt(req.query.limit) || 50);
+
+        const [products, total] = await Promise.all([
+
+            Product.find()
+
+                .sort({ createdAt: -1 })
+
+                .skip((page - 1) * limit)
+
+                .limit(limit),
+
+            Product.countDocuments()
+
+        ]);
+
+        res.json({
+
+            products,
+
+            total,
+
+            page,
+
+            totalPages: Math.ceil(total / limit)
 
         });
-
-        res.json(products);
 
     }
 

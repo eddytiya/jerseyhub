@@ -3,6 +3,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require('cors');
 const session = require('express-session');
+const { MongoStore } = require('connect-mongo');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const { connectDB } = require('./db');
 
@@ -20,6 +23,11 @@ const reviewRoute = require("./route/reviewRoute");
 const productTypeRouter = require("./route/productTypeRoute");
 const paymentRoute=require("./route/paymentRoute");
 const newsletterRoute = require("./route/newsletterRoute");
+const stockAlertRoute = require("./route/stockAlertRoute");
+const couponRoute = require("./route/couponRoute");
+const bulkInquiryRoute = require("./route/bulkInquiryRoute");
+const seoRoute = require("./route/seoRoute");
+const { startAbandonedCartJob } = require("./utils/abandonedCartJob");
 
 const app = express();
 
@@ -30,15 +38,21 @@ app.set("trust proxy", 1);
 ========================================== */
 
 connectDB();
+startAbandonedCartJob();
 
 /* ==========================================
             MIDDLEWARE
 ========================================== */
 
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+}));
+
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:5180",
       "https://jerseyhub-git-main-eddytiyaa.vercel.app",
       "https://jerseyhub-lilac.vercel.app",
     ],
@@ -60,6 +74,11 @@ app.use(
         resave: false,
         saveUninitialized: false,
         proxy: true,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGO_URI,
+            collectionName: "sessions",
+            ttl: 60 * 60,
+        }),
         cookie: {
             maxAge: 1000 * 60 * 60,
             secure: process.env.NODE_ENV === "production",
@@ -70,6 +89,20 @@ app.use(
         },
     })
 );
+
+/* ==========================================
+            RATE LIMITING (AUTH ROUTES)
+========================================== */
+
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { message: "Too many attempts. Please try again later." },
+});
+
+app.use(["/user/login", "/user/register", "/user/google-login"], authLimiter);
 
 /* ==========================================
                 HOME
@@ -123,6 +156,14 @@ app.use(
     paymentRoute
 
 );
+
+app.use("/stock-alert", stockAlertRoute);
+
+app.use("/coupon", couponRoute);
+
+app.use("/bulk-inquiry", bulkInquiryRoute);
+
+app.use(seoRoute);
 
 /* ==========================================
                 SERVER

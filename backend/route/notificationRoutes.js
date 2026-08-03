@@ -2,6 +2,8 @@ const express = require('express')
 
 const router = express.Router()
 
+const adminAuth = require('../adminAuth')
+
 const {
 
     getNotifications,
@@ -26,6 +28,8 @@ router.get(
 
     '/',
 
+    adminAuth,
+
     getNotifications
 
 )
@@ -37,6 +41,8 @@ router.get(
 router.get(
 
     '/count',
+
+    adminAuth,
 
     getUnreadCount
 
@@ -50,6 +56,8 @@ router.post(
 
     '/',
 
+    adminAuth,
+
     createNotification
 
 )
@@ -61,6 +69,8 @@ router.post(
 router.put(
 
     '/read/:id',
+
+    adminAuth,
 
     markAsRead
 
@@ -74,6 +84,8 @@ router.put(
 
     '/read-all',
 
+    adminAuth,
+
     markAllRead
 
 )
@@ -85,6 +97,8 @@ router.put(
 router.delete(
 
     '/:id',
+
+    adminAuth,
 
     deleteNotification
 

@@ -4,6 +4,7 @@ const Notification = require("../model/Notification");
 const bcryptjs = require("bcryptjs");
 const { OAuth2Client } = require("google-auth-library");
 const sendEmail = require("../utils/sendEmail");
+const toCSV = require("../utils/toCSV");
 
 const client = new OAuth2Client(
 
@@ -17,12 +18,6 @@ const register = async (req, resp) => {
 
         const { uname, email, password } = req.body;
 
-        console.log("\n================ REGISTER REQUEST ================");
-        console.log("Incoming Data:", {
-            uname,
-            email
-        });
-
         const existingUser = await userModel.findOne({
 
             $or: [
@@ -34,8 +29,6 @@ const register = async (req, resp) => {
             ]
 
         });
-
-        console.log("Existing User:", existingUser);
 
         if (existingUser) {
 
@@ -55,8 +48,6 @@ const register = async (req, resp) => {
 
         );
 
-        console.log("Creating User...");
-
         const newUser = await userModel.create({
 
             uname,
@@ -66,9 +57,6 @@ const register = async (req, resp) => {
             password: hashPassword
 
         });
-
-        console.log("User Created Successfully:");
-        console.log(newUser);
 
         try {
 
@@ -189,8 +177,6 @@ const register = async (req, resp) => {
             type: "customer"
 
         });
-
-        console.log("Notification Created.");
 
         resp.status(201).json({
 
@@ -346,8 +332,6 @@ const googleLogin = async (req, resp) => {
             sub
 
         } = payload;
-
-        console.log(payload);
 
         // Check if user already exists
         let user = await userModel.findOne({
@@ -533,6 +517,45 @@ const getCurrentUser = async (req, res) => {
     }
 
 };
+
+/* ==========================================
+        ADMIN - EXPORT CUSTOMERS TO CSV
+========================================== */
+
+const exportCustomersCSV = async (req, res) => {
+
+    try {
+
+        const customers = await userModel
+
+            .find({ role: "customer" })
+
+            .select("uname email createdAt");
+
+        const csv = toCSV(customers, [
+
+            { label: "Name", value: (c) => c.uname },
+            { label: "Email", value: (c) => c.email },
+            { label: "Joined", value: (c) => new Date(c.createdAt).toLocaleDateString("en-IN") }
+
+        ]);
+
+        res.header("Content-Type", "text/csv");
+
+        res.attachment(`customers-${Date.now()}.csv`);
+
+        res.send(csv);
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({ message: err.message });
+
+    }
+
+};
+
 module.exports = {
 
     register,
@@ -543,6 +566,7 @@ module.exports = {
 
     dashboard,
     getCurrentUser,
-    logout
+    logout,
+    exportCustomersCSV
 
 };

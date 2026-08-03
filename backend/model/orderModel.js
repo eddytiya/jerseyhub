@@ -176,6 +176,30 @@ const orderSchema = mongoose.Schema(
 
         items: [orderItemSchema],
 
+        subtotal: {
+
+            type: Number,
+
+            required: true
+
+        },
+
+        couponCode: {
+
+            type: String,
+
+            default: ""
+
+        },
+
+        discountAmount: {
+
+            type: Number,
+
+            default: 0
+
+        },
+
         totalAmount: {
 
             type: Number,
@@ -224,7 +248,9 @@ const orderSchema = mongoose.Schema(
 
                 "Paid",
 
-                "Failed"
+                "Failed",
+
+                "Refunded"
 
             ],
 
@@ -240,11 +266,65 @@ const orderSchema = mongoose.Schema(
 
         },
 
+        razorpayOrderId: {
+
+            type: String,
+
+            default: ""
+
+        },
+
+        razorpayPaymentId: {
+
+            type: String,
+
+            default: ""
+
+        },
+
         trackingNumber: {
 
             type: String,
 
             default: ""
+
+        },
+
+        returnStatus: {
+
+            type: String,
+
+            enum: [
+
+                "None",
+
+                "Requested",
+
+                "Approved",
+
+                "Rejected",
+
+                "Refunded"
+
+            ],
+
+            default: "None"
+
+        },
+
+        returnReason: {
+
+            type: String,
+
+            default: ""
+
+        },
+
+        returnRequestedAt: {
+
+            type: Date,
+
+            default: null
 
         },
 

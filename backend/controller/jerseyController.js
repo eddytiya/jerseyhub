@@ -1,8 +1,76 @@
+const mongoose = require("mongoose");
 const Jersey = require("../model/jerseyModel");
 const Fuse = require('fuse.js')
 const Notification = require('../model/Notification')
 const Category = require("../model/categoryModel");
 const ProductType = require("../model/ProductTypeModel");
+const StockAlert = require("../model/StockAlert");
+const sendEmail = require("../utils/sendEmail");
+
+/* ==========================================
+        NOTIFY BACK-IN-STOCK SUBSCRIBERS
+========================================== */
+
+const notifyBackInStock = async (jersey) => {
+
+    try {
+
+        const alerts = await StockAlert.find({ jerseyId: jersey._id });
+
+        if (!alerts.length) return;
+
+        for (const alert of alerts) {
+
+            try {
+
+                await sendEmail({
+
+                    to: alert.email,
+
+                    subject: `⚽ Back In Stock - ${jersey.teamName} ${jersey.jerseyName}`,
+
+                    html: `
+<div style="margin:0;padding:40px;background:#f3f4f6;font-family:Arial,sans-serif;">
+    <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.12);">
+        <div style="background:linear-gradient(135deg,#2563eb,#1d4ed8);padding:35px;text-align:center;">
+            <h1 style="margin:0;color:white;font-size:30px;">⚽ JerseyHub</h1>
+        </div>
+        <div style="padding:40px;">
+            <h2 style="margin-top:0;color:#111827;">Good News! It's Back 🎉</h2>
+            <p style="font-size:16px;color:#4b5563;line-height:26px;">
+                <strong>${jersey.teamName} - ${jersey.jerseyName}</strong> is back in stock. Grab it before it sells out again.
+            </p>
+            <div style="text-align:center;margin-top:30px;">
+                <a href="${process.env.FRONTEND_URL}/jersey/${jersey._id}" style="background:#2563eb;color:white;text-decoration:none;padding:15px 35px;border-radius:10px;font-weight:bold;display:inline-block;">Shop Now</a>
+            </div>
+        </div>
+    </div>
+</div>`
+
+                });
+
+            }
+
+            catch (err) {
+
+                console.log("Stock Alert Email Error:", err.message);
+
+            }
+
+        }
+
+        await StockAlert.deleteMany({ jerseyId: jersey._id });
+
+    }
+
+    catch (err) {
+
+        console.log("notifyBackInStock Error:", err.message);
+
+    }
+
+};
+
 // Add Jersey
 const addJersey = async (req, res) => {
 
@@ -72,6 +140,30 @@ const addJersey = async (req, res) => {
 
 };
 
+// Get Jerseys By IDs (Batch — Used For "Recently Viewed")
+const getJerseysByIds = async (req, res) => {
+    try {
+        const ids = (req.query.ids || "")
+            .split(",")
+            .map(id => id.trim())
+            .filter(id => mongoose.Types.ObjectId.isValid(id));
+
+        if (!ids.length) {
+            return res.status(200).json([]);
+        }
+
+        const jerseys = await Jersey.find({ _id: { $in: ids } })
+            .populate("productType");
+
+        return res.status(200).json(jerseys);
+
+    } catch (err) {
+        return res.status(500).json({
+            message: err.message
+        });
+    }
+};
+
 // Get All Jerseys
 const getAllJerseys = async (req, res) => {
     try {
@@ -133,6 +225,8 @@ if (
 
 }
 
+const previousJersey = await Jersey.findById(req.params.id);
+
 const jersey = await Jersey.findByIdAndUpdate(
 
     req.params.id,
@@ -159,6 +253,20 @@ const jersey = await Jersey.findByIdAndUpdate(
                 type: "jersey"
 
             });
+
+            if (
+
+                previousJersey &&
+
+                previousJersey.stock <= 0 &&
+
+                jersey.stock > 0
+
+            ) {
+
+                notifyBackInStock(jersey);
+
+            }
 
             res.status(200).json(jersey);
 
@@ -634,6 +742,7 @@ const aiSearch = async (req, res) => {
 module.exports = {
     addJersey,
     getAllJerseys,
+    getJerseysByIds,
     getJerseyById,
     updateJersey,
     deleteJersey,

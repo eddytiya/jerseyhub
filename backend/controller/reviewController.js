@@ -667,35 +667,55 @@ const getAllReviews = async (req, res) => {
 
     try {
 
-        const reviews = await Review.find()
+        const page = Math.max(1, parseInt(req.query.page) || 1);
 
-            .populate(
+        const limit = Math.min(100, parseInt(req.query.limit) || 50);
 
-                "user",
+        const [reviews, total] = await Promise.all([
 
-                "uname picture"
+            Review.find()
 
-            )
+                .populate(
 
-            .populate(
+                    "user",
 
-                "jersey",
+                    "uname picture"
 
-                "name club"
+                )
 
-            )
+                .populate(
 
-            .sort({
+                    "jersey",
 
-                createdAt: -1
+                    "name club"
 
-            });
+                )
 
-        return res.status(200).json(
+                .sort({
 
-            reviews
+                    createdAt: -1
 
-        );
+                })
+
+                .skip((page - 1) * limit)
+
+                .limit(limit),
+
+            Review.countDocuments()
+
+        ]);
+
+        return res.status(200).json({
+
+            reviews,
+
+            total,
+
+            page,
+
+            totalPages: Math.ceil(total / limit)
+
+        });
 
     }
 

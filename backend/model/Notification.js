@@ -38,6 +38,10 @@ const notificationSchema = new mongoose.Schema(
 
                 'productType',
 
+                'bulk-inquiry',
+
+                'profile',
+
                 'system'
 
             ],

@@ -1,5 +1,54 @@
 const mongoose = require('mongoose');
 
+const addressSchema = mongoose.Schema({
+
+    label: {
+        type: String,
+        default: "Home"
+    },
+
+    fullName: {
+        type: String,
+        required: true
+    },
+
+    phone: {
+        type: String,
+        required: true
+    },
+
+    address1: {
+        type: String,
+        required: true
+    },
+
+    address2: {
+        type: String,
+        default: ""
+    },
+
+    city: {
+        type: String,
+        required: true
+    },
+
+    state: {
+        type: String,
+        required: true
+    },
+
+    pincode: {
+        type: String,
+        required: true
+    },
+
+    landmark: {
+        type: String,
+        default: ""
+    }
+
+});
+
 const userSchema = mongoose.Schema(
     {
         uname: {
@@ -34,6 +83,11 @@ googleId: {
             type: String,
             enum: ['admin', 'customer'],
             default: 'customer'
+        },
+
+        addresses: {
+            type: [addressSchema],
+            default: []
         }
     },
     {

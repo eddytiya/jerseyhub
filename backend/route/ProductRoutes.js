@@ -2,6 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
+const adminAuth = require("../adminAuth");
+
 const {
 
     getProducts,
@@ -48,6 +50,8 @@ router.post(
 
     "/",
 
+    adminAuth,
+
     addProduct
 
 );
@@ -60,6 +64,8 @@ router.put(
 
     "/:id",
 
+    adminAuth,
+
     updateProduct
 
 );
@@ -71,6 +77,8 @@ router.put(
 router.delete(
 
     "/:id",
+
+    adminAuth,
 
     deleteProduct
 
