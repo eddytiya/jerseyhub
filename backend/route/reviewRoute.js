@@ -13,7 +13,8 @@ const {
     markHelpful,
 
     getAllReviews,
-    adminDeleteReview,getFeaturedReviews
+    adminDeleteReview,getFeaturedReviews,
+    toggleHomepageFeatured
 
 } = require("../controller/reviewController");
 
@@ -122,6 +123,18 @@ router.delete(
     adminAuth,
 
     adminDeleteReview
+
+);
+
+// Toggle Homepage Featured
+
+router.put(
+
+    "/admin/:id/feature",
+
+    adminAuth,
+
+    toggleHomepageFeatured
 
 );
 // (Future)

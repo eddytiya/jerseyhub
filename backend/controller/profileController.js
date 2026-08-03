@@ -1,6 +1,7 @@
 const User = require('../model/userModel')
 const bcryptjs = require('bcryptjs')
 const Notification = require('../model/Notification')
+const { generateReferralCode } = require('../utils/referral')
 
 const getProfile = async (req, res) => {
 
@@ -29,6 +30,14 @@ const getProfile = async (req, res) => {
                 message: 'User not found'
 
             })
+
+        }
+
+        if (!user.referralCode) {
+
+            user.referralCode = await generateReferralCode(user.uname)
+
+            await user.save()
 
         }
 

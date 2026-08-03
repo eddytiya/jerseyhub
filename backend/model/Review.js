@@ -124,7 +124,19 @@ const reviewSchema = new mongoose.Schema(
 
     default: "published"
 
-}
+},
+
+        /* ==========================================
+                HOMEPAGE FEATURE (ADMIN CURATED)
+        ========================================== */
+
+        isHomepageFeatured: {
+
+            type: Boolean,
+
+            default: false
+
+        }
 
     },
 

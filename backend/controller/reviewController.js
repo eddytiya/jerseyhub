@@ -687,7 +687,7 @@ const getAllReviews = async (req, res) => {
 
                     "jersey",
 
-                    "name club"
+                    "teamName jerseyName imageUrl season"
 
                 )
 
@@ -791,11 +791,11 @@ const getFeaturedReviews = async (req, res) => {
                 FEATURED REVIEWS
         ========================================== */
 
-        const reviews = await Review.find({
+        let reviews = await Review.find({
 
             status: "published",
 
-            rating: 5
+            isHomepageFeatured: true
 
         })
 
@@ -817,11 +817,49 @@ const getFeaturedReviews = async (req, res) => {
 
             .sort({
 
-                createdAt: 1
+                updatedAt: -1
 
             })
 
-            .limit(8);
+            .limit(6);
+
+        // Fallback: no admin-curated reviews yet — show recent 5-star reviews
+
+        if (reviews.length === 0) {
+
+            reviews = await Review.find({
+
+                status: "published",
+
+                rating: 5
+
+            })
+
+                .populate(
+
+                    "user",
+
+                    "uname picture"
+
+                )
+
+                .populate(
+
+                    "jersey",
+
+                    "teamName jerseyName imageUrl season"
+
+                )
+
+                .sort({
+
+                    createdAt: -1
+
+                })
+
+                .limit(6);
+
+        }
 
         /* ==========================================
                 TOTAL REVIEWS
@@ -916,6 +954,79 @@ const getFeaturedReviews = async (req, res) => {
     }
 
 };
+
+/* ==========================================
+    ADMIN - TOGGLE HOMEPAGE FEATURED (MAX 6)
+========================================== */
+
+const MAX_HOMEPAGE_REVIEWS = 6;
+
+const toggleHomepageFeatured = async (req, res) => {
+
+    try {
+
+        const review = await Review.findById(req.params.id);
+
+        if (!review) {
+
+            return res.status(404).json({
+
+                message: "Review Not Found"
+
+            });
+
+        }
+
+        if (!review.isHomepageFeatured) {
+
+            const currentCount = await Review.countDocuments({
+
+                isHomepageFeatured: true
+
+            });
+
+            if (currentCount >= MAX_HOMEPAGE_REVIEWS) {
+
+                return res.status(400).json({
+
+                    message: `You Can Only Feature Up To ${MAX_HOMEPAGE_REVIEWS} Reviews On The Homepage`
+
+                });
+
+            }
+
+        }
+
+        review.isHomepageFeatured = !review.isHomepageFeatured;
+
+        await review.save();
+
+        res.status(200).json({
+
+            message: review.isHomepageFeatured
+
+                ? "Review Featured On Homepage"
+
+                : "Review Removed From Homepage",
+
+            review
+
+        });
+
+    }
+
+    catch (err) {
+
+        res.status(500).json({
+
+            message: err.message
+
+        });
+
+    }
+
+};
+
 /* ==========================================
             MODULE EXPORTS
 ========================================== */
@@ -932,6 +1043,7 @@ module.exports = {
 
     markHelpful,
     getAllReviews,
-    adminDeleteReview,getFeaturedReviews
+    adminDeleteReview,getFeaturedReviews,
+    toggleHomepageFeatured
 
 };

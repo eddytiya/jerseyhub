@@ -88,6 +88,23 @@ googleId: {
         addresses: {
             type: [addressSchema],
             default: []
+        },
+
+        loyaltyPoints: {
+            type: Number,
+            default: 0
+        },
+
+        referralCode: {
+            type: String,
+            unique: true,
+            sparse: true
+        },
+
+        referredBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
+            default: null
         }
     },
     {

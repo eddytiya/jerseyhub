@@ -1,22 +1,86 @@
 const courseModel = require("../model/jerseyModel");
 const userModel = require("../model/userModel");
 const Notification = require("../model/Notification");
+const Coupon = require("../model/Coupon");
 const bcryptjs = require("bcryptjs");
 const { OAuth2Client } = require("google-auth-library");
 const sendEmail = require("../utils/sendEmail");
 const toCSV = require("../utils/toCSV");
+const { generateReferralCode } = require("../utils/referral");
 
 const client = new OAuth2Client(
 
     process.env.GOOGLE_CLIENT_ID
 
 );
+
+/* ==========================================
+        REFERRAL PROGRAM HELPERS
+========================================== */
+
+const grantReferralReward = async (referrer, newUser) => {
+
+    try {
+
+        const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+        await Coupon.create({
+
+            code: `REF-${newUser._id.toString().slice(-6).toUpperCase()}`,
+
+            discountType: "flat",
+
+            discountValue: 100,
+
+            minOrderAmount: 500,
+
+            usageLimit: 1,
+
+            expiresAt
+
+        });
+
+        await Coupon.create({
+
+            code: `REF-${referrer._id.toString().slice(-6).toUpperCase()}-${Date.now().toString().slice(-5)}`,
+
+            discountType: "flat",
+
+            discountValue: 100,
+
+            minOrderAmount: 500,
+
+            usageLimit: 1,
+
+            expiresAt
+
+        });
+
+        await Notification.create({
+
+            title: "Referral Reward Granted",
+
+            message: `${referrer.uname} referred ${newUser.uname}. Both received a ₹100 coupon.`,
+
+            type: "customer"
+
+        });
+
+    }
+
+    catch (err) {
+
+        console.log("Referral Reward Error:", err.message);
+
+    }
+
+};
 // Register
 const register = async (req, resp) => {
 
     try {
 
-        const { uname, email, password } = req.body;
+        const { uname, email, password, referralCode } = req.body;
 
         const existingUser = await userModel.findOne({
 
@@ -48,15 +112,37 @@ const register = async (req, resp) => {
 
         );
 
+        let referrer = null;
+
+        if (referralCode) {
+
+            referrer = await userModel.findOne({
+
+                referralCode: referralCode.toUpperCase().trim()
+
+            });
+
+        }
+
         const newUser = await userModel.create({
 
             uname,
 
             email,
 
-            password: hashPassword
+            password: hashPassword,
+
+            referralCode: await generateReferralCode(uname),
+
+            referredBy: referrer ? referrer._id : null
 
         });
+
+        if (referrer) {
+
+            await grantReferralReward(referrer, newUser);
+
+        }
 
         try {
 
@@ -353,7 +439,9 @@ const googleLogin = async (req, resp) => {
 
                 password: "",
 
-                googleId: sub
+                googleId: sub,
+
+                referralCode: await generateReferralCode(username)
 
             });
 

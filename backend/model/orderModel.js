@@ -192,6 +192,22 @@ const orderSchema = mongoose.Schema(
 
         },
 
+        pointsEarned: {
+
+            type: Number,
+
+            default: 0
+
+        },
+
+        pointsRedeemed: {
+
+            type: Number,
+
+            default: 0
+
+        },
+
         discountAmount: {
 
             type: Number,

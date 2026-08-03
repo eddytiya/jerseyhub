@@ -109,7 +109,9 @@ const processOrder = async (req, res, paymentInfo) => {
 
     deliveryInfo,
 
-    couponCode
+    couponCode,
+
+    redeemPoints
 
 } = req.body;
 
@@ -203,7 +205,51 @@ const processOrder = async (req, res, paymentInfo) => {
 
         }
 
-        const totalAmount = subtotal - discountAmount;
+        // =====================================
+        // Redeem Loyalty Points (Registered Users Only)
+        // =====================================
+
+        let pointsRedeemedAmount = 0;
+
+        let redeemingUser = null;
+
+        if (!isGuest) {
+
+            redeemingUser = await User.findById(userId);
+
+        }
+
+        const requestedPoints = Number(redeemPoints) || 0;
+
+        if (requestedPoints > 0) {
+
+            if (!redeemingUser) {
+
+                return res.status(400).json({
+
+                    message: "Please Login To Redeem Points"
+
+                });
+
+            }
+
+            if (requestedPoints > redeemingUser.loyaltyPoints) {
+
+                return res.status(400).json({
+
+                    message: "You Don't Have Enough Points"
+
+                });
+
+            }
+
+            const availableForRedemption = subtotal - discountAmount;
+
+            pointsRedeemedAmount = Math.min(requestedPoints, availableForRedemption);
+
+        }
+
+        const totalAmount = subtotal - discountAmount - pointsRedeemedAmount;
 
         // =====================================
         // Create Snapshot Of Purchased Products
@@ -237,6 +283,8 @@ const processOrder = async (req, res, paymentInfo) => {
         // Create ONE Order
         // =====================================
 
+       const pointsEarned = Math.floor(totalAmount / 100);
+
        const order = await Order.create({
 
     userId,
@@ -248,6 +296,10 @@ const processOrder = async (req, res, paymentInfo) => {
     couponCode: appliedCouponCode,
 
     discountAmount,
+
+    pointsRedeemed: pointsRedeemedAmount,
+
+    pointsEarned,
 
     totalAmount,
 
@@ -274,6 +326,14 @@ const processOrder = async (req, res, paymentInfo) => {
                 { $inc: { usedCount: 1 } }
 
             );
+
+        }
+
+        if (redeemingUser) {
+
+            redeemingUser.loyaltyPoints += pointsEarned - pointsRedeemedAmount;
+
+            await redeemingUser.save();
 
         }
 
@@ -1405,6 +1465,20 @@ const cancelOrder = async (req, res) => {
                 item.jerseyId,
 
                 { $inc: { stock: item.quantity } }
+
+            );
+
+        }
+
+        // Reverse Loyalty Points (Registered Users Only)
+
+        if (mongoose.Types.ObjectId.isValid(order.userId)) {
+
+            await User.findByIdAndUpdate(
+
+                order.userId,
+
+                { $inc: { loyaltyPoints: order.pointsRedeemed - order.pointsEarned } }
 
             );
 
