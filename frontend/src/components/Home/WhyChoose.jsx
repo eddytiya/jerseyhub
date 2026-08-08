@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./WhyChoose.css";
 import WhyCard from "./WhyCard";
 
@@ -55,6 +55,46 @@ const features = [
 
 const WhyChoose = () => {
 
+    const gridRef = useRef(null);
+
+    useEffect(() => {
+
+        const grid = gridRef.current;
+
+        if (!grid) return undefined;
+
+        if (!("IntersectionObserver" in window)) {
+
+            grid.classList.add("no-js");
+
+            return undefined;
+
+        }
+
+        const cards = grid.querySelectorAll(".why-card");
+
+        const observer = new IntersectionObserver((entries) => {
+
+            entries.forEach((entry) => {
+
+                if (!entry.isIntersecting) return;
+
+                cards.forEach((card, i) => {
+                    setTimeout(() => card.classList.add("in-view"), i * 90);
+                });
+
+                observer.disconnect();
+
+            });
+
+        }, { threshold: 0.25 });
+
+        observer.observe(grid);
+
+        return () => observer.disconnect();
+
+    }, []);
+
     return (
 
         <section className="why-section">
@@ -82,7 +122,7 @@ const WhyChoose = () => {
 
             </div>
 
-            <div className="why-grid">
+            <div className="why-grid" ref={gridRef}>
 
                 {
 

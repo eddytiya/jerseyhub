@@ -1,13 +1,16 @@
 import { createRoot } from 'react-dom/client'
 
+// Bootstrap must load before the theme so theme colors (which rely on
+// element-level selectors like `body`) win the cascade instead of
+// Bootstrap's reboot styles.
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
 import './components/theme/themes.css'
 
 import App from './App.jsx'
 
 import axios from 'axios'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

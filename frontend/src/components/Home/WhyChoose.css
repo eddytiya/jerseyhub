@@ -113,6 +113,21 @@
 
     box-shadow:var(--shadow);
 
+    opacity:0;
+
+    transform:translateY(30px);
+
+}
+
+/* Scroll-reveal — JS adds .in-view per card, staggered.
+   Falls back to visible immediately if JS/observer is unavailable. */
+.why-card.in-view,
+.why-grid.no-js .why-card{
+
+    opacity:1;
+
+    transform:translateY(0);
+
 }
 
 .why-card::before{

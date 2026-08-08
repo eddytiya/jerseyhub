@@ -46,13 +46,15 @@ const CategorySection = ({
 
     {
 
-        categories.map((category) => (
+        categories.map((category, index) => (
 
             <CategoryCard
 
                 key={category._id}
 
                 category={category}
+
+                index={index}
 
                 jerseyCount={
 

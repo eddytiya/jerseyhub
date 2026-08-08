@@ -140,13 +140,15 @@ const SearchResults = () => {
 
                             {
 
-                                jerseys.map((jersey) => (
+                                jerseys.map((jersey, index) => (
 
                                     <ProductCard
 
                                         key={jersey._id}
 
                                         product={jersey}
+
+                                        index={index}
 
                                     />
 

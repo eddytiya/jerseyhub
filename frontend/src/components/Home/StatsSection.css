@@ -285,34 +285,6 @@ grid-template-columns:1fr;
 
 }
 
-@keyframes floatCard{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-6px);
-    }
-
-}
-
-.stat-card-0{
-    animation:floatCard 5s ease-in-out infinite;
-}
-
-.stat-card-1{
-    animation:floatCard 5s ease-in-out .5s infinite;
-}
-
-.stat-card-2{
-    animation:floatCard 5s ease-in-out 1s infinite;
-}
-
-.stat-card-3{
-    animation:floatCard 5s ease-in-out 1.5s infinite;
-}
-
 .stat-icon{
 
     position:relative;

@@ -40,6 +40,15 @@
 
     --transition:.28s ease;
 
+    /* Motion system */
+
+    --ease-out:cubic-bezier(.16,1,.3,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+    --dur-micro:120ms;
+    --dur-base:240ms;
+    --dur-entrance:560ms;
+    --stagger:70ms;
+
 }
 
 /* =====================================================
@@ -1661,6 +1670,42 @@ textarea:focus,
 select:focus{
 
     outline:none;
+
+}
+
+/* =====================================================
+                FOCUS-VISIBLE (keyboard users)
+===================================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible{
+
+    outline:2px solid var(--primary);
+    outline-offset:3px;
+    border-radius:4px;
+
+}
+
+/* =====================================================
+                REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+
+    }
 
 }
 

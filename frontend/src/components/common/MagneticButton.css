@@ -1,0 +1,45 @@
+.magnetic-btn{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.magnetic-btn-ripple{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.45);
+
+    transform:scale(0);
+
+    pointer-events:none;
+
+    animation:magneticRippleOut .6s var(--ease-out,cubic-bezier(.16,1,.3,1)) forwards;
+
+}
+
+@keyframes magneticRippleOut{
+
+    to{
+
+        transform:scale(1);
+
+        opacity:0;
+
+    }
+
+}
+
+@media (prefers-reduced-motion:reduce){
+
+    .magnetic-btn-ripple{
+
+        display:none;
+
+    }
+
+}

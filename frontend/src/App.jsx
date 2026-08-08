@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from './components/Navbar'
+import AnimatedOutlet from './components/AnimatedOutlet'
 import Home from './components/Home'
 import Register from './components/Register'
 import Login from './components/Login'
@@ -10,7 +11,6 @@ import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer/Footer'
 import CompareBar from './components/compare/CompareBar'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './components/AdminEffects.css'
 
 /* =====================================
@@ -77,6 +77,10 @@ const App = () => {
             <Suspense fallback={<RouteLoader />}>
 
             <Routes>
+
+                {/* Pathless layout route — animates every page transition
+                    in one place instead of wrapping each Route below */}
+                <Route element={<AnimatedOutlet />}>
 
                 {/* =====================================
                         ADMIN ROUTES
@@ -374,6 +378,8 @@ const App = () => {
                         </div>
                     }
                 />
+
+                </Route>
 
                         </Routes>
 

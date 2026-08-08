@@ -15,8 +15,11 @@ import {
 } from "react-router-dom";
 import API_URL from "../../utils/api";
 import axios from "axios";
+import { motion } from "framer-motion";
 import CheckoutSteps from "./CheckoutSteps";
 import ConfirmOrderModal from "./ConfirmOrderModal";
+import MagneticButton from "../common/MagneticButton";
+import "../common/MagneticButton.css";
 import {
 
     showError
@@ -24,6 +27,8 @@ import {
 } from "../../utils/toastUtils";
 
 import "./Checkout.css";
+
+const EASE_OUT = [0.16, 1, 0.3, 1];
 
 const Checkout = () => {
     
@@ -704,7 +709,12 @@ return (
 
         {/* ================= LEFT ================= */}
 
-        <div className="checkout-form">
+        <motion.div
+            className="checkout-form"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE_OUT }}
+        >
 
             <h2>
 
@@ -874,13 +884,16 @@ return (
 
 </div>
 
-        </div>
+        </motion.div>
 
         {/* ================= RIGHT ================= */}
 
-          {/* ================= RIGHT ================= */}
-
-        <div className="checkout-right">
+        <motion.div
+            className="checkout-right"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.08, ease: EASE_OUT }}
+        >
 
             {/* Delivery Card */}
 
@@ -1201,13 +1214,15 @@ return (
 
                 </div>
 
-                <button
+                <MagneticButton
 
                     className="place-order-btn"
 
                     disabled={loading}
 
                     onClick={handlePlaceOrder}
+
+                    pullStrength={0.12}
 
                 >
 
@@ -1225,13 +1240,38 @@ return (
 
                     }
 
+                </MagneticButton>
+
+            </div>
+
+        </motion.div>
+
+    </div>
+
+    {/* Mobile-only — keeps the primary action within thumb reach instead
+        of requiring a scroll past the whole delivery form + summary. */}
+    {
+
+        cartItems.length > 0 &&
+
+        (
+
+            <div className="mobile-checkout-bar">
+
+                <div className="mobile-checkout-total">
+                    <small>Total</small>
+                    <strong>₹ {grandTotal}</strong>
+                </div>
+
+                <button disabled={loading} onClick={handlePlaceOrder}>
+                    {loading ? "Placing…" : "Place Order"}
                 </button>
 
             </div>
 
-        </div>
+        )
 
-    </div>
+    }
 
     <ConfirmOrderModal
 

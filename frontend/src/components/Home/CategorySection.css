@@ -160,12 +160,6 @@
 
 .category-card:hover{
 
-    transform:
-
-        translateY(-14px)
-
-        scale(1.02);
-
     border-color:var(--primary);
 
     box-shadow:

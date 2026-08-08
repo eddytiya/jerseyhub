@@ -3,6 +3,11 @@ import API_URL from "../../utils/api";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { FiCheck } from "react-icons/fi";
+
+import MagneticButton from "../common/MagneticButton";
+import "../common/MagneticButton.css";
 
 import {
 
@@ -23,6 +28,8 @@ const ProductActions = ({
 
     const [quantity, setQuantity] = useState(1);
 
+    const [justAdded, setJustAdded] = useState(false);
+
     const [notifyEmail, setNotifyEmail] = useState("");
 
     const [notifyLoading, setNotifyLoading] = useState(false);
@@ -32,6 +39,16 @@ const ProductActions = ({
     const navigate = useNavigate();
 
     const outOfStock = jersey.stock <= 0;
+
+    const handleAddToCart = () => {
+
+        onAddToCart(quantity);
+
+        setJustAdded(true);
+
+        setTimeout(() => setJustAdded(false), 1400);
+
+    };
 
     /* ==========================================
             NOTIFY ME (BACK IN STOCK)
@@ -227,17 +244,48 @@ const handleBuyNow = async () => {
 
             </div>
 
-            <button
+            <MagneticButton
 
                 className="cart-btn"
 
-                onClick={()=>onAddToCart(quantity)}
+                pullStrength={0.18}
+
+                disabled={justAdded}
+
+                onClick={handleAddToCart}
 
             >
 
-                Add To Cart
+                <AnimatePresence mode="wait" initial={false}>
 
-            </button>
+                    {
+                        justAdded ? (
+                            <motion.span
+                                key="added"
+                                initial={{ opacity: 0, scale: 0.6 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                                style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
+                            >
+                                <FiCheck /> Added
+                            </motion.span>
+                        ) : (
+                            <motion.span
+                                key="idle"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.15 }}
+                            >
+                                Add To Cart
+                            </motion.span>
+                        )
+                    }
+
+                </AnimatePresence>
+
+            </MagneticButton>
 
             <button
 

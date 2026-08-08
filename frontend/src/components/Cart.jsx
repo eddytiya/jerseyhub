@@ -10,10 +10,13 @@ import {
 
     useLocation,
 
-    useNavigate
+    useNavigate,
+
+    Link
 
 } from "react-router-dom";
 import axios from 'axios'
+import { AnimatePresence, motion } from 'framer-motion'
 import API_URL from "../utils/api";
 import {
 
@@ -26,7 +29,24 @@ import {
 import "./Cart.css";
 
 
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaShoppingBag, FaArrowRight } from "react-icons/fa";
+
+const EASE_OUT = [0.16, 1, 0.3, 1];
+
+const listVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.07 } }
+};
+
+// Entrance only animates opacity (never `transform`) so the existing
+// CSS hover lift/scale on .cart-item keeps working after mount — Framer
+// leaves inline transform styles in place once it has animated them,
+// which would otherwise permanently override the CSS :hover rule.
+const itemVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { duration: 0.45, ease: EASE_OUT } },
+    exit: { opacity: 0, x: -40, transition: { duration: 0.3, ease: EASE_OUT } }
+};
 const Cart = () => {
 
     const [cartItems, setCartItems] = useState([])
@@ -93,6 +113,16 @@ const updateQuantity = (id, quantity) => {
 
     if (quantity < 1) return
 
+    // Optimistic update — the number should move the instant you click,
+    // not after a round trip. Reverted via fetchCart() if the request fails.
+    const previous = cartItems
+
+    setCartItems((items) =>
+        items.map((item) =>
+            item._id === id ? { ...item, quantity } : item
+        )
+    )
+
     axios.put(
 
         `${API_URL}/cart/update/${id}`,
@@ -105,15 +135,11 @@ const updateQuantity = (id, quantity) => {
 
     )
 
-    .then(() => {
-
-        fetchCart()
-
-    })
-
     .catch((err) => {
 
         console.log(err)
+
+        setCartItems(previous)
 
         showError(
 
@@ -129,6 +155,10 @@ const updateQuantity = (id, quantity) => {
 
 const removeItem = (id) => {
 
+    const previous = cartItems
+
+    setCartItems((items) => items.filter((item) => item._id !== id))
+
     axios.delete(
 
         `${API_URL}/cart/remove/${id}`
@@ -143,13 +173,13 @@ const removeItem = (id) => {
 
         )
 
-        fetchCart()
-
     })
 
     .catch((err) => {
 
         console.log(err)
+
+        setCartItems(previous)
 
         showError(
 
@@ -243,15 +273,35 @@ const totalPrice =
 
             (
 
-                <div className="text-center">
+                <motion.div
+                    className="cart-empty"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: EASE_OUT }}
+                >
+
+                    <div className="cart-empty-icon">
+                        <FaShoppingBag />
+                    </div>
 
                     <h4>
 
-                        Cart Is Empty
+                        Your Cart Is Empty
 
                     </h4>
 
-                </div>
+                    <p>
+
+                        Looks like you haven't added any jerseys yet.
+
+                    </p>
+
+                    <Link to="/shop" className="cart-empty-btn">
+                        Browse Jerseys
+                        <FaArrowRight />
+                    </Link>
+
+                </motion.div>
 
             )
 
@@ -263,17 +313,33 @@ const totalPrice =
 
                     {/* ================= LEFT SIDE ================= */}
 
-                    <div className="cart-items">
+                    <motion.div
+
+                        className="cart-items"
+
+                        variants={listVariants}
+
+                        initial="hidden"
+
+                        animate="show"
+
+                    >
+
+                        <AnimatePresence>
 
                         {
 
                             cartItems.map((item) => (
 
-                                <div
+                                <motion.div
 
                                     className="cart-item"
 
                                     key={item._id}
+
+                                    variants={itemVariants}
+
+                                    exit="exit"
 
                                 >
 
@@ -421,13 +487,15 @@ const totalPrice =
 
                                     </div>
 
-                                </div>
+                                </motion.div>
 
                             ))
 
                         }
 
-                    </div>
+                        </AnimatePresence>
+
+                    </motion.div>
 
                     {/* ================= RIGHT SIDE ================= */}
 
@@ -600,6 +668,33 @@ const totalPrice =
     </div>
 
 </div>
+
+                </div>
+
+            )
+
+        }
+
+        {/* Mobile-only — the full checkout button lives inside
+            .cart-summary which is far down the page on a phone;
+            this keeps the primary action within thumb reach. */}
+        {
+
+            cartItems.length > 0 &&
+
+            (
+
+                <div className="mobile-checkout-bar">
+
+                    <div className="mobile-checkout-total">
+                        <small>Total</small>
+                        <strong>₹ {totalPrice}</strong>
+                    </div>
+
+                    <button onClick={handleCheckout}>
+                        <FaLock />
+                        Checkout
+                    </button>
 
                 </div>
 

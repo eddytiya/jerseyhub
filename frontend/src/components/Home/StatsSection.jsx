@@ -1,6 +1,7 @@
 import React from "react";
 import "./StatsSection.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
     FaTshirt,
     FaFutbol,
@@ -69,15 +70,46 @@ const stats = [
     }
 
 ];
-const AnimatedNumber = ({ value, suffix = "" }) => {
+
+const easeOut = [0.16, 1, 0.3, 1];
+
+const containerVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.12 } }
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 36, scale: 0.94 },
+    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: easeOut } }
+};
+
+/* ==========================================
+        COUNT-UP — only starts once the
+        card actually scrolls into view,
+        instead of racing the hero on mount
+========================================== */
+
+const AnimatedNumber = ({ value, suffix = "", start }) => {
 
     const [count, setCount] = useState(0);
 
+    const reduceMotion = useReducedMotion();
+
     useEffect(() => {
+
+        if (!start) return;
+
+        if (reduceMotion) {
+
+            setCount(value);
+
+            return;
+
+        }
 
         let startTime;
 
-        const duration = 1800;
+        const duration = 1400;
 
         const animate = (timestamp) => {
 
@@ -103,9 +135,11 @@ const AnimatedNumber = ({ value, suffix = "" }) => {
 
         };
 
-        requestAnimationFrame(animate);
+        const frame = requestAnimationFrame(animate);
 
-    }, [value]);
+        return () => cancelAnimationFrame(frame);
+
+    }, [start, value, reduceMotion]);
 
     return (
 
@@ -135,30 +169,38 @@ const AnimatedNumber = ({ value, suffix = "" }) => {
 
 const StatsSection = () => {
     const navigate = useNavigate();
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.35 });
 
     return (
 
         <section className="stats-section">
 
-            <div className="stats-container">
+            <motion.div
+                ref={ref}
+                className="stats-container"
+                variants={containerVariants}
+                initial="hidden"
+                animate={isInView ? "show" : "hidden"}
+            >
 
                 {
 
                     stats.map((item, index) => (
 
-                        <div
+                        <motion.div
 
                             className={`stat-card stat-card-${index}`}
 
                             key={index}
 
+                            variants={cardVariants}
+
+                            whileHover={{ y: -8 }}
+
+                            transition={{ y: { duration: 0.24, ease: easeOut } }}
+
                         >
-
-                            <div className="stat-badge">
-
-                               
-
-                            </div>
 
                             <div className="stat-icon">
 
@@ -173,6 +215,8 @@ const StatsSection = () => {
                                     value={item.value}
 
                                     suffix={item.suffix}
+
+                                    start={isInView}
 
                                 />
 
@@ -190,19 +234,13 @@ const StatsSection = () => {
 
                             </span>
 
-                            <div className="stat-arrow">
-
-                               
-
-                            </div>
-
-                        </div>
+                        </motion.div>
 
                     ))
 
                 }
 
-            </div>
+            </motion.div>
 
         </section>
 

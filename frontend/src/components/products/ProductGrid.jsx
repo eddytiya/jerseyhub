@@ -34,13 +34,15 @@ const ProductGrid = ({ products }) => {
 
             {
 
-                products.map((product) => (
+                products.map((product, index) => (
 
                     <ProductCard
 
                         key={product._id}
 
                         product={product}
+
+                        index={index}
 
                     />
 

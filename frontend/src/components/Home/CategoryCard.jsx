@@ -1,16 +1,36 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { FaArrowRight } from 'react-icons/fa'
 
-const CategoryCard = ({ category, jerseyCount }) => {
+const EASE_OUT = [0.16, 1, 0.3, 1]
+
+const MotionNavLink = motion(NavLink)
+
+const CategoryCard = ({ category, jerseyCount, index = 0 }) => {
+
+    const entranceDelay = Math.min(index * 0.06, 0.3)
 
     return (
 
-        <NavLink
+        <MotionNavLink
 
             to={`/category/${category.name}`}
 
             className="category-card"
+
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.5, delay: entranceDelay, ease: EASE_OUT }
+            }}
+            viewport={{ once: true, amount: 0.25 }}
+            whileHover={{
+                y: -14,
+                scale: 1.02,
+                transition: { duration: 0.3, ease: EASE_OUT }
+            }}
 
         >
 
@@ -54,7 +74,7 @@ const CategoryCard = ({ category, jerseyCount }) => {
 
             </div>
 
-        </NavLink>
+        </MotionNavLink>
 
     )
 

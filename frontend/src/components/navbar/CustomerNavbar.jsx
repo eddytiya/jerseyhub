@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useId } from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import axios from "axios";
 import API_URL from "../../utils/api";
 import {
@@ -17,6 +18,10 @@ const CustomerNavbar = () => {
     const [showMenu, setShowMenu] = useState(false);
 
     const timeoutRef = useRef(null);
+
+    // Unique per navbar instance (desktop + mobile duplicates render
+    // simultaneously) so the sliding pill's layoutId never collides.
+    const pillId = `nav-pill-${useId()}`;
 
     useEffect(() => {
 
@@ -59,9 +64,19 @@ const CustomerNavbar = () => {
                 to="/jerseys"
             >
 
-                <FaHome />
-
-                Home
+                {({ isActive }) => (
+                    <>
+                        {isActive && (
+                            <motion.span
+                                layoutId={pillId}
+                                className="nav-active-pill"
+                                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                            />
+                        )}
+                        <FaHome />
+                        Home
+                    </>
+                )}
 
             </NavLink>
 
@@ -102,9 +117,19 @@ const CustomerNavbar = () => {
                 to="/products"
             >
 
-                <FaBoxOpen />
-
-                Products
+                {({ isActive }) => (
+                    <>
+                        {isActive && (
+                            <motion.span
+                                layoutId={pillId}
+                                className="nav-active-pill"
+                                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                            />
+                        )}
+                        <FaBoxOpen />
+                        Products
+                    </>
+                )}
 
             </NavLink>
 

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import {
 
@@ -10,6 +11,8 @@ import {
 
 } from "react-icons/fa";
 
+import MagneticButton from "../common/MagneticButton";
+import "../common/MagneticButton.css";
 import "./CTASection.css";
 
 const CTASection = () => {
@@ -20,7 +23,13 @@ const CTASection = () => {
 
             <div className="container">
 
-                <div className="cta-card">
+                <motion.div
+                    className="cta-card"
+                    initial={{ clipPath: "inset(0 100% 0 0 round 32px)" }}
+                    whileInView={{ clipPath: "inset(0 0% 0 0 round 32px)" }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                >
 
                     <div className="cta-icon">
 
@@ -42,21 +51,20 @@ const CTASection = () => {
 
                     </p>
 
-                    <Link
-
+                    <MagneticButton
+                        as={Link}
                         to="/shop"
-
                         className="cta-btn"
-
+                        pullStrength={0.2}
                     >
 
                         Shop Now
 
                         <FaArrowRight />
 
-                    </Link>
+                    </MagneticButton>
 
-                </div>
+                </motion.div>
 
             </div>
 

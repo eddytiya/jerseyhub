@@ -34,6 +34,21 @@
 
     box-shadow:var(--shadow);
 
+    transition:height var(--dur-base,.24s) var(--ease-out,cubic-bezier(.16,1,.3,1)),
+        backdrop-filter var(--dur-base,.24s), box-shadow var(--dur-base,.24s);
+
+}
+
+.custom-navbar.scrolled{
+
+    height:60px;
+
+    backdrop-filter:blur(26px);
+
+    -webkit-backdrop-filter:blur(26px);
+
+    box-shadow:var(--shadow-hover);
+
 }
 
 /* =====================================================
@@ -234,15 +249,11 @@
 
 }
 
-/* Active */
+/* Active — background now handled by the sliding .nav-active-pill */
 
 .nav-item-custom.active{
 
-    background:var(--primary);
-
     color:white;
-
-    box-shadow:var(--shadow);
 
 }
 
@@ -252,35 +263,29 @@
 
 }
 
-/* Underline */
-
-.nav-item-custom::after{
-
-    content:"";
+.nav-active-pill{
 
     position:absolute;
 
-    left:50%;
+    inset:0;
 
-    bottom:6px;
+    z-index:-1;
 
-    transform:translateX(-50%);
+    border-radius:999px;
 
-    width:0;
+    background:var(--primary);
 
-    height:3px;
-
-    border-radius:20px;
-
-    background:white;
-
-    transition:.3s;
+    box-shadow:var(--shadow);
 
 }
 
-.nav-item-custom.active::after{
+@media (prefers-reduced-motion:reduce){
 
-    width:70%;
+    .nav-active-pill{
+
+        transition:none;
+
+    }
 
 }
 

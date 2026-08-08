@@ -62,6 +62,12 @@ const ReviewCarousel = ({
 
             grabCursor={true}
 
+            speed={650}
+
+            resistance={true}
+
+            resistanceRatio={0.65}
+
             autoplay={{
 
                 delay:3000,

@@ -5,6 +5,7 @@ import './FeaturedSection.css'
 import './Home.css'
 
 import FeaturedCard from './FeaturedCard'
+import ScrollReveal from '../dashboard/ScrollReveal'
 
 const FeaturedSection = ({ jerseys }) => {
 
@@ -42,15 +43,17 @@ const FeaturedSection = ({ jerseys }) => {
 
                     )
 
-                    .map(jersey => (
+                    .map((jersey, index) => (
 
-                        <FeaturedCard
+                        <ScrollReveal key={jersey._id} delay={Math.min(index * 0.08, 0.32)}>
 
-                            key={jersey._id}
+                            <FeaturedCard
 
-                            jersey={jersey}
+                                jersey={jersey}
 
-                        />
+                            />
+
+                        </ScrollReveal>
 
                     ))
 

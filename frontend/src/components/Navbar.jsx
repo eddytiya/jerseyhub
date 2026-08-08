@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import './navbar/Navbar.css'
@@ -21,7 +21,20 @@ const Navbar = () => {
     const [search, setSearch] = useState('')
     const [userMenuOpen, setUserMenuOpen] = useState(false)
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
     const navigate = useNavigate()
+
+    useEffect(() => {
+
+        const onScroll = () => setScrolled(window.scrollY > 24)
+
+        onScroll()
+
+        window.addEventListener('scroll', onScroll, { passive: true })
+
+        return () => window.removeEventListener('scroll', onScroll)
+
+    }, [])
 
     const role = localStorage.getItem('role')
 
@@ -61,7 +74,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
 
-        <header className={`custom-navbar ${role === "admin" ? "admin-hover-nav" : ""}`}>
+        <header className={`custom-navbar ${role === "admin" ? "admin-hover-nav" : ""} ${scrolled ? "scrolled" : ""}`}>
 
             {/* LEFT */}
 

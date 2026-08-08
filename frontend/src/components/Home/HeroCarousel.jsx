@@ -1,22 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import Carousel from "bootstrap/js/dist/carousel";
-import { FaArrowRight } from "react-icons/fa";
-import { FiShoppingBag } from "react-icons/fi";
-import { HiShieldCheck } from "react-icons/hi";
-import { BsTruck } from "react-icons/bs";
-import { MdVerified } from "react-icons/md";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import "./HeroCarousel.css";
+
 const slides = [
 
     {
         image:
             "https://media.gettyimages.com/id/182790712/photo/soccer-jerseys.jpg?s=612x612&w=0&k=20&c=rQVy-ENttTIJhzPeRA4Oq0Ds9tkmOen9q_YIsNlSXdE=",
 
+        tag: "New Drop",
         title: "Premium Football Jerseys",
-
         subtitle: "Authentic jerseys for every fan.",
-
         link: "/products"
     },
 
@@ -24,10 +19,9 @@ const slides = [
         image:
             "https://media.gettyimages.com/id/2276645038/photo/shanghai-china-jerseys-are-on-display-at-a-store-on-may-16-2026-in-shanghai-china-the-fifa.jpg?s=612x612&w=0&k=20&c=WP3BHWjQPgiUOnrZWwbCnOLG64amtfC9lN2OPPLd8kU=",
 
+        tag: "Just Landed",
         title: "New Season Collection",
-
         subtitle: "Latest arrivals for the new season.",
-
         link: "/category/Club"
     },
 
@@ -35,166 +29,155 @@ const slides = [
         image:
             "https://media.gettyimages.com/id/2279472761/photo/jerseys-of-german-french-argentinian-and-brazilian-national-football-teams-for-the-fifa-2026.jpg?s=612x612&w=0&k=20&c=-tjcJMbcqtzpYJfOKDtGiELjMPGEp6d3nmBaa3Jjuww=",
 
+        tag: "Fan Favorite",
         title: "Retro & Special Editions",
-
         subtitle: "Classic football shirts, timeless memories.",
-
         link: "/category/Retro Collection"
     }
 
 ];
 
+const AUTOPLAY_MS = 4500;
+
+const easeOut = [0.16, 1, 0.3, 1];
+
+const copyVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08, delayChildren: 0.22 } }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
+    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: easeOut } }
+};
+
 const HeroCarousel = () => {
 
-    const carouselRef = useRef(null);
+    const [index, setIndex] = useState(0);
+    const [paused, setPaused] = useState(false);
     const navigate = useNavigate();
+    const reduceMotion = useReducedMotion();
+    const timerRef = useRef(null);
+
+    const goTo = useCallback((i) => {
+        setIndex(((i % slides.length) + slides.length) % slides.length);
+    }, []);
 
     useEffect(() => {
 
-        if (!carouselRef.current) return;
+        if (paused) return undefined;
 
-        const carousel = new Carousel(carouselRef.current, {
+        timerRef.current = setInterval(() => {
+            setIndex((i) => (i + 1) % slides.length);
+        }, AUTOPLAY_MS);
 
-            interval: 4500,
-            ride: "carousel",
-            pause: false,
-            wrap: true,
-            touch: true
+        return () => clearInterval(timerRef.current);
 
-        });
+    }, [paused]);
 
-        return () => {
-
-            carousel.dispose();
-
-        };
-
-    }, []);
+    const slide = slides[index];
 
     return (
 
-        <section className="hero-carousel">
+        <section
+            className="hero-carousel"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+        >
 
-            <div
+            <AnimatePresence mode="wait">
 
-                ref={carouselRef}
-                id="heroCarousel"
-                className="carousel slide carousel-fade"
-
-            >
-
-                <div className="carousel-indicators">
-
-                    {
-
-                        slides.map((_, index) => (
-
-                            <button
-
-                                key={index}
-                                type="button"
-                                data-bs-target="#heroCarousel"
-                                data-bs-slide-to={index}
-                                className={index === 0 ? "active" : ""}
-                                aria-current={index === 0}
-                                aria-label={`Slide ${index + 1}`}
-
-                            />
-
-                        ))
-
-                    }
-
-                </div>
-
-                <div className="carousel-inner">
-
-                    {
-
-                        slides.map((slide, index) => (
-
-                            <div
-                                key={index}
-                                className={`carousel-item ${index === 0 ? "active" : ""}`}
-                                onClick={() => navigate(slide.link)}
-                                style={{ cursor: "pointer" }}
-                            >
-
-                                <img
-
-                                    src={slide.image}
-                                    className="hero-image"
-                                    alt={slide.title}
-
-                                />
-
-                                <div className="hero-overlay"></div>
-
-                                <div className="carousel-caption">
-
-                                    <div className="hero-content">
-
-    <span className="hero-tag">
-        {slide.tag}
-    </span>
-
-    <h1>{slide.title}</h1>
-
-    <p className="hero-subtitle">
-        {slide.subtitle}
-    </p>
-
-</div>
-
-                                </div>
-
-                            </div>
-
-                        ))
-
-                    }
-
-                </div>
-
-                {/* Previous */}
-
-                <button
-
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#heroCarousel"
-                    data-bs-slide="prev"
-
+                <motion.div
+                    key={index}
+                    className="carousel-item active"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(slide.link)}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.7, ease: easeOut }}
                 >
 
-                    <span
+                    <motion.img
+                        src={slide.image}
+                        className="hero-image"
+                        alt={slide.title}
+                        initial={{ scale: 1 }}
+                        animate={{ scale: reduceMotion ? 1 : 1.1 }}
+                        transition={{ duration: AUTOPLAY_MS / 1000 + 1.2, ease: "linear" }}
+                    />
 
-                        className="carousel-control-prev-icon"
+                    <div className="hero-overlay"></div>
 
-                    ></span>
+                    <div className="carousel-caption">
 
-                </button>
+                        <motion.div
+                            className="hero-content"
+                            variants={copyVariants}
+                            initial="hidden"
+                            animate="show"
+                        >
 
-                {/* Next */}
+                            <motion.span className="hero-tag" variants={itemVariants}>
+                                {slide.tag}
+                            </motion.span>
 
-                <button
+                            <motion.h1 variants={itemVariants}>
+                                {slide.title}
+                            </motion.h1>
 
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#heroCarousel"
-                    data-bs-slide="next"
+                            <motion.p className="hero-subtitle" variants={itemVariants}>
+                                {slide.subtitle}
+                            </motion.p>
 
-                >
+                        </motion.div>
 
-                    <span
+                    </div>
 
-                        className="carousel-control-next-icon"
+                </motion.div>
 
-                    ></span>
+            </AnimatePresence>
 
-                </button>
+            {/* Indicators */}
+
+            <div className="carousel-indicators">
+
+                {
+                    slides.map((_, i) => (
+                        <button
+                            key={i}
+                            type="button"
+                            className={i === index ? "active" : ""}
+                            aria-current={i === index}
+                            aria-label={`Go to slide ${i + 1}`}
+                            onClick={() => goTo(i)}
+                        />
+                    ))
+                }
 
             </div>
+
+            {/* Previous */}
+
+            <button
+                className="carousel-control-prev"
+                type="button"
+                aria-label="Previous slide"
+                onClick={() => goTo(index - 1)}
+            >
+                <span className="carousel-control-prev-icon"></span>
+            </button>
+
+            {/* Next */}
+
+            <button
+                className="carousel-control-next"
+                type="button"
+                aria-label="Next slide"
+                onClick={() => goTo(index + 1)}
+            >
+                <span className="carousel-control-next-icon"></span>
+            </button>
 
         </section>
 

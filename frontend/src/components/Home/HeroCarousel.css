@@ -74,8 +74,6 @@
 
     object-fit:cover;
 
-    animation:heroZoom 14s ease-in-out infinite;
-
     filter:
 
         brightness(.72)
@@ -94,28 +92,6 @@
         contrast(1.05)
 
         saturate(1.05);
-
-}
-
-@keyframes heroZoom{
-
-    0%{
-
-        transform:scale(1);
-
-    }
-
-    50%{
-
-        transform:scale(1.06);
-
-    }
-
-    100%{
-
-        transform:scale(1.1);
-
-    }
 
 }
 
@@ -215,28 +191,6 @@
     width:100%;
 
     max-width:520px;
-
-    animation:fadeHero .8s ease;
-
-}
-
-@keyframes fadeHero{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
 
 }
 
@@ -357,48 +311,6 @@
 
 }
 
-
-/* ==========================================================
-                    TEXT ANIMATION
-========================================================== */
-
-.hero-tag{
-
-    animation:slideUp .5s ease;
-
-}
-
-.hero-content h1{
-
-    animation:slideUp .75s ease;
-
-}
-
-.hero-content p{
-
-    animation:slideUp 1s ease;
-
-}
-
-@keyframes slideUp{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
 
 /* ==========================================================
                     CAROUSEL INDICATORS

@@ -44,7 +44,6 @@
 }
 
 .gridddddd-product-card:hover{
-    transform:translateY(-10px) scale(1.02);
     border-color:#3b82f6;
     box-shadow:0 0 0 1px rgba(59,130,246,.18),0 25px 45px rgba(37,99,235,.32);
 }

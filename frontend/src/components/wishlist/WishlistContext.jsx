@@ -10,7 +10,10 @@ import React, {
 
 } from "react";
 
-import { showSuccess } from "../../utils/toastUtils";
+import axios from "axios";
+
+import API_URL from "../../utils/api";
+import { showSuccess, showError } from "../../utils/toastUtils";
 export const WishlistContext = createContext();
 
 export const WishlistProvider = ({
@@ -107,51 +110,58 @@ export const WishlistProvider = ({
 
     };
 
-    const moveToCart = (product) => {
+    const moveToCart = async (product) => {
 
-        const cart = JSON.parse(
+        // The real cart lives on the backend (Cart.jsx reads from
+        // `${API_URL}/cart/me`) — this used to write to a `localStorage`
+        // "cart" key that nothing ever read, so items silently vanished.
+        try {
 
-            localStorage.getItem(
+            await axios.post(
 
-                "cart"
+                `${API_URL}/cart/add`,
 
-            )
+                {
 
-        ) || [];
+                    jerseyId: product._id,
 
-        const exists = cart.some(
+                    quantity: 1
 
-            (item) =>
+                },
 
-                item._id === product._id
+                {
 
-        );
+                    withCredentials: true
 
-        if (!exists) {
+                }
 
-            cart.push(product);
+            );
+
+            setWishlist((prev) =>
+
+                prev.filter((item) => item._id !== product._id)
+
+            );
+
+            showSuccess(
+
+                "Moved To Cart 🛒"
+
+            );
 
         }
 
-        localStorage.setItem(
+        catch (err) {
 
-            "cart",
+            showError(
 
-            JSON.stringify(cart)
+                err.response?.data?.message ||
 
-        );
+                "Couldn't move this to your cart — try again"
 
-        removeFromWishlist(
+            );
 
-            product._id
-
-        );
-
-        showSuccess(
-
-            "Moved To Cart 🛒"
-
-        );
+        }
 
     };
 

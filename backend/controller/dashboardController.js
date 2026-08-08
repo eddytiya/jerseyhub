@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Jersey = require('../model/jerseyModel')
 const Category = require('../model/categoryModel')
 const User = require('../model/userModel')
@@ -221,7 +222,9 @@ const getRecentOrders = async (req,res)=>{
 
             orders.map(async(order)=>{
 
-                const user = await User.findById(order.userId)
+                const user = mongoose.isValidObjectId(order.userId)
+                    ? await User.findById(order.userId)
+                    : null
 
                 return{
 

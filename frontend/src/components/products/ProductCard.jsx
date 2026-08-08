@@ -1,14 +1,46 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { FaHeart, FaRegHeart, FaBalanceScale } from "react-icons/fa";
 import "./ProductCard.css";
 
 import useWishlist from "../../hooks/useWishlist";
 import { useCompare } from "../compare/CompareContext";
 
-const ProductCard = ({ product }) => {
+const TILT_SPRING = { stiffness: 300, damping: 20, mass: 0.5 };
+const EASE_OUT = [0.16, 1, 0.3, 1];
+
+const ProductCard = ({ product, index = 0 }) => {
+
+    // Capped so a long grid doesn't queue up a slow cascade of delays
+    const entranceDelay = Math.min(index * 0.05, 0.3);
 
     const navigate = useNavigate();
+    const cardRef = useRef(null);
+    const reduceMotion = useReducedMotion();
+
+    const rotateX = useSpring(useMotionValue(0), TILT_SPRING);
+    const rotateY = useSpring(useMotionValue(0), TILT_SPRING);
+
+    const handleMouseMove = (e) => {
+
+        if (reduceMotion || !cardRef.current) return;
+
+        const rect = cardRef.current.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+
+        rotateY.set(px * 8);
+        rotateX.set(py * -8);
+
+    };
+
+    const handleMouseLeave = () => {
+
+        rotateX.set(0);
+        rotateY.set(0);
+
+    };
 
     const {
 
@@ -36,7 +68,25 @@ const ProductCard = ({ product }) => {
 
     return (
 
-        <div className="gridddddd-product-card">
+        <motion.div
+            ref={cardRef}
+            className="gridddddd-product-card"
+            style={{ rotateX, rotateY, transformPerspective: 800 }}
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.5, delay: entranceDelay, ease: EASE_OUT }
+            }}
+            viewport={{ once: true, amount: 0.25 }}
+            whileHover={{
+                y: -10,
+                scale: 1.02,
+                transition: { duration: 0.24, ease: EASE_OUT }
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+        >
 
             {/* Featured */}
 
@@ -254,7 +304,7 @@ const ProductCard = ({ product }) => {
 
             </div>
 
-        </div>
+        </motion.div>
 
     );
 

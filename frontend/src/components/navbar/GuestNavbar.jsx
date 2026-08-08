@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useId } from 'react'
 import { NavLink } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import {
 
@@ -9,6 +10,8 @@ import {
 
 } from '../../utils/navbarIcons'
 const GuestNavbar = () => {
+
+    const pillId = `nav-pill-${useId()}`;
 
     return (
 
@@ -22,9 +25,19 @@ const GuestNavbar = () => {
 
         >
 
-            <FaClipboardList />
-
-            Register
+            {({ isActive }) => (
+                <>
+                    {isActive && (
+                        <motion.span
+                            layoutId={pillId}
+                            className="nav-active-pill"
+                            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        />
+                    )}
+                    <FaClipboardList />
+                    Register
+                </>
+            )}
 
         </NavLink>
 
@@ -36,9 +49,19 @@ const GuestNavbar = () => {
 
         >
 
-            <FaUserCircle />
-
-            Login
+            {({ isActive }) => (
+                <>
+                    {isActive && (
+                        <motion.span
+                            layoutId={pillId}
+                            className="nav-active-pill"
+                            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        />
+                    )}
+                    <FaUserCircle />
+                    Login
+                </>
+            )}
 
         </NavLink>
 

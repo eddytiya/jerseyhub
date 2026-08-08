@@ -723,9 +723,15 @@
 
 .cart-btn:hover{
 
-    transform:translateY(-3px);
-
     box-shadow:0 18px 35px rgba(37,99,235,.35);
+
+}
+
+.cart-btn:disabled{
+
+    opacity:.85;
+
+    cursor:default;
 
 }
 
