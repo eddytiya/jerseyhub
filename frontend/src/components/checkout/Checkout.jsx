@@ -906,7 +906,7 @@ return (
         </small>
     )}
 
-    <label className="payment-option">
+    {import.meta.env.VITE_RAZORPAY_ENABLED === "true" && <label className="payment-option">
 
         <input
             type="radio"
@@ -920,7 +920,7 @@ return (
 
         Razorpay (UPI / Card / Wallet / Net Banking)
 
-    </label>
+    </label>}
 
 </div>
 

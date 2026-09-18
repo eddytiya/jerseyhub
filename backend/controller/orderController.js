@@ -21,6 +21,9 @@ const InventoryReservation = require("../model/InventoryReservation");
 // Verify Razorpay Signature Then Place Order
 // =====================================
 const verifyPayment = async (req, res) => {
+    if (!razorpay) {
+        return res.status(503).json({ message: "Online payments are temporarily unavailable. Please use Cash On Delivery." });
+    }
 
     const {
 

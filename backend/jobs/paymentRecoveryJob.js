@@ -53,7 +53,7 @@ const runPaymentRecovery = async () => {
 };
 
 const startPaymentRecoveryJob = () => {
-    if (process.env.PAYMENT_RECOVERY_ENABLED !== "true") return;
+    if (!razorpay || process.env.RAZORPAY_ENABLED !== "true" || process.env.PAYMENT_RECOVERY_ENABLED !== "true") return;
     cron.schedule("*/5 * * * *", () => runPaymentRecovery().catch((error) => {
         console.error("Payment recovery job failed:", error.message);
     }));

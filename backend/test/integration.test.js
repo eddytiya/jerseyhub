@@ -42,6 +42,7 @@ before(async () => {
     process.env.RAZORPAY_KEY_ID = "rzp_test_example";
     process.env.RAZORPAY_KEY_SECRET = "test_razorpay_secret";
     process.env.RAZORPAY_WEBHOOK_SECRET = "test_webhook_secret";
+    process.env.RAZORPAY_ENABLED = "true";
     process.env.GOOGLE_CLIENT_ID = "test.apps.googleusercontent.com";
     process.env.FRONTEND_URL = "http://localhost:5173";
 

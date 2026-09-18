@@ -6,6 +6,10 @@ const { reserveInventory, releaseReservations } = require("../services/inventory
 
 const createRazorpayOrder = async (req,res)=>{
 
+    if (!razorpay) {
+        return res.status(503).json({ message: "Online payments are temporarily unavailable. Please use Cash On Delivery." });
+    }
+
     let reservationContext = null;
 
     try{

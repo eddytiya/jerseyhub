@@ -54,6 +54,9 @@ const processCapturedPayment = async (payment) => {
 };
 
 const razorpayWebhook = async (req, res) => {
+    if (!razorpay || process.env.RAZORPAY_ENABLED !== "true") {
+        return res.status(503).json({ message: "Razorpay is disabled" });
+    }
     const rawBody = req.body;
     const signature = req.get("x-razorpay-signature");
     if (!Buffer.isBuffer(rawBody) || !safeSignatureMatch(rawBody, signature)) {
@@ -118,6 +121,7 @@ const razorpayWebhook = async (req, res) => {
 };
 
 const reconcilePayment = async (req, res) => {
+    if (!razorpay) return res.status(503).json({ message: "Razorpay is disabled" });
     const attempt = await PaymentAttempt.findOne({ razorpayOrderId: req.params.razorpayOrderId });
     if (!attempt) return res.status(404).json({ message: "Payment attempt not found" });
     const result = await razorpay.orders.fetchPayments(attempt.razorpayOrderId);
@@ -128,6 +132,7 @@ const reconcilePayment = async (req, res) => {
 };
 
 const refundOrder = async (req, res) => {
+    if (!razorpay) return res.status(503).json({ message: "Razorpay is disabled" });
     const order = await Order.findById(req.params.orderId);
     if (!order) return res.status(404).json({ message: "Order not found" });
     if (order.paymentMethod !== "Razorpay" || order.paymentStatus !== "Paid" || !order.razorpayPaymentId) {
