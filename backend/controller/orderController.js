@@ -8,9 +8,14 @@ const sendEmail = require("../utils/sendEmail");
 const buildOrderStatusEmail = require("../utils/orderStatusEmail");
 const generateInvoice = require("../utils/generateInvoice");
 const Coupon = require("../model/Coupon");
-const { evaluateCoupon } = require("./couponController");
 const toCSV = require("../utils/toCSV");
 const crypto = require("crypto");
+const razorpay = require("../config/razorpay");
+const { calculateCheckout } = require("../services/checkoutPricing");
+const { validateDeliveryInfo } = require("../services/checkoutValidation");
+const PaymentAttempt = require("../model/PaymentAttempt");
+const InventoryMovement = require("../model/InventoryMovement");
+const InventoryReservation = require("../model/InventoryReservation");
 
 // =====================================
 // Verify Razorpay Signature Then Place Order
@@ -61,6 +66,39 @@ const verifyPayment = async (req, res) => {
 
         });
 
+    }
+
+    const existingOrder = await Order.findOne({ razorpayPaymentId: razorpay_payment_id });
+    if (existingOrder) {
+        return res.status(409).json({ message: "Payment has already been used" });
+    }
+
+    const isGuest = !req.session.userId;
+    const userId = req.session.userId || req.session.guestId;
+    const attempt = await PaymentAttempt.findOne({ razorpayOrderId: razorpay_order_id, userId });
+    if (!attempt) {
+        return res.status(400).json({ message: "Payment attempt does not belong to this checkout" });
+    }
+    const { totalAmount } = await calculateCheckout({
+        userId,
+        isGuest,
+        buyNow: req.body.buyNow,
+        couponCode: req.body.couponCode,
+        redeemPoints: req.body.redeemPoints,
+    });
+    const razorpayOrder = await razorpay.orders.fetch(razorpay_order_id);
+    const razorpayPayment = await razorpay.payments.fetch(razorpay_payment_id);
+    const expectedAmount = Math.round(totalAmount * 100);
+
+    if (
+        razorpayOrder.currency !== "INR" ||
+        Number(razorpayOrder.amount) !== expectedAmount ||
+        razorpayPayment.order_id !== razorpay_order_id ||
+        razorpayPayment.currency !== "INR" ||
+        Number(razorpayPayment.amount) !== expectedAmount ||
+        !["authorized", "captured"].includes(razorpayPayment.status)
+    ) {
+        return res.status(400).json({ message: "Payment amount or status does not match this checkout" });
     }
 
     return processOrder(req, res, {
@@ -115,141 +153,45 @@ const processOrder = async (req, res, paymentInfo) => {
 
 } = req.body;
 
-        // =====================================
-        // Fetch Cart
-        // =====================================
-
-       const cartItems = await Cart.find({
-
-    userId,
-
-    buyNow: buyNow ? true : false
-
-}).populate(
-
-    "jerseyId"
-
-);
-
-        if (cartItems.length === 0) {
-
-            return res.status(400).json({
-
-                message: "Cart Is Empty"
-
-            });
-
+        validateDeliveryInfo(deliveryInfo);
+        const idempotencyKey = req.get("Idempotency-Key") || req.body.idempotencyKey || crypto.randomUUID();
+        const existingIdempotentOrder = await Order.findOne({ userId, idempotencyKey });
+        if (existingIdempotentOrder) {
+            return res.status(200).json({ message: "Order already placed", order: existingIdempotentOrder });
         }
 
-        // =====================================
-        // Stock Validation
-        // =====================================
+        const {
+            cartItems,
+            subtotal,
+            discountAmount,
+            appliedCouponCode,
+            pointsRedeemedAmount,
+            merchandiseTotal,
+            shippingAmount,
+            taxAmount,
+            taxRate,
+            codAvailable,
+            codUnavailableReason,
+            totalAmount,
+        } = await calculateCheckout({
+            userId, isGuest, buyNow, couponCode, redeemPoints
+        });
 
-        for (const item of cartItems) {
-
-            if (!item.jerseyId) {
-
-                return res.status(404).json({
-
-                    message: "Jersey Not Found"
-
-                });
-
+        const usesReservation = paymentInfo.paymentMethod === "Razorpay";
+        if (usesReservation) {
+            const reservationCount = await InventoryReservation.countDocuments({ userId, idempotencyKey, status: "active" });
+            if (reservationCount !== cartItems.length) {
+                const error = new Error("Checkout reservation expired. Please restart payment.");
+                error.statusCode = 409;
+                throw error;
             }
-
         }
 
-        // =====================================
-        // Calculate Subtotal
-        // =====================================
-
-        const subtotal = cartItems.reduce(
-
-            (total, item) =>
-
-                total +
-
-                item.jerseyId.price *
-
-                item.quantity,
-
-            0
-
-        );
-
-        // =====================================
-        // Apply Coupon (Re-Validated Server-Side)
-        // =====================================
-
-        let discountAmount = 0;
-
-        let appliedCouponCode = "";
-
-        if (couponCode) {
-
-            const couponResult = await evaluateCoupon(couponCode, subtotal);
-
-            if (!couponResult.valid) {
-
-                return res.status(400).json({
-
-                    message: couponResult.message
-
-                });
-
-            }
-
-            discountAmount = couponResult.discountAmount;
-
-            appliedCouponCode = couponResult.coupon.code;
-
+        if (paymentInfo.paymentMethod === "Cash On Delivery" && !codAvailable) {
+            const error = new Error(codUnavailableReason);
+            error.statusCode = 400;
+            throw error;
         }
-
-        // =====================================
-        // Redeem Loyalty Points (Registered Users Only)
-        // =====================================
-
-        let pointsRedeemedAmount = 0;
-
-        let redeemingUser = null;
-
-        if (!isGuest) {
-
-            redeemingUser = await User.findById(userId);
-
-        }
-
-        const requestedPoints = Number(redeemPoints) || 0;
-
-        if (requestedPoints > 0) {
-
-            if (!redeemingUser) {
-
-                return res.status(400).json({
-
-                    message: "Please Login To Redeem Points"
-
-                });
-
-            }
-
-            if (requestedPoints > redeemingUser.loyaltyPoints) {
-
-                return res.status(400).json({
-
-                    message: "You Don't Have Enough Points"
-
-                });
-
-            }
-
-            const availableForRedemption = subtotal - discountAmount;
-
-            pointsRedeemedAmount = Math.min(requestedPoints, availableForRedemption);
-
-        }
-
-        const totalAmount = subtotal - discountAmount - pointsRedeemedAmount;
 
         // =====================================
         // Create Snapshot Of Purchased Products
@@ -271,6 +213,10 @@ const processOrder = async (req, res, paymentInfo) => {
 
             quantity: item.quantity,
 
+            size: item.selectedSize || "",
+
+            sku: item.sku || "",
+
             subtotal:
 
                 item.jerseyId.price *
@@ -279,168 +225,153 @@ const processOrder = async (req, res, paymentInfo) => {
 
         }));
 
-        // =====================================
-        // Create ONE Order
-        // =====================================
+        const pointsEarned = Math.floor(totalAmount / 100);
+        const dbSession = await mongoose.startSession();
+        let order;
+        const inventoryMovements = [];
 
-       const pointsEarned = Math.floor(totalAmount / 100);
-
-       const order = await Order.create({
-
-    userId,
-
-    items: orderItems,
-
-    subtotal,
-
-    couponCode: appliedCouponCode,
-
-    discountAmount,
-
-    pointsRedeemed: pointsRedeemedAmount,
-
-    pointsEarned,
-
-    totalAmount,
-
-    deliveryInfo,
-
-    status: "Pending",
-
-    paymentStatus: paymentInfo.paymentStatus,
-
-    paymentMethod: paymentInfo.paymentMethod,
-
-    razorpayOrderId: paymentInfo.razorpayOrderId || "",
-
-    razorpayPaymentId: paymentInfo.razorpayPaymentId || ""
-
-});
-
-        if (appliedCouponCode) {
-
-            await Coupon.updateOne(
-
-                { code: appliedCouponCode },
-
-                { $inc: { usedCount: 1 } }
-
-            );
-
-        }
-
-        if (redeemingUser) {
-
-            redeemingUser.loyaltyPoints += pointsEarned - pointsRedeemedAmount;
-
-            await redeemingUser.save();
-
-        }
-
-        // =====================================
-        // Reduce Product Stock (Atomic, With Rollback On Insufficient Stock)
-        // =====================================
-
-        const stockDecrements = [];
-
-        for (const item of cartItems) {
-
-            const updatedJersey = await Jersey.findOneAndUpdate(
-
-                {
-
-                    _id: item.jerseyId._id,
-
-                    stock: { $gte: item.quantity }
-
-                },
-
-                {
-
-                    $inc: {
-
-                        stock: -item.quantity
-
+        try {
+            await dbSession.withTransaction(async () => {
+                for (const item of cartItems) {
+                    const hasVariants = item.jerseyId.variants?.length > 0;
+                    if (hasVariants && !item.selectedSize) {
+                        const error = new Error(`Select a size for ${item.jerseyId.jerseyName}.`);
+                        error.statusCode = 400;
+                        throw error;
                     }
-
-                },
-
-                {
-
-                    new: true
-
-                }
-
-            );
-
-            if (!updatedJersey) {
-
-                for (const rollback of stockDecrements) {
-
-                    await Jersey.findByIdAndUpdate(
-
-                        rollback.jerseyId,
-
-                        { $inc: { stock: rollback.quantity } }
-
+                    const filter = hasVariants
+                        ? {
+                            _id: item.jerseyId._id,
+                            variants: { $elemMatch: {
+                                size: item.selectedSize, active: true, stock: { $gte: item.quantity },
+                                ...(usesReservation ? { reserved: { $gte: item.quantity } } : {})
+                            } }
+                        }
+                        : {
+                            _id: item.jerseyId._id, stock: { $gte: item.quantity },
+                            ...(usesReservation ? { reservedStock: { $gte: item.quantity } } : {})
+                        };
+                    const update = hasVariants
+                        ? { $inc: {
+                            "variants.$.stock": -item.quantity, "variants.$.sold": item.quantity,
+                            ...(usesReservation ? { "variants.$.reserved": -item.quantity, reservedStock: -item.quantity } : {}),
+                            stock: -item.quantity, soldStock: item.quantity
+                        } }
+                        : { $inc: {
+                            stock: -item.quantity, soldStock: item.quantity,
+                            ...(usesReservation ? { reservedStock: -item.quantity } : {})
+                        } };
+                    const updatedJersey = await Jersey.findOneAndUpdate(
+                        filter,
+                        update,
+                        { returnDocument: "after", session: dbSession }
                     );
 
+                    if (!updatedJersey) {
+                        const error = new Error(`${item.jerseyId.jerseyName} no longer has enough stock.`);
+                        error.statusCode = 400;
+                        throw error;
+                    }
+
+                    const updatedVariant = hasVariants
+                        ? updatedJersey.variants.find((variant) => variant.size === item.selectedSize)
+                        : null;
+                    const stockAfter = updatedVariant ? updatedVariant.stock : updatedJersey.stock;
+                    inventoryMovements.push({
+                        jerseyId: updatedJersey._id,
+                        variantId: updatedVariant?._id || null,
+                        sku: updatedVariant?.sku || "",
+                        size: updatedVariant?.size || item.selectedSize || "",
+                        type: "sale",
+                        quantity: -item.quantity,
+                        stockBefore: stockAfter + item.quantity,
+                        stockAfter,
+                        reason: "Customer order",
+                    });
+
+                    const stockNotification = updatedJersey.stock === 0
+                        ? { title: "Out Of Stock", message: `${updatedJersey.teamName} - ${updatedJersey.jerseyName} is out of stock.`, type: "stock" }
+                        : updatedJersey.stock <= 3
+                            ? { title: "Low Stock", message: `${updatedJersey.teamName} - ${updatedJersey.jerseyName} has only ${updatedJersey.stock} item(s) left.`, type: "stock" }
+                            : null;
+                    if (stockNotification) {
+                        await Notification.create([stockNotification], { session: dbSession });
+                    }
                 }
 
-                return res.status(400).json({
+                if (appliedCouponCode) {
+                    await Coupon.updateOne(
+                        { code: appliedCouponCode },
+                        { $inc: { usedCount: 1 } },
+                        { session: dbSession }
+                    );
+                }
 
-                    message: `${item.jerseyId.jerseyName} no longer has enough stock.`
+                if (!isGuest) {
+                    const loyaltyUpdate = await User.updateOne(
+                        { _id: userId, loyaltyPoints: { $gte: pointsRedeemedAmount } },
+                        { $inc: { loyaltyPoints: pointsEarned - pointsRedeemedAmount } },
+                        { session: dbSession }
+                    );
+                    if (loyaltyUpdate.modifiedCount !== 1) {
+                        const error = new Error("Loyalty points changed. Please review your checkout total.");
+                        error.statusCode = 409;
+                        throw error;
+                    }
+                }
 
-                });
+                [order] = await Order.create([{
+                    userId,
+                    items: orderItems,
+                    subtotal,
+                    couponCode: appliedCouponCode,
+                    discountAmount,
+                    pointsRedeemed: pointsRedeemedAmount,
+                    pointsEarned,
+                    merchandiseTotal,
+                    shippingAmount,
+                    taxAmount,
+                    taxRate,
+                    totalAmount,
+                    deliveryInfo,
+                    status: "Pending",
+                    paymentStatus: paymentInfo.paymentStatus,
+                    paymentMethod: paymentInfo.paymentMethod,
+                    razorpayOrderId: paymentInfo.razorpayOrderId || "",
+                    razorpayPaymentId: paymentInfo.razorpayPaymentId || "",
+                    idempotencyKey
+                }], { session: dbSession });
 
-            }
+                if (inventoryMovements.length) {
+                    await InventoryMovement.insertMany(
+                        inventoryMovements.map((movement) => ({ ...movement, orderId: order._id })),
+                        { session: dbSession }
+                    );
+                }
 
-            stockDecrements.push({
+                if (paymentInfo.razorpayOrderId) {
+                    await PaymentAttempt.updateOne(
+                        { razorpayOrderId: paymentInfo.razorpayOrderId },
+                        { status: "order_created", orderId: order._id, razorpayPaymentId: paymentInfo.razorpayPaymentId },
+                        { session: dbSession }
+                    );
+                }
 
-                jerseyId: item.jerseyId._id,
+                if (usesReservation) {
+                    await InventoryReservation.updateMany(
+                        { userId, idempotencyKey, status: "active" },
+                        { status: "consumed" },
+                        { session: dbSession }
+                    );
+                }
 
-                quantity: item.quantity
-
+                await Cart.deleteMany(
+                    { userId, buyNow: buyNow ? true : false },
+                    { session: dbSession }
+                );
             });
-
-            // Low Stock
-
-            if (
-
-                updatedJersey.stock > 0 &&
-
-                updatedJersey.stock <= 3
-
-            ) {
-
-                await Notification.create({
-
-                    title: "Low Stock",
-
-                    message: `${updatedJersey.teamName} - ${updatedJersey.jerseyName} has only ${updatedJersey.stock} item(s) left.`,
-
-                    type: "stock"
-
-                });
-
-            }
-
-            // Out Of Stock
-
-            if (updatedJersey.stock === 0) {
-
-                await Notification.create({
-
-                    title: "Out Of Stock",
-
-                    message: `${updatedJersey.teamName} - ${updatedJersey.jerseyName} is out of stock.`,
-
-                    type: "stock"
-
-                });
-
-            }
-
+        } finally {
+            await dbSession.endSession();
         }
 
         // =====================================
@@ -914,18 +845,6 @@ catch (err) {
         });
 
         // =====================================
-        // Empty Cart
-        // =====================================
-
-        await Cart.deleteMany({
-
-    userId,
-
-    buyNow: buyNow ? true : false
-
-});
-
-        // =====================================
         // Success Response
         // =====================================
 
@@ -941,7 +860,7 @@ catch (err) {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 

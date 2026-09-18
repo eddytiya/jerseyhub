@@ -27,6 +27,10 @@ const ProductActions = ({
 }) => {
 
     const [quantity, setQuantity] = useState(1);
+    const availableVariants = (jersey.variants || []).filter((variant) => variant.active);
+    const [selectedSize, setSelectedSize] = useState(
+        availableVariants.find((variant) => variant.stock - variant.reserved > 0)?.size || jersey.sizes?.[0] || ""
+    );
 
     const [justAdded, setJustAdded] = useState(false);
 
@@ -38,11 +42,19 @@ const ProductActions = ({
 
     const navigate = useNavigate();
 
-    const outOfStock = jersey.stock <= 0;
+    const selectedVariant = availableVariants.find((variant) => variant.size === selectedSize);
+    const availableStock = selectedVariant
+        ? selectedVariant.stock - selectedVariant.reserved
+        : jersey.stock - (jersey.reservedStock || 0);
+    const outOfStock = availableStock <= 0;
 
     const handleAddToCart = () => {
 
-        onAddToCart(quantity);
+        if (availableVariants.length && !selectedSize) {
+            showError("Please select a size.");
+            return;
+        }
+        onAddToCart(quantity, selectedSize);
 
         setJustAdded(true);
 
@@ -120,7 +132,8 @@ const handleBuyNow = async () => {
     `${API_URL}/cart/buy-now`,
     {
         jerseyId: jersey._id,
-        quantity
+        quantity,
+        selectedSize
     },
     {
         withCredentials: true
@@ -204,6 +217,27 @@ const handleBuyNow = async () => {
 
         <div className="product-actions">
 
+            {(availableVariants.length > 0 || jersey.sizes?.length > 0) && (
+                <div className="size-selector" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+                    {(availableVariants.length ? availableVariants : jersey.sizes.map((size) => ({ size, stock: jersey.stock, reserved: 0, active: true })))
+                        .map((variant) => {
+                            const available = variant.stock - (variant.reserved || 0);
+                            return (
+                                <button
+                                    type="button"
+                                    key={variant.size}
+                                    disabled={available <= 0}
+                                    aria-pressed={selectedSize === variant.size}
+                                    onClick={() => { setSelectedSize(variant.size); setQuantity(1); }}
+                                    className={selectedSize === variant.size ? "active" : ""}
+                                >
+                                    {variant.size}{available <= 0 ? " — Sold out" : ""}
+                                </button>
+                            );
+                        })}
+                </div>
+            )}
+
             <div className="quantity-selector">
 
                 <button
@@ -232,7 +266,7 @@ const handleBuyNow = async () => {
 
                     onClick={()=>
 
-                        setQuantity(quantity+1)
+                        quantity < availableStock && setQuantity(quantity+1)
 
                     }
 

@@ -61,7 +61,10 @@ const [jersey, setJersey] = useState({
 
     description: "",
 
-    featured: false
+    featured: false,
+    slug: "",
+    status: "draft",
+    publishAt: ""
 
 });
 
@@ -85,19 +88,13 @@ useEffect(() => {
 
 ] = await Promise.all([
 
-    axios.get(
-        `${API_URL}/jersey/show/${id}`
-    ),
+    axios.get(`${API_URL}/jersey/admin/${id}`),
 
     axios.get(
         `${API_URL}/category`
     ),
 
-    axios.get(
-        axios.get(
-    `${API_URL}/product-type`
-)
-    )
+    axios.get(`${API_URL}/product-type`)
 
 ]);
 
@@ -129,6 +126,9 @@ useEffect(() => {
                 description: data.description || "",
 
                 featured: Boolean(data.featured),
+                slug: data.slug || "",
+                status: data.status || "published",
+                publishAt: data.publishAt ? new Date(data.publishAt).toISOString().slice(0, 16) : "",
 
                 sizes: Array.isArray(data.sizes)
                     ? data.sizes.join(",")
@@ -1672,6 +1672,26 @@ Basic Information
 
     />
 
+</div>
+
+<div className="row g-3 mb-4">
+    <div className="col-md-6">
+        <label className="form-label">SEO Slug</label>
+        <input className="form-control" value={jersey.slug} onChange={(e) => setJersey({ ...jersey, slug: e.target.value })} />
+    </div>
+    <div className="col-md-6">
+        <label className="form-label">Publishing status</label>
+        <select className="form-select" value={jersey.status} onChange={(e) => setJersey({ ...jersey, status: e.target.value, publishAt: e.target.value === "scheduled" ? jersey.publishAt : "" })}>
+            <option value="draft">Draft</option>
+            <option value="published">Published now</option>
+            <option value="scheduled">Schedule</option>
+            <option value="archived">Archived</option>
+        </select>
+    </div>
+    {jersey.status === "scheduled" && <div className="col-md-6">
+        <label className="form-label">Publish date and time</label>
+        <input type="datetime-local" className="form-control" required value={jersey.publishAt} onChange={(e) => setJersey({ ...jersey, publishAt: e.target.value })} />
+    </div>}
 </div>
 
 <div className="form-check mb-4">

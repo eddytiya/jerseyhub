@@ -1,4 +1,6 @@
 require("dotenv").config();
+const { validateEnv } = require("./config/validateEnv");
+validateEnv();
 
 const express = require("express");
 const cors = require('cors');
@@ -28,6 +30,10 @@ const couponRoute = require("./route/couponRoute");
 const bulkInquiryRoute = require("./route/bulkInquiryRoute");
 const seoRoute = require("./route/seoRoute");
 const { startAbandonedCartJob } = require("./utils/abandonedCartJob");
+const { razorpayWebhook } = require("./controller/paymentRecoveryController");
+const { startPaymentRecoveryJob } = require("./jobs/paymentRecoveryJob");
+const { startInventoryReservationJob } = require("./jobs/inventoryReservationJob");
+const { startCatalogPublishingJob } = require("./jobs/catalogPublishingJob");
 
 const app = express();
 
@@ -36,9 +42,6 @@ app.set("trust proxy", 1);
 /* ==========================================
             DATABASE CONNECTION
 ========================================== */
-
-connectDB();
-startAbandonedCartJob();
 
 /* ==========================================
             MIDDLEWARE
@@ -55,12 +58,15 @@ app.use(
       "http://localhost:5180",
       "https://jerseyhub-git-main-eddytiyaa.vercel.app",
       "https://jerseyhub-lilac.vercel.app",
-    ],
+      process.env.FRONTEND_URL,
+    ].filter(Boolean),
     credentials: true,
   })
 );
 
-app.use(express.json());
+app.post("/payment/webhook", express.raw({ type: "application/json", limit: "1mb" }), razorpayWebhook);
+
+app.use(express.json({ limit: "1mb" }));
 
 app.use(
     express.urlencoded({
@@ -74,11 +80,13 @@ app.use(
         resave: false,
         saveUninitialized: false,
         proxy: true,
-        store: MongoStore.create({
-            mongoUrl: process.env.MONGO_URI,
-            collectionName: "sessions",
-            ttl: 60 * 60,
-        }),
+        store: process.env.NODE_ENV === "test"
+            ? new session.MemoryStore()
+            : MongoStore.create({
+                mongoUrl: process.env.MONGO_URI,
+                collectionName: "sessions",
+                ttl: 60 * 60,
+            }),
         cookie: {
             maxAge: 1000 * 60 * 60,
             secure: process.env.NODE_ENV === "production",
@@ -100,6 +108,7 @@ const authLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
     message: { message: "Too many attempts. Please try again later." },
+    skip: () => process.env.NODE_ENV === "test",
 });
 
 app.use(["/user/login", "/user/register", "/user/google-login"], authLimiter);
@@ -169,8 +178,23 @@ app.use(seoRoute);
                 SERVER
 ========================================== */
 
-const PORT = process.env.PORT || 2987;
+const startServer = async () => {
+    await connectDB();
+    startAbandonedCartJob();
+    startPaymentRecoveryJob();
+    startInventoryReservationJob();
+    startCatalogPublishingJob();
+    const PORT = process.env.PORT || 2987;
+    return app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+};
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+    startServer().catch((error) => {
+        console.error("Server startup failed:", error.message);
+        process.exit(1);
+    });
+}
+
+module.exports = { app, startServer };

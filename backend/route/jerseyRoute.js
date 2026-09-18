@@ -11,7 +11,7 @@ const {
     searchJersey,
     getByCategory,
     getFeaturedJerseys,aiSearch,
-    toggleFeatured,getAIMetadata
+    toggleFeatured,getAIMetadata,getAdminJerseys,getAdminJerseyById
 
 } = require('../controller/jerseyController');
 
@@ -19,6 +19,7 @@ const adminAuth =
     require('../adminAuth');
 
 const router = express.Router();
+const { adjustInventory, getInventoryLedger } = require("../controller/inventoryController");
 
 
 // =========================
@@ -75,7 +76,7 @@ router.post(
 
 // Single Jersey
 router.get(
-    '/show/:id',
+    '/show/:identifier',
     getJerseyById
 );
 
@@ -83,6 +84,9 @@ router.get(
 // =========================
 // ADMIN ROUTES
 // =========================
+
+router.get('/admin/all', adminAuth, getAdminJerseys);
+router.get('/admin/:id', adminAuth, getAdminJerseyById);
 
 // Add Jersey
 router.post(
@@ -111,5 +115,8 @@ router.delete(
     adminAuth,
     deleteJersey
 );
+
+router.post("/:id/inventory-adjustment", adminAuth, adjustInventory);
+router.get("/:id/inventory-ledger", adminAuth, getInventoryLedger);
 
 module.exports = router;

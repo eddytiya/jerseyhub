@@ -1,4 +1,6 @@
 const Product = require("../model/ProductModel");
+const mongoose = require("mongoose");
+const { publicCatalogFilter, normalizePublishingInput, ensureUniqueSlug } = require("../services/catalogPublishing");
 
 /* ==========================================
             GET ALL PRODUCTS
@@ -14,7 +16,7 @@ const getProducts = async (req, res) => {
 
         const [products, total] = await Promise.all([
 
-            Product.find()
+            Product.find(publicCatalogFilter())
 
                 .sort({ createdAt: -1 })
 
@@ -22,7 +24,7 @@ const getProducts = async (req, res) => {
 
                 .limit(limit),
 
-            Product.countDocuments()
+            Product.countDocuments(publicCatalogFilter())
 
         ]);
 
@@ -60,11 +62,8 @@ const getProduct = async (req, res) => {
 
     try {
 
-        const product = await Product.findById(
-
-            req.params.id
-
-        );
+        const lookup = mongoose.Types.ObjectId.isValid(req.params.id) ? { _id: req.params.id } : { slug: req.params.id };
+        const product = await Product.findOne(publicCatalogFilter(lookup));
 
         if (!product) {
 
@@ -100,7 +99,10 @@ const addProduct = async (req, res) => {
 
     try {
 
-        const product = await Product.create(req.body);
+        const product = new Product(normalizePublishingInput(req.body));
+        await product.validate();
+        product.slug = await ensureUniqueSlug(Product, product.slug);
+        await product.save();
 
         res.status(201).json(product);
 
@@ -130,7 +132,7 @@ const updateProduct = async (req, res) => {
 
             req.params.id,
 
-            req.body,
+            normalizePublishingInput(req.body),
 
             {
 

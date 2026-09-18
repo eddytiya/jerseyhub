@@ -58,6 +58,8 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("COD");
+    const [checkoutQuote, setCheckoutQuote] = useState(null);
+    const [idempotencyKey] = useState(() => crypto.randomUUID());
 
     const [couponInput, setCouponInput] = useState("");
     const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -254,13 +256,30 @@ const handleSelectAddress = (id) => {
 
         : 0;
 
-    const grandTotal =
+    const localGrandTotal =
 
         totalPrice -
 
         (appliedCoupon?.discountAmount || 0) -
 
         effectivePointsRedeemed;
+
+    const grandTotal = checkoutQuote?.totalAmount ?? localGrandTotal;
+
+    useEffect(() => {
+        if (!cartItems.length) return;
+        const timer = setTimeout(() => {
+            axios.post(`${API_URL}/order/quote`, {
+                buyNow: buyNow === "true",
+                couponCode: appliedCoupon?.code,
+                redeemPoints: effectivePointsRedeemed
+            }).then(({ data }) => {
+                setCheckoutQuote(data);
+                if (!data.codAvailable) setPaymentMethod("RAZORPAY");
+            }).catch(() => setCheckoutQuote(null));
+        }, 150);
+        return () => clearTimeout(timer);
+    }, [cartItems, buyNow, appliedCoupon?.code, effectivePointsRedeemed]);
 
     const handleApplyCoupon = () => {
 
@@ -421,10 +440,14 @@ const startRazorpayPayment = async () => {
            `${API_URL}/order/create-order`,
 
             {
+                buyNow: buyNow === "true",
+                couponCode: appliedCoupon?.code,
+                redeemPoints: effectivePointsRedeemed,
+                deliveryInfo: form,
+                idempotencyKey
 
-                amount: grandTotal
-
-            }
+            },
+            { headers: { "Idempotency-Key": idempotencyKey } }
 
         );
 
@@ -478,9 +501,11 @@ const startRazorpayPayment = async () => {
 
                         couponCode: appliedCoupon?.code,
 
-                        redeemPoints: effectivePointsRedeemed
+                        redeemPoints: effectivePointsRedeemed,
+                        idempotencyKey
 
-                    }
+                    },
+                    { headers: { "Idempotency-Key": idempotencyKey } }
 
                 )
 
@@ -593,7 +618,7 @@ const confirmPlaceOrder = () => {
 
     }
 
-    if (!/^\d{10}$/.test(form.phone)) {
+    if (!/^[6-9]\d{9}$/.test(form.phone)) {
 
         showError(
 
@@ -605,7 +630,7 @@ const confirmPlaceOrder = () => {
 
     }
 
-    if (!/^\d{6}$/.test(form.pincode)) {
+    if (!/^[1-9]\d{5}$/.test(form.pincode)) {
 
         showError(
 
@@ -633,6 +658,12 @@ const confirmPlaceOrder = () => {
 
     setLoading(true);
 
+    if (paymentMethod === "COD" && checkoutQuote && !checkoutQuote.codAvailable) {
+        showError(checkoutQuote.codUnavailableReason);
+        setLoading(false);
+        return;
+    }
+
 if (paymentMethod === "COD") {
 
     axios.post(
@@ -651,9 +682,11 @@ if (paymentMethod === "COD") {
 
             couponCode: appliedCoupon?.code,
 
-            redeemPoints: effectivePointsRedeemed
+            redeemPoints: effectivePointsRedeemed,
+            idempotencyKey
 
-        }
+        },
+        { headers: { "Idempotency-Key": idempotencyKey } }
 
     )
 
@@ -857,6 +890,7 @@ return (
             name="payment"
             value="COD"
             checked={paymentMethod === "COD"}
+            disabled={checkoutQuote && !checkoutQuote.codAvailable}
             onChange={(e) =>
                 setPaymentMethod(e.target.value)
             }
@@ -865,6 +899,12 @@ return (
         Cash On Delivery
 
     </label>
+
+    {checkoutQuote && !checkoutQuote.codAvailable && (
+        <small style={{ color: "var(--danger, #dc2626)" }}>
+            {checkoutQuote.codUnavailableReason}
+        </small>
+    )}
 
     <label className="payment-option">
 
@@ -995,6 +1035,12 @@ return (
 
                                     }
 
+                                    {item.selectedSize && (
+                                        <small style={{ display: "block" }}>
+                                            Size: {item.selectedSize}{item.sku ? ` · ${item.sku}` : ""}
+                                        </small>
+                                    )}
+
                                 </p>
 
                                 <small>
@@ -1122,11 +1168,18 @@ return (
 
                     <strong>
 
-                        FREE
+                        {checkoutQuote?.shippingAmount ? `₹${checkoutQuote.shippingAmount}` : "FREE"}
 
                     </strong>
 
                 </div>
+
+                {checkoutQuote && (
+                    <div className="shipping-row">
+                        <span>GST ({checkoutQuote.taxRate}% included)</span>
+                        <strong>₹{checkoutQuote.taxAmount}</strong>
+                    </div>
+                )}
 
                 {
                     appliedCoupon && (

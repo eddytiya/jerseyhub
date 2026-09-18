@@ -377,6 +377,12 @@ const totalPrice =
 
                                             {item.jerseyId.jerseyName}
 
+                                            {item.selectedSize && (
+                                                <small style={{ display: "block", marginTop: 4 }}>
+                                                    Size: {item.selectedSize}{item.sku ? ` · ${item.sku}` : ""}
+                                                </small>
+                                            )}
+
                                         </p>
 
                                         <h3>

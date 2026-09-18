@@ -210,7 +210,7 @@ const ProductCard = ({ product, index = 0 }) => {
 
                 className="gridddddd-product-image"
 
-                onClick={() => navigate(`/jersey/${product._id}`)}
+                onClick={() => navigate(`/jersey/${product.slug || product._id}`)}
 
             >
 
@@ -294,7 +294,7 @@ const ProductCard = ({ product, index = 0 }) => {
 
                     className="gridddddd-view-btn"
 
-                    onClick={() => navigate(`/jersey/${product._id}`)}
+                    onClick={() => navigate(`/jersey/${product.slug || product._id}`)}
 
                 >
 

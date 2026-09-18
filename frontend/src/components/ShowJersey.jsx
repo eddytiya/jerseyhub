@@ -86,7 +86,7 @@ const ShowJersey = () => {
     
     
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (quantity, selectedSize) => {
 
         axios
 
@@ -98,7 +98,9 @@ const ShowJersey = () => {
 
                     jerseyId: jersey._id,
 
-                    quantity: 1
+                    quantity,
+
+                    selectedSize
 
                 },
 

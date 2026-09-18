@@ -5,12 +5,6 @@ const dns = require("dns");
             DEBUG ENV VARIABLES
 ========================================== */
 
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log(
-    "EMAIL_PASS:",
-    process.env.EMAIL_PASS ? "Loaded ✅" : "Missing ❌"
-);
-
 /* ==========================================
             TRANSPORTER
 ========================================== */
@@ -31,19 +25,24 @@ const transporter = nodemailer.createTransport({
             VERIFY CONNECTION
 ========================================== */
 
-transporter.verify((error, success) => {
-    if (error) {
-        console.log("❌ Email Server Error:", error);
-    } else {
-        console.log("✅ Email Server Ready");
-    }
-});
+if (process.env.NODE_ENV !== "test" && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    transporter.verify((error) => {
+        if (error) {
+            console.log("❌ Email Server Error:", error.message);
+        } else {
+            console.log("✅ Email Server Ready");
+        }
+    });
+}
 
 /* ==========================================
             SEND EMAIL
 ========================================== */
 
 const sendEmail = async ({ to, subject, html }) => {
+    if (process.env.NODE_ENV === "test") {
+        return { messageId: "test-message" };
+    }
     try {
         const info = await transporter.sendMail({
             from: `"JerseyHub ⚽" <${process.env.EMAIL_USER}>`,

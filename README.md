@@ -286,11 +286,39 @@ GOOGLE_CLIENT_ID=
 
 RAZORPAY_KEY_ID=
 RAZORPAY_KEY_SECRET=
+RAZORPAY_WEBHOOK_SECRET=
+
+FREE_SHIPPING_THRESHOLD=1499
+STANDARD_SHIPPING_CHARGE=99
+GST_RATE=5
+COD_MAX_AMOUNT=5000
+
+# Enable only after configuring Razorpay webhooks in production.
+PAYMENT_RECOVERY_ENABLED=false
+PAYMENT_RECOVERY_GRACE_MINUTES=15
 
 FRONTEND_URL=
 
 NODE_ENV=
 ```
+
+Configure the Razorpay webhook URL as `https://your-api.example.com/payment/webhook`
+and subscribe to `payment.captured`, `payment.failed`, and `refund.processed`.
+Use the same webhook secret in `RAZORPAY_WEBHOOK_SECRET`. Automatic recovery is
+opt-in; when enabled, captured payments that still have no order after the grace
+period are queued and refunded automatically.
+
+## Catalog migration
+
+After deploying the unified catalog schema, run this once from `backend`:
+
+```bash
+npm run migrate:catalog
+```
+
+The command backfills slugs and publishing state on existing jerseys and copies
+records from the retired `products` collection without deleting source data. It
+is idempotent and can be rerun safely.
 
 ## Frontend
 

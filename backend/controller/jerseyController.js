@@ -6,6 +6,7 @@ const Category = require("../model/categoryModel");
 const ProductType = require("../model/ProductTypeModel");
 const StockAlert = require("../model/StockAlert");
 const sendEmail = require("../utils/sendEmail");
+const { publicCatalogFilter, normalizePublishingInput, ensureUniqueSlug } = require("../services/catalogPublishing");
 
 /* ==========================================
         NOTIFY BACK-IN-STOCK SUBSCRIBERS
@@ -78,11 +79,7 @@ const addJersey = async (req, res) => {
 
         console.log("BODY:", req.body);
 
-        const jerseyData = {
-
-            ...req.body
-
-        };
+        const jerseyData = normalizePublishingInput(req.body);
 
         /* ==========================
                 Images Support
@@ -102,11 +99,9 @@ const addJersey = async (req, res) => {
 
         }
 
-        const jersey = new Jersey(
-
-            jerseyData
-
-        );
+        const jersey = new Jersey(jerseyData);
+        await jersey.validate();
+        jersey.slug = await ensureUniqueSlug(Jersey, jersey.slug);
 
         const result = await jersey.save();
 
@@ -152,7 +147,7 @@ const getJerseysByIds = async (req, res) => {
             return res.status(200).json([]);
         }
 
-        const jerseys = await Jersey.find({ _id: { $in: ids } })
+        const jerseys = await Jersey.find(publicCatalogFilter({ _id: { $in: ids } }))
             .populate("productType");
 
         return res.status(200).json(jerseys);
@@ -167,7 +162,7 @@ const getJerseysByIds = async (req, res) => {
 // Get All Jerseys
 const getAllJerseys = async (req, res) => {
     try {
-        const jerseys = await Jersey.find()
+        const jerseys = await Jersey.find(publicCatalogFilter())
             .populate("productType");
 
         // Always return an array.
@@ -184,8 +179,9 @@ const getAllJerseys = async (req, res) => {
 // Get Single Jersey
 const getJerseyById = async (req, res) => {
     try {
-        const jersey = await Jersey.findById(req.params.id)
-.populate("productType");
+        const identifier = req.params.identifier || req.params.id;
+        const lookup = mongoose.Types.ObjectId.isValid(identifier) ? { _id: identifier } : { slug: identifier };
+        const jersey = await Jersey.findOne(publicCatalogFilter(lookup)).populate("productType");
 
         if (jersey) {
             res.status(200).json(jersey);
@@ -201,11 +197,7 @@ const updateJersey = async (req, res) => {
 
     try {
 
-        const jerseyData = {
-
-    ...req.body
-
-};
+        const jerseyData = normalizePublishingInput(req.body);
 
 /* ==========================
         Images Support
@@ -227,6 +219,12 @@ if (
 
 const previousJersey = await Jersey.findById(req.params.id);
 
+const pending = new Jersey({ ...previousJersey?.toObject(), ...jerseyData, _id: previousJersey?._id });
+await pending.validate();
+if (jerseyData.slug || !previousJersey?.slug) {
+    jerseyData.slug = await ensureUniqueSlug(Jersey, pending.slug, req.params.id);
+}
+
 const jersey = await Jersey.findByIdAndUpdate(
 
     req.params.id,
@@ -235,7 +233,8 @@ const jersey = await Jersey.findByIdAndUpdate(
 
     {
 
-        new:true
+        new:true,
+        runValidators:true
 
     }
 
@@ -366,7 +365,7 @@ const searchJersey = async (req, res) => {
 
         }
 
-        const jerseys = await Jersey.find()
+        const jerseys = await Jersey.find(publicCatalogFilter())
 .populate("productType");
 
         const fuse = new Fuse(jerseys, {
@@ -440,9 +439,9 @@ const searchJersey = async (req, res) => {
 const getByCategory = async (req, res) => {
     try {
 
-        const jerseys = await Jersey.find({
+        const jerseys = await Jersey.find(publicCatalogFilter({
             category: req.params.category
-        })
+        }))
         .populate("productType");
 
         res.status(200).json(jerseys);
@@ -460,11 +459,7 @@ const getFeaturedJerseys = async (req, res) => {
 
     try {
 
-        const jerseys = await Jersey.find({
-
-            featured: true
-
-        })
+        const jerseys = await Jersey.find(publicCatalogFilter({ featured: true }))
         .populate("productType")
         .limit(8);
 
@@ -520,7 +515,7 @@ const getAIMetadata = async (req, res) => {
 
     try {
 
-        const jerseys = await Jersey.find()
+        const jerseys = await Jersey.find(publicCatalogFilter())
             .populate("productType");
 
         const teams = [
@@ -694,7 +689,7 @@ const aiSearch = async (req, res) => {
 
         console.log("🔎 Mongo Filter:", filter);
 
-        const jerseys = await Jersey.find(filter)
+        const jerseys = await Jersey.find(publicCatalogFilter(filter))
 
             .populate("productType");
 
@@ -739,6 +734,25 @@ const aiSearch = async (req, res) => {
     }
 
 };
+
+const getAdminJerseys = async (req, res) => {
+    try {
+        const jerseys = await Jersey.find().populate("productType").sort({ createdAt: -1 });
+        return res.status(200).json(jerseys);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+const getAdminJerseyById = async (req, res) => {
+    try {
+        const jersey = await Jersey.findById(req.params.id).populate("productType");
+        if (!jersey) return res.status(404).json({ message: "Product not found" });
+        return res.status(200).json(jersey);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
 module.exports = {
     addJersey,
     getAllJerseys,
@@ -749,5 +763,5 @@ module.exports = {
     searchJersey,
     getByCategory,
     getFeaturedJerseys,
-    toggleFeatured,getAIMetadata,aiSearch
+    toggleFeatured,getAIMetadata,aiSearch,getAdminJerseys,getAdminJerseyById
 };

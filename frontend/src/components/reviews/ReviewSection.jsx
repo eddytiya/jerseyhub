@@ -7,6 +7,7 @@ import React, {
 } from "react";
 
 import axios from "axios";
+import { Link } from "react-router-dom";
 import API_URL from "../../utils/api";
 import RatingBreakdown from "./RatingBreakdown";
 
@@ -33,6 +34,7 @@ const ReviewSection = ({
     const [totalReviews,setTotalReviews]=useState(0);
    
     const [currentUser, setCurrentUser] = useState(null);
+    const [authChecked, setAuthChecked] = useState(false);
     const [editingReview, setEditingReview] = useState(null);
 
     /* ==========================================
@@ -135,7 +137,8 @@ const ReviewSection = ({
 
         setCurrentUser(null);
 
-    });
+    })
+    .finally(() => setAuthChecked(true));
 
 }, [jerseyId]);
 
@@ -144,6 +147,8 @@ const ReviewSection = ({
     ========================================== */
 
     const handleHelpful=(id)=>{
+
+        if (!currentUser) return;
 
         axios.put(
 
@@ -250,7 +255,7 @@ const handleEdit = (review) => {
 
             />
 
-           <ReviewForm
+           {authChecked && currentUser ? <ReviewForm
 
     jerseyId={jerseyId}
 
@@ -264,7 +269,10 @@ const handleEdit = (review) => {
 
     }
 
-/>
+/> : authChecked && <div className="review-login-prompt">
+    <p>You can read every review without an account.</p>
+    <Link to="/login">Log in to write a review</Link>
+</div>}
             <div className="review-list">
 
                 {

@@ -64,6 +64,10 @@ const orderItemSchema = mongoose.Schema({
 
     },
 
+    size: { type: String, default: "" },
+
+    sku: { type: String, default: "" },
+
     subtotal: {
 
         type: Number,
@@ -216,6 +220,14 @@ const orderSchema = mongoose.Schema(
 
         },
 
+        merchandiseTotal: { type: Number, default: 0 },
+
+        shippingAmount: { type: Number, default: 0 },
+
+        taxAmount: { type: Number, default: 0 },
+
+        taxRate: { type: Number, default: 0 },
+
         totalAmount: {
 
             type: Number,
@@ -266,7 +278,9 @@ const orderSchema = mongoose.Schema(
 
                 "Failed",
 
-                "Refunded"
+                "Refunded",
+
+                "RefundPending"
 
             ],
 
@@ -297,6 +311,8 @@ const orderSchema = mongoose.Schema(
             default: ""
 
         },
+
+        idempotencyKey: { type: String, default: "" },
 
         trackingNumber: {
 
@@ -386,10 +402,17 @@ deliveredAt: {
 
 );
 
-module.exports = mongoose.model(
-
-    "Order",
-
-    orderSchema
-
+orderSchema.index(
+    { razorpayPaymentId: 1 },
+    {
+        unique: true,
+        partialFilterExpression: { razorpayPaymentId: { $type: "string", $gt: "" } }
+    }
 );
+
+orderSchema.index(
+    { userId: 1, idempotencyKey: 1 },
+    { unique: true, partialFilterExpression: { idempotencyKey: { $type: "string", $gt: "" } } }
+);
+
+module.exports = mongoose.model("Order", orderSchema);

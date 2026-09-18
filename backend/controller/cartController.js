@@ -1,5 +1,24 @@
 const Cart = require('../model/cartModel')
 const Jersey = require('../model/jerseyModel')
+const { isPubliclyAvailable } = require('../services/catalogPublishing')
+
+const getInventory = (jersey, selectedSize) => {
+    if (!jersey.variants?.length) {
+        return { available: jersey.stock - (jersey.reservedStock || 0), sku: "", selectedSize: selectedSize || "" }
+    }
+    if (!selectedSize) {
+        const error = new Error("Please select a size")
+        error.statusCode = 400
+        throw error
+    }
+    const variant = jersey.variants.find((item) => item.size === selectedSize && item.active)
+    if (!variant) {
+        const error = new Error("Selected size is unavailable")
+        error.statusCode = 400
+        throw error
+    }
+    return { available: variant.stock - variant.reserved, sku: variant.sku, selectedSize: variant.size }
+}
 
 // Add item to cart
 
@@ -13,7 +32,9 @@ const addToCart = async (req, res) => {
 
             jerseyId,
 
-            quantity
+            quantity,
+
+            selectedSize
 
         } = req.body
 
@@ -25,7 +46,7 @@ const addToCart = async (req, res) => {
 
         )
 
-        if (!jersey) {
+        if (!jersey || !isPubliclyAvailable(jersey)) {
 
             return res.status(404).json({
 
@@ -35,9 +56,9 @@ const addToCart = async (req, res) => {
 
         }
 
-        // Out of stock
+        const inventory = getInventory(jersey, selectedSize)
 
-        if (jersey.stock <= 0) {
+        if (inventory.available <= 0) {
 
             return res.status(400).json({
 
@@ -51,7 +72,9 @@ const addToCart = async (req, res) => {
 
             userId,
 
-            jerseyId
+            jerseyId,
+
+            selectedSize: inventory.selectedSize
 
         })
 
@@ -65,13 +88,13 @@ const addToCart = async (req, res) => {
 
                 existingItem.quantity + 1 >
 
-                jersey.stock
+                inventory.available
 
             ) {
 
                 return res.status(400).json({
 
-                    message: `Only ${jersey.stock} item(s) available in stock`
+                    message: `Only ${inventory.available} item(s) available in stock`
 
                 })
 
@@ -93,11 +116,11 @@ const addToCart = async (req, res) => {
 
         // Prevent adding more than stock
 
-        if (quantity > jersey.stock) {
+        if (quantity > inventory.available) {
 
             return res.status(400).json({
 
-                message: `Only ${jersey.stock} item(s) available in stock`
+                message: `Only ${inventory.available} item(s) available in stock`
 
             })
 
@@ -109,7 +132,11 @@ const addToCart = async (req, res) => {
 
             jerseyId,
 
-            quantity
+            quantity,
+
+            selectedSize: inventory.selectedSize,
+
+            sku: inventory.sku
 
         })
 
@@ -125,7 +152,7 @@ const addToCart = async (req, res) => {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 
@@ -155,7 +182,7 @@ const getCart = async (req, res) => {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 
@@ -203,17 +230,19 @@ const updateQuantity = async (req, res) => {
 
         )
 
+        const inventory = getInventory(jersey, cartItem.selectedSize)
+
         if (
 
             req.body.quantity >
 
-            jersey.stock
+            inventory.available
 
         ) {
 
             return res.status(400).json({
 
-                message: `Only ${jersey.stock} item(s) available in stock`
+                message: `Only ${inventory.available} item(s) available in stock`
 
             })
 
@@ -229,7 +258,7 @@ const updateQuantity = async (req, res) => {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 
@@ -287,7 +316,7 @@ const removeFromCart = async (req, res) => {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 
@@ -310,7 +339,9 @@ const buyNow = async (req, res) => {
 
             jerseyId,
 
-            quantity
+            quantity,
+
+            selectedSize
 
         } = req.body;
 
@@ -320,7 +351,7 @@ const buyNow = async (req, res) => {
 
         );
 
-        if (!jersey) {
+        if (!jersey || !isPubliclyAvailable(jersey)) {
 
             return res.status(404).json({
 
@@ -330,11 +361,13 @@ const buyNow = async (req, res) => {
 
         }
 
-        if (quantity > jersey.stock) {
+        const inventory = getInventory(jersey, selectedSize)
+
+        if (quantity > inventory.available) {
 
             return res.status(400).json({
 
-                message: `Only ${jersey.stock} item(s) available`
+                message: `Only ${inventory.available} item(s) available`
 
             });
 
@@ -360,6 +393,10 @@ const buyNow = async (req, res) => {
 
             quantity,
 
+            selectedSize: inventory.selectedSize,
+
+            sku: inventory.sku,
+
             buyNow: true
 
         });
@@ -376,7 +413,7 @@ const buyNow = async (req, res) => {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 
@@ -413,7 +450,7 @@ const getBuyNowCart = async (req, res) => {
 
     catch (err) {
 
-        res.status(500).json({
+        res.status(err.statusCode || 500).json({
 
             message: err.message
 

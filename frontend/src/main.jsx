@@ -1,5 +1,22 @@
 import { createRoot } from 'react-dom/client'
 
+// Vite emits this event when an older page tries to load a hashed chunk that
+// no longer exists after a deployment. Refresh once so the current app shell
+// and its matching asset manifest are loaded.
+window.addEventListener('vite:preloadError', (event) => {
+    event.preventDefault()
+
+    const recoveryKey = 'jerseyhub-chunk-recovery'
+    if (sessionStorage.getItem(recoveryKey)) return
+
+    sessionStorage.setItem(recoveryKey, '1')
+    window.location.reload()
+})
+
+window.addEventListener('load', () => {
+    sessionStorage.removeItem('jerseyhub-chunk-recovery')
+}, { once: true })
+
 // Bootstrap must load before the theme so theme colors (which rely on
 // element-level selectors like `body`) win the cascade instead of
 // Bootstrap's reboot styles.

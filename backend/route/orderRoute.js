@@ -37,6 +37,9 @@ const {
 } = require("../controller/orderController");
 
 const { createRazorpayOrder } = require("../controller/paymentController");
+const { getCheckoutQuote } = require("../controller/checkoutController");
+
+router.post("/quote", identifyUser, getCheckoutQuote);
 
 router.post(
 

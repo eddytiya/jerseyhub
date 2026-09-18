@@ -244,6 +244,8 @@ const ReviewCard = ({
     <button
 
         className="helpful-btn"
+        disabled={!currentUser}
+        title={currentUser ? "Mark this review as helpful" : "Log in to mark reviews as helpful"}
 
         onClick={()=>
 

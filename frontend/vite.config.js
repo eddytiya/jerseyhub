@@ -43,9 +43,27 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
-        navigateFallbackDenylist: [/^\/(admin|manage-|api)/],
+        // Never precache the HTML app shell. A cached index.html can refer to
+        // hashed chunks removed by a later Vercel deployment, causing 404s on
+        // lazy-loaded routes. Fetch navigations from the network instead.
+        globPatterns: ['**/*.{js,css,svg,png,ico}'],
+        navigateFallback: null,
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
         runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'jerseyhub-pages',
+              networkTimeoutSeconds: 4,
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 24 * 60 * 60
+              }
+            }
+          },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/jersey') || url.pathname.startsWith('/category') || url.pathname.startsWith('/product'),
             handler: 'NetworkFirst',

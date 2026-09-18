@@ -25,10 +25,10 @@ const CTASection = () => {
 
                 <motion.div
                     className="cta-card"
-                    initial={{ clipPath: "inset(0 100% 0 0 round 32px)" }}
-                    whileInView={{ clipPath: "inset(0 0% 0 0 round 32px)" }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    initial={false}
+                    whileInView={{ y: [16, 0] }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 >
 
                     <div className="cta-icon">

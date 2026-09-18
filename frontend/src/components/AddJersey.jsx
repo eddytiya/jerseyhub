@@ -36,7 +36,10 @@ const AddJersey = () => {
 
     description: "",
 
-    featured: false
+    featured: false,
+    slug: "",
+    status: "draft",
+    publishAt: ""
 
 });
 
@@ -1222,6 +1225,26 @@ const [uploading,setUploading]=useState(false);
                                 }
                             />
 
+                        </div>
+
+                        <div className="row g-3 mb-3">
+                            <div className="col-md-6">
+                                <label className="form-label">SEO Slug (optional)</label>
+                                <input className="form-control" value={jersey.slug} placeholder="auto-generated-from-product-name" onChange={(e) => setJersey({ ...jersey, slug: e.target.value })} />
+                            </div>
+                            <div className="col-md-6">
+                                <label className="form-label">Publishing status</label>
+                                <select className="form-select" value={jersey.status} onChange={(e) => setJersey({ ...jersey, status: e.target.value, publishAt: e.target.value === "scheduled" ? jersey.publishAt : "" })}>
+                                    <option value="draft">Draft</option>
+                                    <option value="published">Published now</option>
+                                    <option value="scheduled">Schedule</option>
+                                    <option value="archived">Archived</option>
+                                </select>
+                            </div>
+                            {jersey.status === "scheduled" && <div className="col-md-6">
+                                <label className="form-label">Publish date and time</label>
+                                <input type="datetime-local" className="form-control" required value={jersey.publishAt} onChange={(e) => setJersey({ ...jersey, publishAt: e.target.value })} />
+                            </div>}
                         </div>
 
                         <div className="form-check mb-3">

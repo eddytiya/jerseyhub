@@ -33,7 +33,7 @@ const ManageJerseys = () => {
         try {
 
             const res = await axios.get(
-                `${API_URL}/jersey`
+                `${API_URL}/jersey/admin/all`
             );
 
             setJerseys(res.data);

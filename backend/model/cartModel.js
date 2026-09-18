@@ -18,6 +18,10 @@ const cartSchema = mongoose.Schema({
         default: 1
     },
 
+    selectedSize: { type: String, default: "" },
+
+    sku: { type: String, default: "" },
+
     buyNow: {
         type: Boolean,
         default: false
